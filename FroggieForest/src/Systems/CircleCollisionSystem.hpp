@@ -1,0 +1,72 @@
+#ifndef CIRCLE_COLISION_SYSTEM_HPP
+#define CIRCLE_COLISION_SYSTEM_HPP
+
+#include <memory>
+
+#include "../Components/CircleColiderComponent.hpp"
+#include "../Components/TransformComponent.hpp"
+#include "../ECS/ECS.hpp"
+#include "../EventManager/EventManager.hpp"
+#include "../Events/CollisionEvent.hpp"
+
+class CircleCollisionSystem : public System
+{
+public:
+  CircleCollisionSystem()
+  {
+    requireComponent<CircleColiderComponent>();
+    requireComponent<TransformComponent>();
+  }
+
+  void update(std::unique_ptr<EventManager> &EventManager)
+  {
+    auto entities = getEntities();
+    for (auto i = entities.begin(); i != entities.end(); i++)
+    {
+      Entity a = *i;
+      auto &aCircleColider = a.getComponent<CircleColiderComponent>();
+      auto &aTransform = a.getComponent<TransformComponent>();
+
+      for (auto j = i; j != entities.end(); j++)
+      {
+        Entity b = *j;
+
+        if (a == b)
+        {
+          continue;
+        }
+        auto &bCircleColider = b.getComponent<CircleColiderComponent>();
+        auto &bTransform = b.getComponent<TransformComponent>();
+
+        glm::vec2 aCenterPos = glm::vec2(
+            aTransform.position.x - (aCircleColider.width / 2) * aTransform.scale.x,
+            aTransform.position.y - (aCircleColider.height / 2) * aTransform.scale.y);
+
+        glm::vec2 bCenterPos = glm::vec2(
+            bTransform.position.x - (bCircleColider.width / 2) * bTransform.scale.x,
+            bTransform.position.y - (bCircleColider.height / 2) * bTransform.scale.y);
+
+        int aRadius = aCircleColider.radius * aTransform.scale.x;
+        int bRadius = bCircleColider.radius * bTransform.scale.x;
+
+        bool collision = CheckCircularCollision(aRadius, bRadius, aCenterPos, bCenterPos);
+
+        if (collision)
+        {
+          EventManager->EmitEvent<CollisionEvent>(a, b);
+        }
+      }
+    }
+  }
+
+  bool CheckCircularCollision(int aRadius, int bRadius, glm::vec2 aPosition, glm::vec2 bPosition)
+  {
+    glm::vec2 distance = aPosition - bPosition;
+    double length = glm::length((distance.x * distance.x) + (distance.y * distance.y));
+    // there is collision if the sum of the radius is greater or equal to
+    // the distance between the two circles
+    return (aRadius + bRadius) >= length;
+  }
+};
+
+#endif // CIRCLE_COLISION_SYSTEM_HPP
