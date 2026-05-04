@@ -13,6 +13,7 @@ LFLAGS=-lSDL2 -lSDL2_image -lSDL2_ttf -llua5.3 -ltinyxml2
 
 build:
 	$(CC) $(STD) $(CFLAGS) $(INC_PATH) $(SRC) $(LFLAGS) -o gameEngine
+
 run:
 	./gameEngine
 
