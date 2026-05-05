@@ -35,8 +35,8 @@ scene = {
   buttons = {},
 
   maps = {
-    map_path = "./assets/maps/level_01.tmx",
-    tile_path = "./assets/maps/terrain.tsx",
+    map_path = "./assets/maps/map2/level01.tmx",
+    tile_path = "./assets/maps/map2/terrain.tsx",
     tile_name = "terrain",
   },
 
@@ -91,7 +91,7 @@ scene = {
           tag = "player",
         },
         transform = {
-          position = {x = 10, y = 300.0},
+          position = {x = 50.0, y = 300.0},
           scale = {x = 1.0, y = 1.0},
           rotation = 0.0,
         },

@@ -8,7 +8,7 @@ player_states = {
 player_state = player_states["IDLE"]
 player_can_jump = false
 player_speed = 5.0 * 64.0
-player_jump_force = -5500.0 * 64.0
+player_jump_force = -3200.0 * 64.0
 
 function update()
   local vel_x, vel_y = get_velocity(this)
