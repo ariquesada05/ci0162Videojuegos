@@ -1,4 +1,4 @@
-#include "AnimantionManager.hpp"
+#include "AnimationManager.hpp"
 
 AnimationManager::AnimationManager()
 {

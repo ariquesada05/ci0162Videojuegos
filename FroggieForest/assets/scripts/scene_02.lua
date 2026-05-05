@@ -2,6 +2,7 @@ scene = {
   -- Tabla de imágenes y sprites
   sprites = {
     [0] = 
+   -- {assetId = "background", filePath = "./assets/images/backgroundl1.png",},
     {assetId = "frog_idle", filePath = "./assets/images/frog_idle.png",},
     {assetId = "frog_jump", filePath = "./assets/images/frog_jump.png",},
     {assetId = "frog_fall", filePath = "./assets/images/frog_fall.png",},
@@ -15,7 +16,7 @@ scene = {
     {animation_id = "player_frog_idle", texture_id = "frog_idle", w = 32, h = 32, num_frames = 11, speed_rate = 15, is_loop = true,},
     {animation_id = "player_frog_jump", texture_id = "frog_jump", w = 32, h = 32, num_frames = 01, speed_rate = 01, is_loop = true,},
     {animation_id = "player_frog_fall", texture_id = "frog_fall", w = 32, h = 32, num_frames = 01, speed_rate = 01, is_loop = true,},
-    {animation_id = "player_frog_run" , texture_id = "frog_run",  w = 32, h = 32, num_frames = 12, speed_rate = 15, is_loop = true,},
+    {animation_id = "player_frog_run" , texture_id = "frog_run",  w = 32, h = 32, num_frames = 11, speed_rate = 10, is_loop = true,},
   },
   
   -- Tabla de fuentes
@@ -42,6 +43,22 @@ scene = {
   -- Tabla de Entidades
   entities = {
     [0] = 
+     --background
+        -- {
+        --     components = {
+        --         sprite = {
+        --             assetId = "background",
+        --             width = 800,
+        --             height = 600,
+        --             src_rect = {x = 0, y = 0},
+        --         },
+        --         transform = {
+        --             position = {x = 0, y = 0},
+        --             scale = {x = 1.0, y = 1.0},
+        --             rotation = 0.0,
+        --         },
+        --     }
+        -- },
     -- Player
     {
       components = {

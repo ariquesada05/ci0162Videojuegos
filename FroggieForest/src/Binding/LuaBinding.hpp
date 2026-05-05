@@ -6,7 +6,7 @@
 #include <string>
 #include <tuple>
 
-#include "../AnimationManager/AnimantionManager.hpp"
+#include "../AnimationManager/AnimationManager.hpp"
 #include "../Components/AnimationComponent.hpp"
 #include "../Components/BoxColliderComponent.hpp"
 #include "../Components/RigidBodyComponent.hpp"

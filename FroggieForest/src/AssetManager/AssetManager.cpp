@@ -37,7 +37,12 @@ void AssetManager::AddTexture(SDL_Renderer *renderer, const std::string &texture
 
 SDL_Texture *AssetManager::getTexture(const std::string &textureID)
 {
-  return textures[textureID];
+  auto it = textures.find(textureID);
+  if (it == textures.end())
+  {
+    return nullptr;
+  }
+  return it->second;
 }
 
 void AssetManager::AddFont(const std::string &fontID, const std::string &filePath, int fontSize)
@@ -54,5 +59,10 @@ void AssetManager::AddFont(const std::string &fontID, const std::string &filePat
 
 TTF_Font *AssetManager::getFont(const std::string &fontID)
 {
-  return fonts[fontID];
+  auto it = fonts.find(fontID);
+  if (it == fonts.end())
+  {
+    return nullptr;
+  }
+  return it->second;
 }

@@ -11,7 +11,7 @@
 // #include "../Systems/DamageSystem.hpp"
 #include "../Systems/animationSystem.hpp"
 #include "../Systems/ScriptSystem.hpp"
-#include "../Systems/TextSystem.hpp"
+#include "../Systems/textSystem.hpp"
 #include "../Systems/UISystem.hpp"
 #include "../Systems/CameraMovementSystem.hpp"
 #include "../Systems/boxCollisionSystem.hpp"
@@ -200,8 +200,8 @@ void Game::render()
   SDL_SetRenderDrawColor(renderer, 31, 31, 31, 255);
   SDL_RenderClear(renderer);
 
-  registry->getSystem<TextSystem>().update(renderer, assetManager);
   registry->getSystem<RenderSystem>().update(renderer, assetManager, camera);
+  registry->getSystem<TextSystem>().update(renderer, assetManager);
 
   if (isDebugMode)
   {

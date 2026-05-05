@@ -23,6 +23,12 @@ public:
     {
       const auto &sprite = entity.getComponent<SpriteComponent>();
       const auto &transform = entity.getComponent<TransformComponent>();
+      SDL_Texture *texture = AssetManager->getTexture(sprite.textureID);
+      if (texture == nullptr)
+      {
+        std::cerr << "[RenderSystem] Missing texture: " << sprite.textureID << std::endl;
+        continue;
+      }
 
       SDL_Rect srcRect = sprite.srcRect;
       SDL_Rect dstRect = {
@@ -34,7 +40,7 @@ public:
 
       SDL_RenderCopyEx(
           renderer,
-          AssetManager->getTexture(sprite.textureID),
+          texture,
           &srcRect,
           &dstRect,
           transform.rotation,

@@ -15,12 +15,14 @@ struct RigidBodyComponent
   float mass;
   float invMass;
 
+
   RigidBodyComponent(bool isDynamic = false, bool isSolid = false, float mass = 1)
   {
     this->isDynamic = isDynamic;
     this->isSolid = isSolid;
     this->mass = mass;
     this->invMass = 1 / mass;
+
   };
 };
 

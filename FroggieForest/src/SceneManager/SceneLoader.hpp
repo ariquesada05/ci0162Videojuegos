@@ -7,7 +7,7 @@
 #include <memory>
 #include <string>
 #include <sol/sol.hpp>
-#include "../AnimationManager/AnimantionManager.hpp"
+#include "../AnimationManager/AnimationManager.hpp"
 #include "../AssetManager/AssetManager.hpp"
 #include "../ControllerManager/ControllerManager.hpp"
 #include "../ECS/ECS.hpp"

@@ -19,7 +19,6 @@ public:
     requireComponent<TextComponent>();
     requireComponent<TransformComponent>();
   }
-
   void update(SDL_Renderer *renderer, const std::unique_ptr<AssetManager> &assetManager)
   {
     for (auto entity : getEntities())
@@ -27,12 +26,31 @@ public:
       auto &text = entity.getComponent<TextComponent>();
       auto &transform = entity.getComponent<TransformComponent>();
 
+      TTF_Font *font = assetManager->getFont(text.fontID);
+      if (font == nullptr)
+      {
+        std::cerr << "[TextSystem] Missing font: " << text.fontID << std::endl;
+        continue;
+      }
+
       SDL_Surface *surface = TTF_RenderText_Blended(
-          assetManager->getFont(text.fontID), text.text.c_str(), text.color);
+          font, text.text.c_str(), text.color);
+      if (surface == nullptr)
+      {
+        std::cerr << "[TextSystem] Failed to render text: " << TTF_GetError() << std::endl;
+        continue;
+      }
+
       text.width = surface->w;
       text.height = surface->h;
+
       SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-      SDL_FreeSurface(surface);
+      SDL_FreeSurface(surface); 
+      if (texture == nullptr)
+      {
+        std::cerr << "[TextSystem] Failed to create text texture: " << SDL_GetError() << std::endl;
+        continue;
+      }
 
       SDL_Rect destRect = {
           static_cast<int>(transform.position.x),

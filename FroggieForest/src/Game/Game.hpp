@@ -8,7 +8,7 @@
 
 #include <memory>
 
-#include "../AnimationManager/AnimantionManager.hpp"
+#include "../AnimationManager/AnimationManager.hpp"
 #include "../AssetManager/AssetManager.hpp"
 #include "../ControllerManager/ControllerManager.hpp"
 #include "../EventManager/EventManager.hpp"
