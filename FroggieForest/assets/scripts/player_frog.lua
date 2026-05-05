@@ -4,6 +4,7 @@ player_states = {
   RUN = 1,
   JUMP = 2,
   FALL = 3,
+  DIE = 4,
 }
 player_state = player_states["IDLE"]
 player_can_jump = false
@@ -26,24 +27,26 @@ function update()
   if is_action_activated("right") then
     vel_x = vel_x + player_speed
   end
-
+  if player_state == player_states["DIE"] then
+    return
+  end
   set_velocity(this, vel_x, vel_y)
   update_animation_state()
   player_can_jump = false
 end
 
 function on_collision(other)
-  if get_tag(other) == "floor" then
+  if get_tag(other) == "floor" or get_tag(other) == "obsorange" or get_tag(other) == "obsgrey" then
     local vel_x, vel_y = get_velocity(this)
     if vel_y == 0 then
       player_can_jump = true
     end
   end
-  if get_tag(other) == "obsgrey" or get_tag(other) == "obsorange" then
-    local vel_x, vel_y = get_velocity(this)
-    if vel_y == 0 then
-      player_can_jump = true
-    end
+  if get_tag(other) == "die" then
+    print("Die")
+    player_state = player_states["DIE"]
+    change_animation(this, "player_frog_die")
+    go_to_scene("game_over")
   end
 end
 
@@ -92,5 +95,7 @@ function update_animation_state()
     end
   end
 
-
+  if player_state == player_states["DIE"] then
+    change_animation(this, "player_frog_die")
+  end
 end

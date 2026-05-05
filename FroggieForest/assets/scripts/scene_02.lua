@@ -7,6 +7,7 @@ scene = {
     {assetId = "frog_jump", filePath = "./assets/images/frog_jump.png",},
     {assetId = "frog_fall", filePath = "./assets/images/frog_fall.png",},
     {assetId = "frog_run", filePath = "./assets/images/frog_run.png",},
+    {assetId = "frog_die", filePath = "./assets/images/frog_die.png",},
     {assetId = "terrain", filePath = "./assets/images/terrain.png",},
   },
 
@@ -17,6 +18,8 @@ scene = {
     {animation_id = "player_frog_jump", texture_id = "frog_jump", w = 32, h = 32, num_frames = 01, speed_rate = 01, is_loop = true,},
     {animation_id = "player_frog_fall", texture_id = "frog_fall", w = 32, h = 32, num_frames = 01, speed_rate = 01, is_loop = true,},
     {animation_id = "player_frog_run" , texture_id = "frog_run",  w = 32, h = 32, num_frames = 11, speed_rate = 10, is_loop = true,},
+    {animation_id = "player_frog_die" , texture_id = "frog_die",  w = 32, h = 32, num_frames = 3, speed_rate = 10, is_loop = true,},
+
   },
   
   -- Tabla de fuentes
@@ -24,7 +27,8 @@ scene = {
 
   -- Tabla de acciones y teclas
   keys = {
-    [0] = {action = "up", key = 119},
+    [0] = 
+    {action = "up", key = 119},
     {action = "left", key = 97},
     {action = "down", key = 115},
     {action = "right", key = 100},
