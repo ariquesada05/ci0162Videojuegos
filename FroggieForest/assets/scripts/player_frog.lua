@@ -39,6 +39,12 @@ function on_collision(other)
       player_can_jump = true
     end
   end
+  if get_tag(other) == "obsgrey" or get_tag(other) == "obsorange" then
+    local vel_x, vel_y = get_velocity(this)
+    if vel_y == 0 then
+      player_can_jump = true
+    end
+  end
 end
 
 function update_animation_state()

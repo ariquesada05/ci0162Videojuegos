@@ -482,7 +482,8 @@ void SceneLoader::LoadLayer(std::unique_ptr<Registry> &registry, tinyxml2::XMLEl
   }
 }
 
-void SceneLoader::LoadColliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup)
+void SceneLoader::LoadColliders(std::unique_ptr<Registry> &registry, 
+  tinyxml2::XMLElement *objectGroup)
 {
   tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
 
