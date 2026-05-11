@@ -8,8 +8,9 @@ SRC=src/*.cpp \
 	src/AnimationManager/*.cpp \
 	src/AssetManager/*.cpp \
 	src/ControllerManager/*.cpp \
-	src/SceneManager/*.cpp
-LFLAGS=-lSDL2 -lSDL2_image -lSDL2_ttf -llua5.3 -ltinyxml2
+	src/SceneManager/*.cpp \
+	src/AudioManager/*.cpp
+LFLAGS=-lSDL2 -lSDL2_image -lSDL2_ttf -llua5.3 -ltinyxml2 -lSDL2_mixer
 
 build:
 	$(CC) $(STD) $(CFLAGS) $(INC_PATH) $(SRC) $(LFLAGS) -o gameEngine

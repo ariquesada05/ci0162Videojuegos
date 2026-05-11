@@ -17,6 +17,7 @@
 #include "../Systems/boxCollisionSystem.hpp"
 #include "../Systems/renderBoxColliderSystem.hpp"
 #include "../Systems/physicsSystem.hpp"
+#include "../AudioManager/AudioManager.hpp"
 
 Game::Game()
 {
@@ -28,6 +29,7 @@ Game::Game()
   eventManager = std::make_unique<EventManager>();
   registry = std::make_unique<Registry>();
   sceneManager = std::make_unique<SceneManager>();
+  audioManager = std::make_unique<AudioManager>();
 }
 
 Game::~Game()
@@ -88,7 +90,7 @@ void Game::init()
   windowHeight = 600;
 
   window = SDL_CreateWindow(
-      "Game Engine 2D",
+      "Froggie Forest",
       SDL_WINDOWPOS_CENTERED,
       SDL_WINDOWPOS_CENTERED,
       windowWidth,

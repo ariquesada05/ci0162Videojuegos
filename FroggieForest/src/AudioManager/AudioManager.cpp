@@ -7,7 +7,7 @@ AudioManager::AudioManager() {
 
 AudioManager::~AudioManager() {
     // std::cout << "[AUDIOMANAGER] Destructor" << std::endl;
-    clearAudio();
+    ClearAudio();
 }
 
 void AudioManager::ClearAudio() {

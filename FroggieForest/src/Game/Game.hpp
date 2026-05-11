@@ -14,6 +14,7 @@
 #include "../EventManager/EventManager.hpp"
 #include "../ECS/ECS.hpp"
 #include "../SceneManager/SceneManager.hpp"
+#include "../AudioManager/AudioManager.hpp"
 
 const int FPS = 60;
 const int MILISECS_PER_FRAME = 1000 / FPS;
@@ -41,6 +42,7 @@ public:
   std::unique_ptr<EventManager> eventManager = nullptr;
   std::unique_ptr<Registry> registry = nullptr;
   std::unique_ptr<SceneManager> sceneManager = nullptr;
+  std::unique_ptr<AudioManager> audioManager = nullptr;
   sol::state lua;
 
   int windowWidth = 0;

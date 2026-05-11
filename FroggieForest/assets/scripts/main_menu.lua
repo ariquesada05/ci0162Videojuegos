@@ -7,6 +7,19 @@ scene = {
 
   animations = {},
   
+    -- sounds table
+  sounds = {
+        [0] =
+        {soundId = "other_sound",file_path ="./assets/sounds/lazer.mp3"},
+    },
+
+    -- music table
+  music = {
+        [0] =
+        {musicId = "menu_music",file_path ="./assets/sounds/Title_v1.mp3"},
+    },
+
+
   -- Tabla de fuentes
   fonts = {
     [0] = 
@@ -14,13 +27,16 @@ scene = {
     {fontId = "font-02", filePath = "./assets/fonts/04B_11__.ttf", fontSize = 32},
   },
 
+
   -- Tabla de acciones y teclas
-  keys = {
-    [0] =
-    {action = "up", key = 119},
-    {action = "left", key = 97},
-    {action = "down", key = 115},
-    {action = "right", key = 100},
+ keys = {
+    [0] = 
+    {action = "up", key = 1073741906},
+    {action = "left", key = 1073741904},
+    {action = "down", key = 1073741905},
+    {action = "right", key = 1073741903},
+    {action = "jump", key = 122},
+    {action = "attack", key = 120},
   },
 
   -- Tabla de acciones y botones del ratón
