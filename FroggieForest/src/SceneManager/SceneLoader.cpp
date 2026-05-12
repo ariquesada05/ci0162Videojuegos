@@ -336,8 +336,6 @@ void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table enti
     onInit();
       
     }
-
-
     sol::function onCollision = sol::nil;
     if (sol::optional<sol::function> hasOnCollision = lua["on_collision"];
         hasOnCollision != sol::nullopt)

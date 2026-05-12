@@ -114,7 +114,7 @@ function on_collision(other)
     print("Die")
     player_state = player_states["DIE"]
     change_animation(this, "player_frog_die")
-    go_to_scene("game_over")
+    go_to_scene("gameOver")
   end
 end
 

@@ -66,12 +66,11 @@ scene = {
     -- Music
     {
       components = {
-        script = {
+        script = { 
           path = "./assets/scripts/level01Music.lua",
         },
       }
     },
-
     --level
     {
       components = {

@@ -22,8 +22,8 @@ scene = {
   -- Tabla de fuentes
   fonts = {
     [0] = 
-    {fontId = "font-01", filePath = "./assets/fonts/04B_11__.ttf", fontSize = 24},
-    {fontId = "font-02", filePath = "./assets/fonts/04B_11__.ttf", fontSize = 32},
+    {fontId = "font-01", filePath = "./assets/fonts/toad.otf", fontSize = 50},
+    {fontId = "font-02", filePath = "./assets/fonts/toad.otf", fontSize = 70},
   },
 
 
@@ -83,10 +83,10 @@ scene = {
         text = {
           text = "Froggie Forest",
           fontId = "font-02",
-          r = 255, g = 215, b = 0, a = 255  
-        },
+          r = 90, g = 120, b = 70, a = 255    
+            },
         transform = {
-          position = {x = 50.0, y = 50.0},
+          position = {x = 225.0, y = 50.0},
           scale = {x = 1.0, y = 1.0},
           rotation = 0.0,
 
