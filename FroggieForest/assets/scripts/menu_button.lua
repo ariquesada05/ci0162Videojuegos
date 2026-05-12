@@ -1,4 +1,4 @@
 
 function on_click()
-    go_to_scene("level_02")
+    go_to_scene("level01")
 end

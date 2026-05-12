@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "../Components/CircleColiderComponent.hpp"
+#include "../Components/CircleColliderComponent.hpp"
 #include "../Components/TransformComponent.hpp"
 #include "../ECS/ECS.hpp"
 #include "../EventManager/EventManager.hpp"
@@ -14,7 +14,7 @@ class CircleCollisionSystem : public System
 public:
   CircleCollisionSystem()
   {
-    requireComponent<CircleColiderComponent>();
+    requireComponent<CircleColliderComponent>();
     requireComponent<TransformComponent>();
   }
 
@@ -24,7 +24,7 @@ public:
     for (auto i = entities.begin(); i != entities.end(); i++)
     {
       Entity a = *i;
-      auto &aCircleColider = a.getComponent<CircleColiderComponent>();
+      auto &aCircleCollider = a.getComponent<CircleColliderComponent>();
       auto &aTransform = a.getComponent<TransformComponent>();
 
       for (auto j = i; j != entities.end(); j++)
@@ -35,19 +35,19 @@ public:
         {
           continue;
         }
-        auto &bCircleColider = b.getComponent<CircleColiderComponent>();
+        auto &bCircleCollider = b.getComponent<CircleColliderComponent>();
         auto &bTransform = b.getComponent<TransformComponent>();
 
         glm::vec2 aCenterPos = glm::vec2(
-            aTransform.position.x - (aCircleColider.width / 2) * aTransform.scale.x,
-            aTransform.position.y - (aCircleColider.height / 2) * aTransform.scale.y);
+            aTransform.position.x - (aCircleCollider.width / 2) * aTransform.scale.x,
+            aTransform.position.y - (aCircleCollider.height / 2) * aTransform.scale.y);
 
         glm::vec2 bCenterPos = glm::vec2(
-            bTransform.position.x - (bCircleColider.width / 2) * bTransform.scale.x,
-            bTransform.position.y - (bCircleColider.height / 2) * bTransform.scale.y);
+            bTransform.position.x - (bCircleCollider.width / 2) * bTransform.scale.x,
+            bTransform.position.y - (bCircleCollider.height / 2) * bTransform.scale.y);
 
-        int aRadius = aCircleColider.radius * aTransform.scale.x;
-        int bRadius = bCircleColider.radius * bTransform.scale.x;
+        int aRadius = aCircleCollider.radius * aTransform.scale.x;
+        int bRadius = bCircleCollider.radius * bTransform.scale.x;
 
         bool collision = CheckCircularCollision(aRadius, bRadius, aCenterPos, bCenterPos);
 

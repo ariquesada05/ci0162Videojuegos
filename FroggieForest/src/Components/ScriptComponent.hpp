@@ -7,12 +7,14 @@ struct ScriptComponent
 {
   sol::function update;
   sol::function onClick;
+  sol::function onInit;
   sol::function onCollision;
 
-  ScriptComponent(sol::function update = sol::lua_nil, sol::function onClick = sol::lua_nil, sol::function onCollision = sol::lua_nil)
+  ScriptComponent(sol::function update = sol::lua_nil, sol::function onClick = sol::lua_nil, sol::function onInit = sol::lua_nil, sol::function onCollision = sol::lua_nil)
   {
     this->update = update;
     this->onClick = onClick;
+    this->onInit = onInit;
     this->onCollision = onCollision;
   }
 };

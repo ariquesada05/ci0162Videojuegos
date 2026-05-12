@@ -50,6 +50,7 @@ public:
   void LoadScene(const std::string &scenePath, sol::state &lua,
                  std::unique_ptr<AnimationManager> &animationManager,
                  std::unique_ptr<AssetManager> &assetManager,
+                 std::unique_ptr<AudioManager> &audioManager,
                  std::unique_ptr<ControllerManager> &controllerManager,
                  std::unique_ptr<Registry> &registry, SDL_Renderer *renderer);
 };

@@ -21,7 +21,7 @@ public:
   ~SceneManager();
 
   void LoadSceneFromScript(const std::string &scenePath, sol::state &lua);
-  void LoadSene();
+  void LoadScene();
 
   std::string GetNextScene() const;
   void SetNextScene(const std::string &nextScene);

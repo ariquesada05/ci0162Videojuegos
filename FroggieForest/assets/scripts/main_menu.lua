@@ -10,16 +10,15 @@ scene = {
     -- sounds table
   sounds = {
         [0] =
-        {soundId = "other_sound",file_path ="./assets/sounds/lazer.mp3"},
+        {soundId = "sound", filePath ="./assets/sounds/lazer.mp3"},
     },
 
     -- music table
   music = {
         [0] =
-        {musicId = "menu_music",file_path ="./assets/sounds/Title_v1.mp3"},
+        {musicId = "menuMusic",filePath ="./assets/sounds/Title_v1.mp3"},
     },
-
-
+  
   -- Tabla de fuentes
   fonts = {
     [0] = 
@@ -41,8 +40,7 @@ scene = {
 
   -- Tabla de acciones y botones del ratón
   buttons = {
-    [0] = 
-    {name = "shoot", button = 1},
+
   },
 
   -- Tabla de Mapa
@@ -54,6 +52,15 @@ scene = {
   -- Tabla de Entidades
     entities = {
         [0] = 
+
+         -- music player
+        {
+            components = {
+                script = {
+                    path = "./assets/scripts/music_main_menu.lua"
+                },
+            }
+        },
        -- background
         {
             components = {

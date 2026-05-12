@@ -7,6 +7,12 @@ scene = {
 
   animations = {},
   
+
+    -- sounds table
+  sounds = {},
+    -- music table
+  music = {},
+
   -- Tabla de fuentes
   fonts = {
     [0] = 

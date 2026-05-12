@@ -2,6 +2,8 @@
 #define LUABINDING_HPP
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h> // SDL2_mixer used for audio
+
 
 #include <string>
 #include <tuple>
@@ -230,14 +232,21 @@ bool rightCollision(Entity This, Entity Other)
 
 //audio section
 
-void PlayAudio(const std::string &audioId, int loops)
+void PlaySound(const std::string &soundId)
 {
-  Game::GetInstance().audioManager->PlayMusic(audioId, loops);
+  Game::GetInstance().audioManager->PlaySoundEffect(soundId);
 }
 
-void StopAudio(const std::string &audioId)
+void PlayMusic(const std::string &musicId)
 {
-  Game::GetInstance().audioManager->StopMusic(audioId);
+  Game::GetInstance().audioManager->PlayMusic(musicId);
 }
+
+void StopAllSounds()
+{
+  Game::GetInstance().audioManager->StopAllSounds();
+}
+
+
 
 #endif // LUABINDING_HPP

@@ -1,7 +1,8 @@
 #include "Game.hpp"
 
 #include <iostream>
-
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 #include "../Events/ClickEvent.hpp"
 
 #include "../Systems/CircleCollisionSystem.hpp"
@@ -40,7 +41,8 @@ Game::~Game()
   eventManager.reset();
   registry.reset();
   sceneManager.reset();
-
+  audioManager.reset();
+  
   std::cout << "[Game] Destructor" << std::endl;
 }
 
@@ -66,10 +68,21 @@ void Game::setUp()
   registry->addSystem<PhysicsSystem>();
   registry->addSystem<OverlapSystem>();
 
-  sceneManager->LoadSceneFromScript("assets/scripts/scenes.lua", lua);
-
   lua.open_libraries(sol::lib::base, sol::lib::math);
   registry->getSystem<ScriptSystem>().CreateLuaBinding(lua);
+
+int flags = MIX_INIT_OGG | MIX_INIT_MP3;
+if ((Mix_Init(flags) & flags) != flags) {
+    std::cerr << "SDL_mixer init failed: " << Mix_GetError() << std::endl;
+}
+
+if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+    std::cerr << "Mix_OpenAudio error: " << Mix_GetError() << std::endl;
+}
+
+
+  sceneManager->LoadSceneFromScript("assets/scripts/scenes.lua", lua);
+
 }
 
 void Game::init()
@@ -215,7 +228,8 @@ void Game::render()
 
 void Game::runScene()
 {
-  sceneManager->LoadSene();
+  sceneManager->LoadScene();
+  registry->getSystem<ScriptSystem>().initFromScript(lua);
 
   while (sceneManager->IsSceneRunning())
   {

@@ -50,6 +50,11 @@ public:
     lua.set_function("set_position", setPosition);
 
     lua.set_function("get_size", getSize);
+
+    lua.set_function("play_sound", PlaySound);
+    lua.set_function("play_music", PlayMusic);
+    lua.set_function("stop_all_sounds", StopAllSounds);
+
   }
 
   void update(sol::state &lua)
@@ -65,6 +70,18 @@ public:
       }
     }
   }
+
+  void initFromScript(sol::state& lua) {
+        // loop through all entities and call the on_init function
+        for (auto& entity : getEntities()) {
+            const auto& script = entity.getComponent<ScriptComponent>();
+            // check if the on_init function exists
+            if (script.onInit != sol::lua_nil) {
+                lua["this"] = entity;
+                script.onInit();
+            }
+        }
+    }
 };
 
 #endif // SCRIPT_SYSTEM_HPP
