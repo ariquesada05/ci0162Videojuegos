@@ -11,7 +11,7 @@
 #include "../AssetManager/AssetManager.hpp"
 #include "../ControllerManager/ControllerManager.hpp"
 #include "../ECS/ECS.hpp"
-
+#include "../AudioManager/AudioManager.hpp"
 class SceneLoader
 {
 private:
@@ -20,6 +20,8 @@ private:
   void LoadAnimations(const sol::table &animations, std::unique_ptr<AnimationManager> &animationManager);
 
   void LoadKeys(const sol::table &keys, std::unique_ptr<ControllerManager> &controllerManager);
+
+  void LoadEntity(sol::state &lua, Entity &entity, sol::table entityTable);
 
   void LoadEntities(sol::state &lua, const sol::table &entities, std::unique_ptr<Registry> &registry);
 
@@ -32,6 +34,14 @@ private:
   void LoadLayer(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *layerElement, int tWidth, int tHeight, int mWidth, const std::string &tileSet, int columns);
 
   void LoadColliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup);
+
+  void LoadSounds(const sol::table &sounds, std::unique_ptr<AudioManager> &audioManager);
+
+  void LoadMusic(const sol::table &music, std::unique_ptr<AudioManager> &audioManager);
+
+  void LoadEnemiesColliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup);
+
+  void LoadEnemies(sol::state &lua, const sol::table &scriptPath, tinyxml2::XMLElement *objectGroup, std::unique_ptr<Registry> &registry);
 
 public:
   SceneLoader();

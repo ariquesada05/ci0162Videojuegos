@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <iostream>
 #include <sstream>
+#include <filesystem>
 
 #include "../Components/CircleColiderComponent.hpp"
 #include "../Components/ClickableComponent.hpp"
@@ -16,6 +17,10 @@
 #include "../Components/BoxColliderComponent.hpp"
 #include "../Components/TagComponent.hpp"
 #include "../Game/Game.hpp"
+#include "../AudioManager/AudioManager.hpp"
+#include "../Components/EnemyColliderComponent.hpp"
+#include "../Components/StateComponent.hpp"
+
 
 SceneLoader::SceneLoader()
 {
@@ -309,6 +314,11 @@ void SceneLoader::LoadEntities(sol::state &lua, const sol::table &entities, std:
   }
 }
 
+void SceneLoader::LoadEntity(sol::state &lua, Entity &entity, sol::table entityTable)
+{
+  
+}
+
 void SceneLoader::LoadFonts(sol::table fonts, std::unique_ptr<AssetManager> &assetManager)
 {
   int index = 0;
@@ -434,7 +444,8 @@ void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &regis
         LoadEnemiesColliders(registry, objectGroup);
       }else if (name.compare("spawn") == 0)
       {
-        LoadEnemies(*registry, scriptPath, objectGroup, lua);
+        sol::table enemiesTable = lua["enemies"]; // la tabla enemies del scene.lua
+        LoadEnemies(lua, enemiesTable, objectGroup, *registry);
       }
 
       objectGroup = objectGroup->NextSiblingElement("objectgroup");
@@ -554,7 +565,8 @@ void SceneLoader::LoadEnemiesColliders(std::unique_ptr<Registry> &registry,
     Entity collider = registry->createEntity();
     collider.addComponent<TagComponent>(tag);
     collider.addComponent<TransformComponent>(
-        glm::vec2(x, y));
+        glm::vec2(x *SCALE, y* SCALE),
+       glm::vec2(SCALE, SCALE));
     collider.addComponent<EnemyColliderComponent>();
     collider.addComponent<RigidBodyComponent>(false, true, 9999999999.0f);
 
@@ -566,6 +578,10 @@ void SceneLoader::LoadEnemies(sol::state &lua, const sol::table &scriptPath,
   tinyxml2::XMLElement *objectGroup, std::unique_ptr<Registry> &registry)
 {
   tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
+  const float SCALE = 1.5f;
+
+  std::vector<Entity> enemies;
+  std::cout << "Loading enemies..." << std::endl;
 
   while (object != nullptr)
   {
@@ -583,22 +599,95 @@ void SceneLoader::LoadEnemies(sol::state &lua, const sol::table &scriptPath,
     object->QueryIntAttribute("y", &y);
 
     // Crear entidad
-    Entity enemy = registry->createEntity();
-    enemy.addComponent<TagComponent>(tag);
-    enemy.addComponent<TransformComponent>(
-        glm::vec2(x, y));
+    Entity collider = registry->createEntity();
+    collider.addComponent<TagComponent>(tag);
+    collider.addComponent<TransformComponent>(
+        glm::vec2(x * SCALE, y * SCALE),
+        glm::vec2(SCALE, SCALE)
+      );
 
-    lua["this"] = enemy;
-    std::string path = scriptPath["path"];
-    lua.script_file(path);
-
-    sol::optional<sol::function> hasOnAwake = lua["on_awake"];
-    if (hasOnAwake != sol::nullopt)
-    {
-      sol::function onAwake = lua["on_awake"];
-      onAwake();
+    collider.addComponent<EnemyColliderComponent>(32*SCALE, 32*SCALE);
+    
+    object = object->NextSiblingElement("object");
+    enemies.push_back(collider);
     }
 
-    object = object->NextSiblingElement("object");
+    if (enemies.empty())
+    {
+      std::cout << "No enemies found in the scene." << std::endl;
+      return;
+    }
+
+    std::filesystem::path filePath(filePath);
+    filePath = filePath.parent_path();
+    std::string enemiesPath = (filePath / "enemies.lua").string(); // filePath.string + "/enemies.lua";
+
+    sol::load_result script_result = lua.load_file(enemiesPath.c_str());
+    if (!script_result.valid())
+    {
+      sol::error error = script_result;
+      std::string err = error.what();
+      std::cerr << "Failed to load enemies script: " << err << std::endl;
+      return;
+    }
+
+    lua.script_file(enemiesPath);
+    sol::table enemiesTable = lua["enemies"];
+
+    for (Entity &enemy : enemies)
+    {
+      auto& tag = enemy.getComponent<TagComponent>();
+      const auto pos = enemy.getComponent<TransformComponent>().position;
+      std::string name = tag.tag;
+      sol::table enemyData = enemiesTable[name];
+
+      //LoadEntity(lua, enemy, enemyData);
+
+      auto& transform = enemy.getComponent<TransformComponent>();
+      transform.position = pos;
+      enemy.addComponent<StateComponent>();
+    }
+}
+
+void SceneLoader::LoadSounds(const sol::table &sounds, std::unique_ptr<AudioManager> &audioManager)
+{
+  int index = 0;
+  while (true)
+  {
+    sol::optional<sol::table> hasSound = sounds[index];
+    if (hasSound == sol::nullopt)
+    {
+      break;
+    }
+
+    sol::table sound = sounds[index];
+    std::string soundId = sound["soundId"];
+    std::string path = sound["filePath"];
+
+    audioManager->AddSoundEffect(soundId, path);
+
+    index++;
   }
 }
+
+void SceneLoader::LoadMusic(const sol::table &music, std::unique_ptr<AudioManager> &audioManager)
+{
+  int index = 0;
+  while (true)
+  {
+    sol::optional<sol::table> hasMusic = music[index];
+    if (hasMusic == sol::nullopt)
+    {
+      break;
+    }
+
+    sol::table musicTrack = music[index];
+    std::string musicId = musicTrack["musicId"];
+    std::string path = musicTrack["filePath"];
+
+    audioManager->AddMusic(musicId, path);
+
+    index++;
+  }
+}
+
