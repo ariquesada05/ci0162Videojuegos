@@ -58,6 +58,7 @@ Mix_Chunk* AudioManager::GetSoundEffect(const std::string& soundID) {
 }
 
 void AudioManager::PlayMusic(const std::string& musicID, int loops) {
+    std::cout << "[AudioManager] PlayMusic request: " << musicID << std::endl;
     Mix_Music* music = GetMusic(musicID);
     if (music != nullptr) {
         if (Mix_PlayMusic(music, loops) == -1) {
@@ -67,6 +68,7 @@ void AudioManager::PlayMusic(const std::string& musicID, int loops) {
 }
 
 void AudioManager::PlaySoundEffect(const std::string& soundID, int loops) {
+    std::cout << "[AudioManager] PlaySoundEffect request: " << soundID << std::endl;
     Mix_Chunk* sound = GetSoundEffect(soundID);
     if (sound != nullptr) {
         if (Mix_PlayChannel(-1, sound, loops) == -1) {

@@ -7,12 +7,18 @@ scene = {
 
   animations = {},
   
-
     -- sounds table
-  sounds = {},
-    -- music table
-  music = {},
+  sounds = {
+        [0] =
+        {soundId = "sound", filePath ="./assets/sounds/lazer.mp3"},
+    },
 
+    -- music table
+  music = {
+        [0] =
+        {musicId = "menuMusic",filePath ="./assets/sounds/FUT.mp3"},
+    },
+  
   -- Tabla de fuentes
   fonts = {
     [0] = 
@@ -20,8 +26,9 @@ scene = {
     {fontId = "font-02", filePath = "./assets/fonts/04B_11__.ttf", fontSize = 32},
   },
 
+
   -- Tabla de acciones y teclas
-keys = {
+ keys = {
     [0] = 
     {action = "up", key = 1073741906},
     {action = "left", key = 1073741904},
@@ -33,8 +40,7 @@ keys = {
 
   -- Tabla de acciones y botones del ratón
   buttons = {
-    [0] = 
-    {name = "shoot", button = 1},
+
   },
 
   -- Tabla de Mapa
@@ -46,6 +52,15 @@ keys = {
   -- Tabla de Entidades
     entities = {
         [0] = 
+
+         -- music player
+        {
+            components = {
+                script = {
+                    path = "./assets/scripts/musicMainMenu.lua"
+                },
+            }
+        },
        -- background
         {
             components = {
@@ -66,7 +81,7 @@ keys = {
     {
       components = {
         text = {
-          text = "Game Over",
+          text = "Froggie Forest",
           fontId = "font-02",
           r = 255, g = 215, b = 0, a = 255  
         },
@@ -84,7 +99,7 @@ keys = {
         clickable = {},
         camera_follow = {},
         script = {
-          path = "./assets/scripts/menu_button.lua",
+          path = "./assets/scripts/menuButton.lua",
         },
         text = {
           text = "Level 01",

@@ -79,10 +79,7 @@ if ((Mix_Init(flags) & flags) != flags) {
 if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
     std::cerr << "Mix_OpenAudio error: " << Mix_GetError() << std::endl;
 }
-
-
   sceneManager->LoadSceneFromScript("assets/scripts/scenes.lua", lua);
-
 }
 
 void Game::init()

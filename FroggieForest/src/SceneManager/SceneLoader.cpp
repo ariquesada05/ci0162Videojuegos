@@ -308,13 +308,13 @@ void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table enti
       return;
     }
 
-    std::string path = hasPath.value();
-    std::cout << "[SceneLoader] Loading script: " << path << std::endl;
-
     lua["on_init"] = sol::nil;
     lua["on_click"] = sol::nil;
     lua["update"] = sol::nil;
     lua["on_collision"] = sol::nil;
+
+    std::string path = hasPath.value();
+    std::cout << "[SceneLoader] Loading script: " << path << std::endl;
   
 
     sol::load_result script_result = lua.load_file(path);
@@ -333,8 +333,10 @@ void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table enti
     {
       onInit = hasOnInit.value();
       lua["this"] = newEntity;
-      onInit();
+    onInit();
+      
     }
+
 
     sol::function onCollision = sol::nil;
     if (sol::optional<sol::function> hasOnCollision = lua["on_collision"];

@@ -34,7 +34,8 @@ scene = {
     -- music table
   music = { 
     [0] =
-        {musicId = "Level01Music",filePath ="./assets/sounds/FUT.mp3"},},
+        {musicId = "l01Music" ,filePath ="./assets/sounds/Tree.mp3"},
+      },
   -- Tabla de fuentes
   fonts = {},
 
@@ -62,7 +63,16 @@ scene = {
   -- Tabla de Entidades
   entities = {
     [0] = 
-    -- Player
+    -- Music
+    {
+      components = {
+        script = {
+          path = "./assets/scripts/level01Music.lua",
+        },
+      }
+    },
+
+    --level
     {
       components = {
         animation = {
@@ -83,7 +93,7 @@ scene = {
           mass = 10,
         },
         script = {
-          path = "./assets/scripts/player_frog.lua",
+          path = "./assets/scripts/playerFrog.lua",
         },
         sprite = {
           assetId = "frog_idle",
