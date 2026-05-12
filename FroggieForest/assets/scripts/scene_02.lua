@@ -9,6 +9,9 @@ scene = {
     {assetId = "frog_run", filePath = "./assets/images/frog_run.png",},
     {assetId = "frog_die", filePath = "./assets/images/frog_die.png",},
     {assetId = "frog_attack", filePath = "./assets/images/frog_attack.png",},
+    {assetId = "mushroom_idle", filePath = "./assets/images/mushroom_idle.png",},
+    {assetId = "mushroom_fall", filePath = "./assets/images/mushroom_fall.png",},
+    {assetId = "mushroom_run", filePath = "./assets/images/mushroom_run.png",},
     {assetId = "terrain", filePath = "./assets/images/terrain.png",},
   },
 
@@ -20,8 +23,10 @@ scene = {
     {animation_id = "player_frog_fall", texture_id = "frog_fall", w = 32, h = 32, num_frames = 01, speed_rate = 01, is_loop = true,},
     {animation_id = "player_frog_run" , texture_id = "frog_run",  w = 32, h = 32, num_frames = 10, speed_rate = 10, is_loop = true,},
     {animation_id = "player_frog_die" , texture_id = "frog_die",  w = 32, h = 32, num_frames = 3, speed_rate = 10, is_loop = true,},
-    {animation_id = "player_frog_attack", texture_id = "frog_attack", w = 32, h = 32, num_frames = 8, speed_rate = 10, is_loop = true,},
-
+    {animation_id = "player_frog_attack", texture_id = "frog_attack", w = 42, h = 32, num_frames = 8, speed_rate = 10, is_loop = true,},
+    {animation_id = "enemy01_idle", texture_id = "mushroom_idle", w = 80, h = 80, num_frames = 7, speed_rate = 5, is_loop = true,},
+    {animation_id = "enemy01_run" , texture_id = "mushroom_run",  w = 80, h = 80, num_frames = 7, speed_rate = 5, is_loop = true,},
+  
   },
   
   -- Tabla de fuentes
@@ -90,5 +95,5 @@ scene = {
         },
       }
     },
-  }
+}
 }

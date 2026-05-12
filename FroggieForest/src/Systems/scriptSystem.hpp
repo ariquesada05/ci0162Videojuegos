@@ -30,6 +30,13 @@ public:
     lua.set_function("set_velocity", SetVelocity);
 
     lua.set_function("add_force", AddForce);
+    lua.set_function("increment_velocity", IncrementVelocity);
+    lua.set_function("change_direction", changeDirection);
+
+    lua.set_function("frog_attack", frogAttack);
+
+    lua.set_function("add_force", AddForce);
+
 
     lua.set_function("go_to_scene", GoToScene);
     lua.set_function("flip_sprite", FlipSprite);

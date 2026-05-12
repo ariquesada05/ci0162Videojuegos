@@ -429,6 +429,12 @@ void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &regis
       if (name.compare("colliders") == 0)
       {
         LoadColliders(registry, objectGroup);
+      }else if (name.compare("enemies") == 0)
+      {
+        LoadEnemiesColliders(registry, objectGroup);
+      }else if (name.compare("spawn") == 0)
+      {
+        LoadEnemies(*registry, scriptPath, objectGroup, lua);
       }
 
       objectGroup = objectGroup->NextSiblingElement("objectgroup");
@@ -513,6 +519,85 @@ void SceneLoader::LoadColliders(std::unique_ptr<Registry> &registry,
         glm::vec2(x, y));
     collider.addComponent<BoxColliderComponent>(w, h);
     collider.addComponent<RigidBodyComponent>(false, true, 9999999999.0f);
+
+    object = object->NextSiblingElement("object");
+  }
+}
+
+void SceneLoader::LoadEnemiesColliders(std::unique_ptr<Registry> &registry, 
+  tinyxml2::XMLElement *objectGroup)
+{
+  tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
+
+  const float SCALE = 1.5f;
+
+  while (object != nullptr)
+  {
+    // Declarar variables
+    const char *name;
+    std::string tag;
+    int x, y, w, h;
+
+    // Extraer atributos
+    object->QueryStringAttribute("name", &name);
+    tag = name;
+
+    // Extraer posición
+    object->QueryIntAttribute("x", &x);
+    object->QueryIntAttribute("y", &y);
+
+    // Extraer dimensiones
+    object->QueryIntAttribute("width", &w);
+    object->QueryIntAttribute("height", &h);
+
+    // Crear entidad
+    Entity collider = registry->createEntity();
+    collider.addComponent<TagComponent>(tag);
+    collider.addComponent<TransformComponent>(
+        glm::vec2(x, y));
+    collider.addComponent<EnemyColliderComponent>();
+    collider.addComponent<RigidBodyComponent>(false, true, 9999999999.0f);
+
+    object = object->NextSiblingElement("object");
+  }
+}
+
+void SceneLoader::LoadEnemies(sol::state &lua, const sol::table &scriptPath, 
+  tinyxml2::XMLElement *objectGroup, std::unique_ptr<Registry> &registry)
+{
+  tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
+
+  while (object != nullptr)
+  {
+    // Declarar variables
+    const char *name;
+    std::string tag;
+    int x, y;
+
+    // Extraer atributos
+    object->QueryStringAttribute("name", &name);
+    tag = name;
+
+    // Extraer posición
+    object->QueryIntAttribute("x", &x);
+    object->QueryIntAttribute("y", &y);
+
+    // Crear entidad
+    Entity enemy = registry->createEntity();
+    enemy.addComponent<TagComponent>(tag);
+    enemy.addComponent<TransformComponent>(
+        glm::vec2(x, y));
+
+    lua["this"] = enemy;
+    std::string path = scriptPath["path"];
+    lua.script_file(path);
+
+    sol::optional<sol::function> hasOnAwake = lua["on_awake"];
+    if (hasOnAwake != sol::nullopt)
+    {
+      sol::function onAwake = lua["on_awake"];
+      onAwake();
+    }
 
     object = object->NextSiblingElement("object");
   }

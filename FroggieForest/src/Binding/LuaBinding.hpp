@@ -13,8 +13,10 @@
 #include "../Components/TagComponent.hpp"
 #include "../Components/TransformComponent.hpp"
 #include "../Components/SpriteComponent.hpp"
+#include "../Components/PlayerVelocity.hpp"
 #include "../Game/Game.hpp"
 #include "../ECS/ECS.hpp"
+#include "../AudioManager/AudioManager.hpp"
 
 //* Animations
 
@@ -38,6 +40,48 @@ void ChangeAnimation(Entity entity, const std::string &animationId)
   animation.isLooping = data.isLoop;
   animation.startTime = SDL_GetTicks();
 }
+
+int GetCurrentFrame(Entity entity)
+{
+  auto &animation = entity.getComponent<AnimationComponent>();
+
+  return animation.currentFrame;
+}
+
+bool IsLookingRight(Entity entity)
+{
+  if (!entity.hasComponent<SpriteComponent>())
+  {
+    return false;
+  }
+  return entity.getComponent<SpriteComponent>().flip == false;
+}
+
+/**
+ * @brief Attack with frog tongue animation.
+ * @param entity The entity that attacks.
+ */
+void frogAttack(Entity entity)
+{
+    auto& sprite = entity.getComponent<SpriteComponent>();
+
+    // Cambiar sprite/animación
+    sprite.textureID = "frog_attack";
+
+    // Reiniciar frame
+    if (entity.hasComponent<AnimationComponent>())
+    {
+        auto& animation = entity.getComponent<AnimationComponent>();
+
+        animation.currentFrame = 0;
+        animation.numFrames = 8;      
+        animation.frameTime = 8;
+        animation.isLooping = false;
+    }
+
+    std::cout << "[LUABINDING] Frog Attack" << std::endl;
+}
+
 
 //* Controls
 
@@ -68,6 +112,12 @@ void AddForce(Entity entity, float x, float y)
 {
   auto &rigidBody = entity.getComponent<RigidBodyComponent>();
   rigidBody.sumForces += glm::vec2(x, y);
+}
+
+void IncrementVelocity(Entity entity, float x)
+{
+  auto &playerVelocity = entity.getComponent<PlayerVelocity>();
+  playerVelocity.playerVelocity += x; // Assuming playerVelocity is a scalar value
 }
 
 void changeDirection(Entity entity)
@@ -176,6 +226,18 @@ bool rightCollision(Entity This, Entity Other)
       otherY < thisY + thisH &&
       otherY + otherH > thisY &&
       otherX > thisX);
+}
+
+//audio section
+
+void PlayAudio(const std::string &audioId, int loops)
+{
+  Game::GetInstance().audioManager->PlayMusic(audioId, loops);
+}
+
+void StopAudio(const std::string &audioId)
+{
+  Game::GetInstance().audioManager->StopMusic(audioId);
 }
 
 #endif // LUABINDING_HPP
