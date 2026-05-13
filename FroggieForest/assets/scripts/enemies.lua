@@ -3,9 +3,9 @@ enemies =
   enemy01 = {
     components = {
        sprite = {
-          assetId = "mushroom_idle",
-          width = 80,
-          height = 80,
+          assetId = "enemy01_idle",
+          width = 48,
+          height = 48,
           src_rect = {x = 0, y = 0}, 
         },
     animation = {
@@ -19,8 +19,8 @@ enemies =
           mass = 10,
         },
     box_collider = {
-          width = 80,
-          height = 80,
+          width = 48,
+          height = 48,
           offset = {x = 0, y = 0},
         },
     script = {
