@@ -180,6 +180,8 @@ void SceneLoader::LoadEntities(sol::state &lua, const sol::table &entities, std:
         newEntity.removeComponent<CameraFollowComponent>();
         newEntity.removeComponent<BoxColliderComponent>();
         newEntity.removeComponent<TagComponent>();
+        newEntity.removeComponent<EnemyColliderComponent>();
+        newEntity.removeComponent<StateComponent>();
         
         LoadEntity(lua, newEntity, entity);
 
@@ -223,6 +225,7 @@ void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table enti
         glm::vec2(
             components["box_collider"]["offset"]["x"],
             components["box_collider"]["offset"]["y"]));
+        
   }
 
   //* CircleColliderComponent
@@ -250,6 +253,7 @@ void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table enti
         components["rigid_body"]["is_dynamic"],
         components["rigid_body"]["is_solid"],
         components["rigid_body"]["mass"]);
+         
   }
 
   //* SpriteComponent
@@ -631,7 +635,7 @@ void SceneLoader::LoadEnemiesColliders(std::unique_ptr<Registry> &registry,
     collider.addComponent<TransformComponent>(
       glm::vec2(x, y));
       //glm::vec2(SCALE, SCALE));
-    collider.addComponent<EnemyColliderComponent>();
+    collider.addComponent<EnemyColliderComponent>(w,h);
     collider.addComponent<RigidBodyComponent>(false, true, 9999999999.0f);
 
     object = object->NextSiblingElement("object");

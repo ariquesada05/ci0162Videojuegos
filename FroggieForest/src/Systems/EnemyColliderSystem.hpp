@@ -10,6 +10,7 @@
 #include "../Components/EnemyColliderComponent.hpp"
 #include "../Components/TagComponent.hpp"
 #include "../EventManager/EventManager.hpp"
+#include "../Components/BoxColliderComponent.hpp"
 
 class EnemyColliderSystem : public System
 {
@@ -23,63 +24,87 @@ class EnemyColliderSystem : public System
     };
 public:
     EnemyColliderSystem() {
-        this->requireComponent<EnemyColliderComponent>();
+        requireComponent<EnemyColliderComponent>();
         requireComponent<TransformComponent>();
         requireComponent<TagComponent>();
     }
 
 
-    void Update(const std::unique_ptr<EventManager>& eventManager, sol::state& lua) {
-        auto entities = getEntities();
+   void Update(const std::unique_ptr<EventManager>& eventManager, sol::state& lua) {
 
-        for (auto i = entities.begin(); i != entities.end(); ++i) {
-            Entity entity = *i;
+    auto entities = getEntities();
 
-            const auto& entityCollider = entity.getComponent<EnemyColliderComponent>();
-            const auto& entityTransform = entity.getComponent<TransformComponent>();
+    for (auto i = entities.begin(); i != entities.end(); ++i) {
+        Entity entity = *i;
 
-            for (auto j = i + 1; j != entities.end(); ++j) {
-                Entity otherEntity = *j;
-                const auto& otherCollider = otherEntity.getComponent<EnemyColliderComponent>();
-                const auto& otherTransform = otherEntity.getComponent<TransformComponent>();
+        const auto& entityCollider =
+            entity.getComponent<EnemyColliderComponent>();
 
+        const auto& entityTransform =
+            entity.getComponent<TransformComponent>();
 
-                const bool thereIsCollision = EnemyColliderSystem::CheckCollision(
-                    {
-                        entityTransform.position.x, 
-                        entityTransform.position.y,
-                        entityCollider.width, 
-                        entityCollider.height},
-                    {
+        // recorrer TODAS las entidades del juego
+        for (auto j = entities.begin(); j != entities.end(); ++j) {
+            Entity otherEntity = *j;
+
+            if (entity == otherEntity)
+                continue;
+
+            if (!otherEntity.hasComponent<BoxColliderComponent>())
+                continue;
+
+            const auto& otherCollider =
+                otherEntity.getComponent<BoxColliderComponent>();
+
+            const auto& otherTransform =
+                otherEntity.getComponent<TransformComponent>();
+
+                    CollisionInfo a {
+                        entityTransform.position.x,
+                        entityTransform.position.y - entityCollider.height, // ajustar la posición Y para que el collider esté debajo de la entidad
+                        (float)entityCollider.width,
+                        (float)entityCollider.height
+                    };
+
+                    CollisionInfo b {
                         otherTransform.position.x,
                         otherTransform.position.y,
-                        otherCollider.width,
-                        otherCollider.height
-                    }
-                );
+                        (float)otherCollider.width,
+                        (float)otherCollider.height
+                    };
 
-                if (thereIsCollision) {
-                    
-                    if(entity.hasComponent<ScriptComponent>()) {
-                        const auto& script = entity.getComponent<ScriptComponent>();
-                        if(script.onCollision != sol::nil) {
-                            lua["this"] = entity;
-                            script.onCollision(otherEntity);
-                        }
+                    bool thereIsCollision = CheckCollision(a, b);                   
+
+
+            if (thereIsCollision) {
+
+                if(entity.hasComponent<ScriptComponent>()) {
+
+                    const auto& script =
+                        entity.getComponent<ScriptComponent>();
+
+                    if(script.onCollision != sol::nil) {
+
+                        lua["this"] = entity;
+                        script.onCollision(otherEntity);
                     }
-                    if(otherEntity.hasComponent<ScriptComponent>()) {
-                        const auto& script = otherEntity.getComponent<ScriptComponent>();
-                        if(script.onCollision != sol::nil) {
-                            lua["this"] = otherEntity;
-                            script.onCollision(entity);
-                        }
-                    }
+                }
+                if(otherEntity.hasComponent<ScriptComponent>()) {
+             
+
+                    const auto& script =
+                        otherEntity.getComponent<ScriptComponent>();
+
+                    if(script.onCollision != sol::nil) {
+
+                        lua["this"] = otherEntity;
+                        script.onCollision(entity);
                     }
                 }
             }
-
-           // eventManager->EmitEvent<CollisionEvent>(tag.tag, collisionInfo);
+        }
     }
+}
 
     static bool CheckCollision(const CollisionInfo& a, const CollisionInfo& b) {
         return (a.X < b.X + b.Width &&

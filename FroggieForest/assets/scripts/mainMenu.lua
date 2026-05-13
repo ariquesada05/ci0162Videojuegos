@@ -97,7 +97,7 @@ scene = {
         clickable = {},
         camera_follow = {},
         script = {
-          path = "./assets/scripts/menuButton.lua",
+          path = "./assets/scripts/goToLevel01.lua",
         },
         text = {
           text = "Level 01",
@@ -109,6 +109,54 @@ scene = {
         },
         transform = {
           position = {x = 50.0, y = 150.0},
+          scale = {x = 1.0, y = 1.0},
+          rotation = 0.0,
+
+        },
+      }
+    },
+   -- level 02
+     {
+      components = {
+        clickable = {},
+        camera_follow = {},
+        script = {
+          path = "./assets/scripts/goToLevel02.lua",
+        },
+        text = {
+          text = "Level 02",
+          fontId = "font-01",
+          r = 120,
+          g = 40,
+          b = 40,
+          a = 255,
+        },
+        transform = {
+          position = {x = 50.0, y = 200.0},
+          scale = {x = 1.0, y = 1.0},
+          rotation = 0.0,
+
+        },
+      }
+    },
+-- level 03
+     {
+      components = {
+        clickable = {},
+        camera_follow = {},
+        script = {
+          path = "./assets/scripts/goToLevel03.lua",
+        },
+        text = {
+          text = "Level 03",
+          fontId = "font-01",
+          r = 120,
+          g = 40,
+          b = 40,
+          a = 255,
+        },
+        transform = {
+          position = {x = 50.0, y = 250.0},
           scale = {x = 1.0, y = 1.0},
           rotation = 0.0,
 

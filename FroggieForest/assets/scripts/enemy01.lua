@@ -22,7 +22,7 @@ function update()
   if pos.x >= start_x + range then
     direction = -1
     set_position(this, start_x + range)
-  else if pos.x <= start_x - range then
+  elseif pos.x <= start_x - range then
     direction = 1
     set_position(this, start_x - range)
   end
@@ -34,11 +34,13 @@ function update()
   update_animation_state()
 end
 
-end
+
 ----------------------------------------------------------------
 -- COLISIONES
 ----------------------------------------------------------------
--- function on_collision(other)
+function on_collision(other)
+  print("Collided with: " .. get_tag(other))
+end
   
 --   if get_tag(other) == "die" then
 --     print("Die")

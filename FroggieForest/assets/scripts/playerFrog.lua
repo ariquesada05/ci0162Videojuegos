@@ -116,7 +116,7 @@ function on_collision(other)
     end
   end
 
-  if get_tag(other) == "obs" or get_tag(other) == "enemy01" then
+  if get_tag(other) == "obs" then
     local vel_x, vel_y = get_velocity(this)
     if vel_y == 0 then
       player_can_jump = true
