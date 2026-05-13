@@ -17,6 +17,9 @@ player_jump_force = -3200.0 * 64.0
 player_is_attacking = false
 attack_timer = 0          -- contador de frames
 attack_max_frames = 20
+dieFrames = 30
+dieTimer = 0
+isDead = false  
 
 ----------------------------------------------------------------
 -- UPDATE
@@ -45,6 +48,16 @@ function update()
   if player_is_attacking then
     attack()
   end
+
+  if isDead then
+    dieTimer = dieTimer + 1
+
+    if dieTimer >= dieFrames then
+        go_to_scene("gameOver")
+    end
+
+    return
+end
 
   -- Movimiento (lo dejas activo incluso atacando; si no quieres, añade "and not player_is_attacking")
   if is_action_activated("left") then
@@ -103,7 +116,7 @@ function on_collision(other)
     end
   end
 
-  if get_tag(other) == "obs" or get_tag(other) == "obs" then
+  if get_tag(other) == "obs" or get_tag(other) == "enemy01" then
     local vel_x, vel_y = get_velocity(this)
     if vel_y == 0 then
       player_can_jump = true
@@ -111,10 +124,7 @@ function on_collision(other)
   end
 
   if get_tag(other) == "die" then
-    print("Die")
-    player_state = player_states["DIE"]
-    change_animation(this, "player_frog_die")
-    go_to_scene("gameOver")
+    die()
   end
 end
 
@@ -122,11 +132,18 @@ end
 -- MUERTE
 ----------------------------------------------------------------
 function die()
-  print("Die")
-  player_state = player_states["DIE"]
-  change_animation(this, "player_frog_die")
-end
+  if isDead then
+    return
+  end
 
+  print("Die")
+
+  isDead = true
+  player_state = player_states["DIE"]
+
+  change_animation(this, "player_frog_die")
+  play_sound("dieSound")
+end
 ----------------------------------------------------------------
 -- ANIMACIONES
 ----------------------------------------------------------------

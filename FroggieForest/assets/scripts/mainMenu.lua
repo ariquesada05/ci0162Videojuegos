@@ -9,8 +9,6 @@ scene = {
   
     -- sounds table
   sounds = {
-        [0] =
-        {soundId = "sound", filePath ="./assets/sounds/lazer.mp3"},
     },
 
     -- music table

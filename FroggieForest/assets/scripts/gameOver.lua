@@ -11,13 +11,15 @@ scene = {
     -- sounds table
   sounds = {},
     -- music table
-  music = {},
+  music = { [0] =
+        {musicId = "menuMusic",filePath = "./assets/sounds/town.mp3"},
+      },
 
   -- Tabla de fuentes
   fonts = {
     [0] = 
-    {fontId = "font-01", filePath = "./assets/fonts/04B_11__.ttf", fontSize = 24},
-    {fontId = "font-02", filePath = "./assets/fonts/04B_11__.ttf", fontSize = 32},
+    {fontId = "font-01", filePath = "./assets/fonts/toad.otf", fontSize = 50},
+    {fontId = "font-02", filePath = "./assets/fonts/toad.otf", fontSize = 70},
   },
 
   -- Tabla de acciones y teclas
@@ -68,26 +70,47 @@ keys = {
         text = {
           text = "Game Over",
           fontId = "font-02",
-          r = 255, g = 215, b = 0, a = 255  
+          r = 52, g = 95, b = 87, a = 255  
         },
         transform = {
-          position = {x = 50.0, y = 50.0},
+          position = {x = 225.0, y = 50.0},
           scale = {x = 1.0, y = 1.0},
           rotation = 0.0,
 
         },
       }
     },
-    -- level 01
+
     {
       components = {
         clickable = {},
         camera_follow = {},
         script = {
-          path = "./assets/scripts/menuButton.lua",
+          path = "./assets/scripts/goToMain.lua",
         },
         text = {
-          text = "Level 01",
+          text = "Good Try! Try Again",
+          fontId = "font-01",
+          r = 70, g = 140, b = 180, a = 255
+        },
+        transform = {
+          position = {x = 200.0, y = 220.0},
+          scale = {x = 1.0, y = 1.0},
+          rotation = 0.0,
+
+        },
+      }
+    },
+
+    {
+      components = {
+        clickable = {},
+        camera_follow = {},
+        script = {
+          path = "./assets/scripts/goToMain.lua",
+        },
+        text = {
+          text = "Back to Main Menu",
           fontId = "font-01",
           r = 120,
           g = 40,
@@ -95,7 +118,7 @@ keys = {
           a = 255,
         },
         transform = {
-          position = {x = 50.0, y = 150.0},
+          position = {x = 220.0, y = 350.0},
           scale = {x = 1.0, y = 1.0},
           rotation = 0.0,
 
