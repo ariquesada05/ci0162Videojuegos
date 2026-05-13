@@ -9,6 +9,8 @@
 #include "../Systems/RenderSystem.hpp"
 #include "../Systems/MovementSystem.hpp"
 #include "../Systems/overlapSystem.hpp"
+#include "../Systems/UISystem.hpp"
+#include "../Systems/CameraMovementSystem.hpp" 
 // #include "../Systems/DamageSystem.hpp"
 #include "../Systems/animationSystem.hpp"
 #include "../Systems/ScriptSystem.hpp"
@@ -18,7 +20,13 @@
 #include "../Systems/boxCollisionSystem.hpp"
 #include "../Systems/renderBoxColliderSystem.hpp"
 #include "../Systems/physicsSystem.hpp"
+#include "../Systems/EnemyColliderSystem.hpp"
+#include "../Systems/RenderEnemyColliderSystem.hpp"
+#include "../Systems/PlayerScoreSystem.hpp"
+
+
 #include "../AudioManager/AudioManager.hpp"
+
 
 Game::Game()
 {
@@ -65,21 +73,25 @@ void Game::setUp()
   registry->addSystem<CameraMovementSystem>();
   registry->addSystem<BoxCollisionSystem>();
   registry->addSystem<RenderBoxColliderSystem>();
+  //registry->addSystem<PlayerScoreSystem>();
+
   registry->addSystem<PhysicsSystem>();
   registry->addSystem<OverlapSystem>();
+  registry->addSystem<EnemyColliderSystem>();
+  registry->addSystem<RenderEnemyColliderSystem>();
 
   lua.open_libraries(sol::lib::base, sol::lib::math);
   registry->getSystem<ScriptSystem>().CreateLuaBinding(lua);
 
-int flags = MIX_INIT_OGG | MIX_INIT_MP3;
-if ((Mix_Init(flags) & flags) != flags) {
-    std::cerr << "SDL_mixer init failed: " << Mix_GetError() << std::endl;
-}
+  int flags = MIX_INIT_OGG | MIX_INIT_MP3;
+  if ((Mix_Init(flags) & flags) != flags) {
+      std::cerr << "SDL_mixer init failed: " << Mix_GetError() << std::endl;
+  }
 
-if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-    std::cerr << "Mix_OpenAudio error: " << Mix_GetError() << std::endl;
-}
-  sceneManager->LoadSceneFromScript("assets/scripts/scenes.lua", lua);
+  if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+      std::cerr << "Mix_OpenAudio error: " << Mix_GetError() << std::endl;
+  }
+    sceneManager->LoadSceneFromScript("assets/scripts/scenes.lua", lua);
 }
 
 void Game::init()
@@ -202,6 +214,8 @@ void Game::update()
   registry->getSystem<MovementSystem>().update(deltaTime);
   registry->getSystem<BoxCollisionSystem>().update(eventManager, lua);
   registry->getSystem<CircleCollisionSystem>().update(eventManager);
+  //damage
+  registry->getSystem<EnemyColliderSystem>().Update(eventManager, lua);
 
   registry->getSystem<AnimationSystem>().update();
   registry->getSystem<CameraMovementSystem>().Update(camera);
@@ -215,9 +229,13 @@ void Game::render()
   registry->getSystem<RenderSystem>().update(renderer, assetManager, camera);
   registry->getSystem<TextSystem>().update(renderer, assetManager);
 
+  //stats and plkayer score
+
+
   if (isDebugMode)
   {
     registry->getSystem<RenderBoxColliderSystem>().Update(renderer, camera);
+    registry->getSystem<RenderEnemyColliderSystem>().Update(renderer, camera);
   }
 
   SDL_RenderPresent(renderer);
