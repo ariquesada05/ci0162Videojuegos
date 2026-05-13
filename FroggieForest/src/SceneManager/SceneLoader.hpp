@@ -43,6 +43,8 @@ private:
 
   void LoadEnemies(sol::state &lua, tinyxml2::XMLElement *objectGroup, std::unique_ptr<Registry> &registry);
 
+  void LoadStats(const sol::table &stats);
+
 public:
   SceneLoader();
   ~SceneLoader();

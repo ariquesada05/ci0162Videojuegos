@@ -52,6 +52,8 @@ public:
   int mapWidth = 0;
   int mapHeight = 0;
 
+  int playerScore = 0;
+
 private:
   void setUp();
   void runScene();

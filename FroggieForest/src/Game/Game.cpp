@@ -23,7 +23,7 @@
 #include "../Systems/EnemyColliderSystem.hpp"
 #include "../Systems/RenderEnemyColliderSystem.hpp"
 #include "../Systems/PlayerScoreSystem.hpp"
-
+#include "../Systems/StatsSystem.hpp"
 
 #include "../AudioManager/AudioManager.hpp"
 
@@ -73,12 +73,12 @@ void Game::setUp()
   registry->addSystem<CameraMovementSystem>();
   registry->addSystem<BoxCollisionSystem>();
   registry->addSystem<RenderBoxColliderSystem>();
-  //registry->addSystem<PlayerScoreSystem>();
-
+  registry->addSystem<PlayerScoreSystem>();
   registry->addSystem<PhysicsSystem>();
   registry->addSystem<OverlapSystem>();
   registry->addSystem<EnemyColliderSystem>();
   registry->addSystem<RenderEnemyColliderSystem>();
+  registry->addSystem<StatsSystem>();
 
   lua.open_libraries(sol::lib::base, sol::lib::math);
   registry->getSystem<ScriptSystem>().CreateLuaBinding(lua);
@@ -240,7 +240,8 @@ void Game::render()
 
   registry->getSystem<RenderSystem>().update(renderer, assetManager, camera);
   registry->getSystem<TextSystem>().update(renderer, assetManager);
-
+  registry->getSystem<PlayerScoreSystem>().Update(renderer, playerScore);
+  registry->getSystem<StatsSystem>().Update(renderer);
   //stats and plkayer score
 
 

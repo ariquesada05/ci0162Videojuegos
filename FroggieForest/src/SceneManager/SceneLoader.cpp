@@ -20,6 +20,10 @@
 #include "../AudioManager/AudioManager.hpp"
 #include "../Components/EnemyColliderComponent.hpp"
 #include "../Components/StateComponent.hpp"
+#include "../Components/StatsComponent.hpp"
+#include "../Components/PlayerScoreComponent.hpp"
+#include "../Components/PlayerVelocity.hpp"
+#include "../StatsManager/StatsManager.hpp"
 
 
 SceneLoader::SceneLoader()
@@ -182,7 +186,6 @@ void SceneLoader::LoadEntities(sol::state &lua, const sol::table &entities, std:
         index++;
       }
 }
-
 
 void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table entityTable)
 {
@@ -359,6 +362,25 @@ void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table enti
 
     newEntity.addComponent<ScriptComponent>(update, onClick, onInit, onCollision);
   }
+
+  //player velocity component
+  if (sol::optional<sol::table> hasPlayerVelocityComponent = components["player_velocity"];
+      hasPlayerVelocityComponent != sol::nullopt)
+  {
+    int velocity = (int)components["player_velocity"]["playerVelocity"];
+    newEntity.addComponent<PlayerVelocity>(velocity);
+  }
+
+
+  //Player score component
+  if (sol::optional<sol::table> hasPlayerScoreComponent = components["player_score"];
+      hasPlayerScoreComponent != sol::nullopt)
+  {
+    int score = (int)components["player_score"]["playerScore"];
+    newEntity.addComponent<PlayerScoreComponent>(score);
+  }
+
+  StatsManager::GetInstance().AddStatsToEntity(newEntity);
 }
 
 
@@ -743,3 +765,28 @@ void SceneLoader::LoadMusic(const sol::table &music, std::unique_ptr<AudioManage
   }
 }
 
+  
+void SceneLoader::LoadStats(const sol::table &stats){
+  int index = 0;
+  while (true)
+  {
+    sol::optional<sol::table> hasStat = stats[index];
+    if (hasStat == sol::nullopt)
+    {
+      break;
+    }
+
+    sol::table stat = stats[index];
+
+    StatsComponent newStat {
+      stat["points"],
+      stat["health"],
+      stat["damage"]
+    };
+   
+    StatsManager::GetInstance().AddStat(stat["tag"], newStat);
+
+    index++;
+  }
+
+}

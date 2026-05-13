@@ -9,7 +9,8 @@ SRC=src/*.cpp \
 	src/AssetManager/*.cpp \
 	src/ControllerManager/*.cpp \
 	src/SceneManager/*.cpp \
-	src/AudioManager/*.cpp
+	src/AudioManager/*.cpp \
+	src/StatsManager/*.cpp
 LFLAGS=-lSDL2 -lSDL2_image -lSDL2_ttf -llua5.3 -ltinyxml2 -lSDL2_mixer
 
 build:

@@ -19,6 +19,7 @@
 #include "../Game/Game.hpp"
 #include "../ECS/ECS.hpp"
 #include "../AudioManager/AudioManager.hpp"
+#include "../StatsManager/StatsManager.hpp"
 
 //* Animations
 
@@ -164,6 +165,63 @@ std::tuple<int, int> getSize(Entity entity)
   };
 }
 
+
+//* Score and player functions
+
+void IncrementPlayerVelocity(Entity entity, int increment)
+{
+  auto &playerVelocity = entity.getComponent<PlayerVelocity>();
+  playerVelocity.playerVelocity += increment;
+}
+
+void getPlayerVelocity(Entity entity, int &velocity)
+{
+  auto &playerVelocity = entity.getComponent<PlayerVelocity>();
+  velocity = playerVelocity.playerVelocity;
+}
+
+int getHealth(Entity entity)
+{
+  if (!entity.hasComponent<StatsComponent>()) {
+    return -1; // or some default value indicating no health
+  }
+  auto &stats = entity.getComponent<StatsComponent>();
+  return stats.Health;
+}
+
+void setHealth(Entity entity, int health)
+{
+  entity.getComponent<StatsComponent>().Health = health;
+}
+
+int getPoints(Entity entity)
+{
+  if (!entity.hasComponent<StatsComponent>()) {
+    return -1; // or some default value indicating no points
+  }
+  auto &stats = entity.getComponent<StatsComponent>();
+  return stats.Points;
+}
+
+void setPoints(Entity entity, int points)
+{
+  entity.getComponent<StatsComponent>().Points = points;
+}
+
+
+// int getDamage(Entity entity)
+// {
+//   if (!entity.hasComponent<StatsComponent>()) {
+//     return -1; // or some default value indicating no damage
+//   }
+//   auto &stats = entity.getComponent<StatsComponent>();
+//   return stats.damage;
+// }
+
+// int setDamage(Entity entity, int damage)
+// {
+//   entity.getComponent<StatsComponent>().damage = damage;
+// }
 //* Scenes
 
 void GoToScene(const std::string &scenePath)

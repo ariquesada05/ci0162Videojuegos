@@ -40,8 +40,11 @@ scene = {
         {musicId = "l01Music" ,filePath ="./assets/sounds/journey.mp3"},
       },
   -- Tabla de fuentes
-  fonts = {},
+  fonts = {
+    [0] = 
+    {fontId = "mainFont", filePath = "./assets/fonts/VarelaRound-Regular.ttf", fontSize = 32},
 
+  },
 
   -- Tabla de acciones y teclas
   keys = {
@@ -63,6 +66,11 @@ scene = {
     tile_name = "terrain",
   },
 
+  stats = {
+    [0] =
+
+    {tag = "player", health = 100, points = 0, damage = 0},
+  },
   -- Tabla de Entidades
   entities = {
     [0] = 
