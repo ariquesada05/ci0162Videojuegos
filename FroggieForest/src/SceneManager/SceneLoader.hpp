@@ -29,7 +29,7 @@ private:
 
   void LoadButtons(sol::table buttons, std::unique_ptr<ControllerManager> &controllerManager);
 
-  void LoadMap(const sol::table map, std::unique_ptr<Registry> &registry);
+  void LoadMap(const sol::table map, std::unique_ptr<Registry> &registry, sol::state &lua);
 
   void LoadLayer(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *layerElement, int tWidth, int tHeight, int mWidth, const std::string &tileSet, int columns);
 
@@ -41,7 +41,7 @@ private:
 
   void LoadEnemiesColliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup);
 
-  void LoadEnemies(sol::state &lua, const sol::table &scriptPath, tinyxml2::XMLElement *objectGroup, std::unique_ptr<Registry> &registry);
+  void LoadEnemies(sol::state &lua, tinyxml2::XMLElement *objectGroup, std::unique_ptr<Registry> &registry);
 
 public:
   SceneLoader();

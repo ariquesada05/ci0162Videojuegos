@@ -61,6 +61,6 @@
  </objectgroup>
  <objectgroup id="4" name="EnemiesColliders"/>
  <objectgroup id="5" name="spawn">
-  <object id="39" name="enemy01" x="658" y="226.667" width="74.6667" height="61.3333"/>
+  <object id="39" name="enemy01" x="219.333" y="440.334" width="20.6667" height="21.3333"/>
  </objectgroup>
 </map>

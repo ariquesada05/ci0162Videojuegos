@@ -74,7 +74,7 @@ void SceneLoader::LoadScene(const std::string &scenePath, sol::state &lua,
   LoadButtons(buttons, controllerManager);
 
   sol::table maps = scene["maps"];
-  LoadMap(maps, registry);
+  LoadMap(maps, registry, lua);
 
   sol::table entities = scene["entities"];
   LoadEntities(lua, entities, registry);
@@ -405,7 +405,7 @@ void SceneLoader::LoadButtons(sol::table buttons, std::unique_ptr<ControllerMana
   }
 }
 
-void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &registry)
+void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &registry, sol::state &lua)
 {
   sol::optional<int> hasWidth = map["width"];
   if (hasWidth != sol::nullopt)
@@ -482,15 +482,13 @@ void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &regis
       if (name.compare("colliders") == 0)
       {
         LoadColliders(registry, objectGroup);
+      }else if (name.compare("enemies") == 0)
+      {
+        LoadEnemiesColliders(registry, objectGroup);
+      }else if (name.compare("spawn") == 0)
+      {
+        LoadEnemies(lua, objectGroup, registry);
       }
-      // }else if (name.compare("enemies") == 0)
-      // {
-      //   LoadEnemiesColliders(registry, objectGroup);
-      // }else if (name.compare("spawn") == 0)
-      // {
-      //   sol::table enemiesTable = lua["enemies"]; // la tabla enemies del scene.lua
-      //   LoadEnemies(lua, enemiesTable, objectGroup, *registry);
-      // }
 
       objectGroup = objectGroup->NextSiblingElement("objectgroup");
     }
@@ -584,7 +582,7 @@ void SceneLoader::LoadEnemiesColliders(std::unique_ptr<Registry> &registry,
 {
   tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
 
-  const float SCALE = 1.5f;
+  //const float SCALE = 1.0f;
 
   while (object != nullptr)
   {
@@ -609,8 +607,8 @@ void SceneLoader::LoadEnemiesColliders(std::unique_ptr<Registry> &registry,
     Entity collider = registry->createEntity();
     collider.addComponent<TagComponent>(tag);
     collider.addComponent<TransformComponent>(
-        glm::vec2(x *SCALE, y* SCALE),
-       glm::vec2(SCALE, SCALE));
+      glm::vec2(x, y));
+      //glm::vec2(SCALE, SCALE));
     collider.addComponent<EnemyColliderComponent>();
     collider.addComponent<RigidBodyComponent>(false, true, 9999999999.0f);
 
@@ -618,11 +616,11 @@ void SceneLoader::LoadEnemiesColliders(std::unique_ptr<Registry> &registry,
   }
 }
 
-void SceneLoader::LoadEnemies(sol::state &lua, const sol::table &scriptPath, 
+void SceneLoader::LoadEnemies(sol::state &lua, 
   tinyxml2::XMLElement *objectGroup, std::unique_ptr<Registry> &registry)
 {
   tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
-  const float SCALE = 1.5f;
+ // const float SCALE = 1.0f;
 
   std::vector<Entity> enemies;
   std::cout << "Loading enemies..." << std::endl;
@@ -646,11 +644,10 @@ void SceneLoader::LoadEnemies(sol::state &lua, const sol::table &scriptPath,
     Entity collider = registry->createEntity();
     collider.addComponent<TagComponent>(tag);
     collider.addComponent<TransformComponent>(
-        glm::vec2(x * SCALE, y * SCALE),
-        glm::vec2(SCALE, SCALE)
+        glm::vec2(x, y)
       );
 
-    collider.addComponent<EnemyColliderComponent>(32*SCALE, 32*SCALE);
+    collider.addComponent<EnemyColliderComponent>(32, 32);
     
     object = object->NextSiblingElement("object");
     enemies.push_back(collider);
@@ -662,34 +659,45 @@ void SceneLoader::LoadEnemies(sol::state &lua, const sol::table &scriptPath,
       return;
     }
 
-    std::filesystem::path filePath(filePath);
-    filePath = filePath.parent_path();
-    std::string enemiesPath = (filePath / "enemies.lua").string(); // filePath.string + "/enemies.lua";
+    std::string enemiesPath = "./assets/scripts/enemies.lua";
 
-    sol::load_result script_result = lua.load_file(enemiesPath.c_str());
-    if (!script_result.valid())
+
+    sol::load_result load_result = lua.load_file("./assets/scripts/enemies.lua");
+    if (!load_result.valid())
     {
-      sol::error error = script_result;
+      sol::error error = load_result;
       std::string err = error.what();
       std::cerr << "Failed to load enemies script: " << err << std::endl;
       return;
     }
 
-    lua.script_file(enemiesPath);
-    sol::table enemiesTable = lua["enemies"];
+
+    load_result();
+
+
+    sol::object Obj = lua["enemies"];
+    if (!Obj.is<sol::table>())
+    {
+      std::cerr << "Enemies data is not a table" << std::endl;
+      return;
+    }
+
+    sol::table enemiesTable = Obj.as<sol::table>();
 
     for (Entity &enemy : enemies)
     {
       auto& tag = enemy.getComponent<TagComponent>();
       const auto pos = enemy.getComponent<TransformComponent>().position;
       std::string name = tag.tag;
+      
       sol::table enemyData = enemiesTable[name];
 
-      //LoadEntity(lua, enemy, enemyData);
+      LoadEntity(lua, enemy, enemyData);
 
       auto& transform = enemy.getComponent<TransformComponent>();
       transform.position = pos;
       enemy.addComponent<StateComponent>();
+
     }
 }
 
