@@ -157,6 +157,11 @@ void Game::processInput()
         sceneManager->StopScene();
         isRunning = false;
         break;
+      } 
+      if (event.key.keysym.sym == SDLK_p)
+      {
+        isPaused = !isPaused;
+        break;
       }
       if (event.key.keysym.sym == SDLK_i)
       {
@@ -190,12 +195,19 @@ void Game::processInput()
 
 void Game::update()
 {
+  if (isPaused) {
+    this->millisecsPreviousFrame = SDL_GetTicks();
+    return;
+  }
   int millisecsToWait = MILISECS_PER_FRAME - (SDL_GetTicks() - millisecsPreviousFrame);
 
+  
   if (0 < millisecsToWait && millisecsToWait <= MILISECS_PER_FRAME)
   {
     SDL_Delay(millisecsToWait);
   }
+
+
 
   double deltaTime = (SDL_GetTicks() - millisecsPreviousFrame) / 1000.0;
   // TODO: add this variable to the LUA state

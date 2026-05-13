@@ -15,7 +15,6 @@ local range = 100.0
 -- UPDATE
 ----------------------------------------------------------------
 function update()
-  function update()
   local pos = get_position(this)
   local vel_x = direction * enemy_speed
 
@@ -34,8 +33,8 @@ function update()
 
   update_animation_state()
 end
-end
 
+end
 ----------------------------------------------------------------
 -- COLISIONES
 ----------------------------------------------------------------

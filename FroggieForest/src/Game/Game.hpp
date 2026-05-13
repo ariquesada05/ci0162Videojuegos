@@ -32,6 +32,7 @@ private:
 
   bool isRunning = false;
   bool isDebugMode = false;
+  bool isPaused = false;
 
 public:
   SDL_Renderer *renderer = nullptr;
