@@ -30,7 +30,7 @@ public:
     }
 
 
-   void Update(const std::unique_ptr<EventManager>& eventManager, sol::state& lua) {
+   void Update(sol::state& lua) {
 
     auto entities = getEntities();
 

@@ -24,6 +24,7 @@
 #include "../Components/PlayerScoreComponent.hpp"
 #include "../Components/PlayerVelocity.hpp"
 #include "../StatsManager/StatsManager.hpp"
+#include "../Components/LapseComponent.hpp"
 
 
 SceneLoader::SceneLoader()
@@ -168,7 +169,6 @@ void SceneLoader::LoadEntities(sol::state &lua, const sol::table &entities, std:
         sol::table entity = entities[index];
         Entity newEntity = registry->createEntity();
 
-        // to be sure, remove_component is called for all components
         newEntity.removeComponent<TransformComponent>();
         newEntity.removeComponent<RigidBodyComponent>();
         newEntity.removeComponent<SpriteComponent>();
@@ -180,7 +180,6 @@ void SceneLoader::LoadEntities(sol::state &lua, const sol::table &entities, std:
         newEntity.removeComponent<CameraFollowComponent>();
         newEntity.removeComponent<BoxColliderComponent>();
         newEntity.removeComponent<TagComponent>();
-        newEntity.removeComponent<EnemyColliderComponent>();
         newEntity.removeComponent<StateComponent>();
         
         LoadEntity(lua, newEntity, entity);
@@ -382,6 +381,42 @@ void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table enti
   {
     int score = (int)components["player_score"]["playerScore"];
     newEntity.addComponent<PlayerScoreComponent>(score);
+  }
+
+  //*lapse component
+  if (sol::optional<sol::table> hasLapseComponent = components["lapse"];
+      hasLapseComponent != sol::nullopt)
+  {
+    newEntity.addComponent<LapseComponent>();
+    int index = 0;
+
+    auto& component = newEntity.getComponent<LapseComponent>();
+    while (true)
+    {
+      sol::optional<sol::table> lapse = components["lapse"][index];
+      if (lapse == sol::nullopt)
+      {
+        break;
+      }
+
+      const std::string& name = lapse.value()["name"];
+
+      if (name == "global")
+      {
+        component.Global.TimeLimit = (double)lapse.value()["seconds"];
+      }
+      else
+      {
+        component.PlayerActions.insert({name, 
+          TimingTracer{lapse.value()["seconds"], 
+            (double)lapse.value()["seconds"]
+          }
+        }
+      );
+      }
+
+      index++;
+    }
   }
 
   StatsManager::GetInstance().AddStatsToEntity(newEntity);

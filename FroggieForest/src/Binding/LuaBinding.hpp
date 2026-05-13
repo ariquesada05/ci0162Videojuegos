@@ -20,6 +20,8 @@
 #include "../ECS/ECS.hpp"
 #include "../AudioManager/AudioManager.hpp"
 #include "../StatsManager/StatsManager.hpp"
+#include "../Components/LapseComponent.hpp"
+
 
 //* Animations
 
@@ -306,5 +308,27 @@ void StopAllSounds()
 }
 
 
+//perform actions
+
+bool canPerformAction(Entity entity, const std::string &action)
+{
+  if(!entity.hasComponent<LapseComponent>()) {
+    return false;
+  }
+  auto& lapse = entity.getComponent<LapseComponent>();
+  if (action == "") {
+    return lapse.CanPerformAction("");
+  }
+  if(!lapse.CanPerformAction(action) || !lapse.CanPerformAction("")) {
+    return false;
+  }
+  return true;
+}
+void performAction(Entity entity, const std::string &action)
+{
+  if(!canPerformAction(entity, action)) 
+    return;
+  entity.getComponent<LapseComponent>().PerformAction(action);
+}
 
 #endif // LUABINDING_HPP

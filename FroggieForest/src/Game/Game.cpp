@@ -24,6 +24,8 @@
 #include "../Systems/RenderEnemyColliderSystem.hpp"
 #include "../Systems/PlayerScoreSystem.hpp"
 #include "../Systems/StatsSystem.hpp"
+#include "../Systems/LifetimeSystem.hpp"
+#include "../Systems/LapseSystem.hpp"
 
 #include "../AudioManager/AudioManager.hpp"
 
@@ -76,6 +78,9 @@ void Game::setUp()
   registry->addSystem<PlayerScoreSystem>();
   registry->addSystem<PhysicsSystem>();
   registry->addSystem<OverlapSystem>();
+  registry->addSystem<LapseSystem>();
+  //damage
+  registry->addSystem<LifetimeSystem>();
   registry->addSystem<EnemyColliderSystem>();
   registry->addSystem<RenderEnemyColliderSystem>();
   registry->addSystem<StatsSystem>();
@@ -227,9 +232,12 @@ void Game::update()
   registry->getSystem<BoxCollisionSystem>().update(eventManager, lua);
   registry->getSystem<CircleCollisionSystem>().update(eventManager);
   //damage
-  registry->getSystem<EnemyColliderSystem>().Update(eventManager, lua);
+  registry->getSystem<EnemyColliderSystem>().Update(lua);
 
+  registry->getSystem<LapseSystem>().update(deltaTime);
+  
   registry->getSystem<AnimationSystem>().update();
+  registry->getSystem<LifetimeSystem>().update(deltaTime);
   registry->getSystem<CameraMovementSystem>().Update(camera);
 }
 
