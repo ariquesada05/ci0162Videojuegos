@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="50" height="38" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="40">
+<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="50" height="38" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="42">
  <tileset firstgid="1" source="terrain.tsx"/>
  <layer id="1" name="platform" width="50" height="38">
   <data encoding="csv">
@@ -59,8 +59,10 @@
   <object id="35" name="die" x="319.879" y="543.053" width="224.909" height="65.25"/>
   <object id="36" name="floor" x="162.417" y="464.5" width="157.5" height="143.333"/>
  </objectgroup>
- <objectgroup id="4" name="EnemiesColliders"/>
+ <objectgroup id="4" name="EnemiesColliders">
+  <object id="41" name="enemy_collider" x="276.667" y="401.273" width="13.2727" height="14.1212"/>
+ </objectgroup>
  <objectgroup id="5" name="spawn">
-  <object id="39" name="enemy01" x="219.333" y="440.334" width="20.6667" height="21.3333"/>
+  <object id="39" name="enemy01" x="219.061" y="411.137" width="32.1667" height="32.8333"/>
  </objectgroup>
 </map>

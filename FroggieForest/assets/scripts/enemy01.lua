@@ -8,28 +8,32 @@ enemy_states = {
 enemy_state = enemy_states["IDLE"]
 enemy_speed = 5.0 * 64.0
 
+local start_x = 0
+local direction = 1
+local range = 100.0
 ---------------------------------------------------------------
 -- UPDATE
 ----------------------------------------------------------------
 function update()
-  local vel_x, vel_y = get_velocity(this)
-  vel_x = 0
+  function update()
+  local pos = get_position(this)
+  local vel_x = direction * enemy_speed
 
-  vel_y = 0 --solo se mueve horizontalmente
+  -- cambiar dirección si sale del rango
+  if pos.x >= start_x + range then
+    direction = -1
+    set_position(this, start_x + range)
+  else if pos.x <= start_x - range then
+    direction = 1
+    set_position(this, start_x - range)
+  end
   
-  if is_action_activated("left") then
-    vel_x = vel_x - enemy_speed
-  end
-  if is_action_activated("right") then
-    vel_x = vel_x + enemy_speed
-  end
 
-  if enemy_state == enemy_states["DIE"] then
-    return
-  end
+  -- aplicar velocidad solo en X
+  set_velocity(this, vel_x, 0)
 
-  set_velocity(this, vel_x, vel_y)
   update_animation_state()
+end
 end
 
 ----------------------------------------------------------------
