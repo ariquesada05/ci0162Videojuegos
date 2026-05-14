@@ -105,6 +105,17 @@ void frogAttack(Entity entity)
     std::cout << "[LUABINDING] Frog Attack" << std::endl;
 }
 
+bool playerIsAttacking = false;
+
+bool IsAttacking()
+{
+    return playerIsAttacking;
+}
+
+void KillEntity(Entity entity)
+{
+    entity.Kill();
+}
 
 //* Controls
 
@@ -113,6 +124,17 @@ bool IsActionActivated(const std::string &action)
   return Game::GetInstance().controllerManager->IsActionActivated(action);
 }
 
+void SetColliderSize(Entity entity, int width, int height)
+{
+  if (!entity.hasComponent<BoxColliderComponent>())
+  {
+    return;
+  }
+
+  auto &collider = entity.getComponent<BoxColliderComponent>();
+  collider.width = width;
+  collider.height = height;
+}
 //* Rigidbody
 
 std::tuple<int, int> GetVelocity(Entity entity)
@@ -231,20 +253,34 @@ void SetHealth(Entity entity, int health)
               << stats.Health
               << std::endl;
 }
+
 int GetPoints(Entity entity)
 {
   if (!entity.hasComponent<StatsComponent>()) {
     return -1; // or some default value indicating no points
   }
+  
   auto &stats = entity.getComponent<StatsComponent>();
+  std::cout << "CURRENT POINTS: " << stats.Points << std::endl;
   return stats.Points;
 }
 
 void SetPoints(Entity entity, int points)
 {
-  entity.getComponent<StatsComponent>().Points = points;
-}
+     if (!entity.hasComponent<StatsComponent>())
+    {
+        return;
+    }
 
+    auto& stats =
+        entity.getComponent<StatsComponent>();
+
+    stats.Points = points;
+
+    std::cout << "NEW POINTS: "
+              << stats.Points
+              << std::endl;
+}
 
 int GetDamage(Entity entity)
 {

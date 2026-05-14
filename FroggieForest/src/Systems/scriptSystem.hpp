@@ -39,9 +39,7 @@ public:
     lua.set_function("change_direction", changeDirection);
 
     lua.set_function("frog_attack", frogAttack);
-
-    lua.set_function("add_force", AddForce);
-
+    lua.set_function("is_attacking", IsAttacking);
 
     lua.set_function("go_to_scene", GoToScene);
     lua.set_function("flip_sprite", FlipSprite);
@@ -62,13 +60,18 @@ public:
 
     lua.set_function("get_score", GetPoints);
     lua.set_function("increment_score", SetPoints);
+    
     lua.set_function("get_health",GetHealth);
     lua.set_function("increment_health", SetHealth);
 
     lua.set_function("get_damage", GetDamage);
     lua.set_function("set_damage", SetDamage);
 
+    lua.set_function("can_perform_action", canPerformAction);
+    lua.set_function("perform_action", performAction);
 
+    lua.set_function("kill_entity", KillEntity);
+    lua.set_function("set_collider_size", SetColliderSize);
 
 
   }

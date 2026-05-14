@@ -110,6 +110,7 @@ end
 -- COLISIONES
 ----------------------------------------------------------------
 function on_collision(other)
+
   if get_tag(other) == "floor" then
     local vel_x, vel_y = get_velocity(this)
     if vel_y == 0 then
@@ -123,9 +124,57 @@ function on_collision(other)
       player_can_jump = true
     end
   end
+  if get_tag(other) == "coin" then
+    print("COIN DETECTED")
 
+    local points = get_score(this)
+
+    print("POINTS BEFORE:", points)
+
+    increment_score(this, points + 10)
+
+    print("POINTS AFTER:", get_score(this))
+
+    kill_entity(other)
+  end
   if get_tag(other) == "die" then
     die()
+  end
+
+  if get_tag(other) == "enemy01" then
+    on_damage(other)
+  end
+
+  if get_tag(other) == "win" then
+    go_to_scene("win")
+  end
+end
+
+function on_damage(other)
+
+  local otherTag = get_tag(other)
+
+  if otherTag == "enemy01" then
+
+    if damage_cooldown > 0 then
+      return
+    end
+
+    damage_cooldown = 60
+
+    local health = get_health(this)
+
+    print("Health received:", health)
+
+    health = health - 10
+
+    increment_health(this, health)
+
+    print("Vida player:", health)
+
+    if health <= 0 then
+      die()
+    end
   end
 end
 
@@ -218,30 +267,3 @@ function update_animation_state()
   end
 end
 
-function on_damage(other)
-
-  local otherTag = get_tag(other)
-
-  if otherTag == "enemy01" then
-
-    if damage_cooldown > 0 then
-      return
-    end
-
-    damage_cooldown = 60
-
-    local health = get_health(this)
-
-    print("Health received:", health)
-
-    health = health - 10
-
-    increment_health(this, health)
-
-    print("Vida player:", health)
-
-    if health <= 0 then
-      die()
-    end
-  end
-end

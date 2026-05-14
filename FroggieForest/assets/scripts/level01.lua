@@ -12,6 +12,8 @@ scene = {
     {assetId = "enemy01_idle", filePath = "./assets/images/enemy01_idle.png",},
     {assetId = "enemy01_run", filePath = "./assets/images/enemy01_run.png",},
     {assetId = "terrain", filePath = "./assets/images/terrain.png",},
+    {assetId = "coin", filePath = "./assets/images/coin.png"},
+    --{assetId = "spikes", filePath = "./assets/images/spikes.png"},
   },
 
   -- Tabla con la Info de las animaciones
@@ -22,7 +24,7 @@ scene = {
     {animation_id = "player_frog_fall", texture_id = "frog_fall", w = 32, h = 32, num_frames = 01, speed_rate = 01, is_loop = true,},
     {animation_id = "player_frog_run" , texture_id = "frog_run",  w = 32, h = 32, num_frames = 10, speed_rate = 10, is_loop = true,},
     {animation_id = "player_frog_die" , texture_id = "frog_die",  w = 32, h = 32, num_frames = 3, speed_rate = 5, is_loop = true,},
-    {animation_id = "player_frog_attack", texture_id = "frog_attack", w = 48, h = 32, num_frames = 8, speed_rate = 5, is_loop = true,},
+    {animation_id = "player_frog_attack", texture_id = "frog_attack", w = 48, h = 32, num_frames = 8, speed_rate = 4, is_loop = true,},
     {animation_id = "enemy01_idle", texture_id = "enemy01_idle", w = 16, h = 48, num_frames = 7, speed_rate = 2, is_loop = true,},
     {animation_id = "enemy01_run" , texture_id = "enemy01_run",  w = 16, h = 48, num_frames = 7, speed_rate = 3, is_loop = true,},
   
@@ -44,6 +46,14 @@ scene = {
     [0] = 
     {fontId = "mainFont", filePath = "./assets/fonts/VarelaRound-Regular.ttf", fontSize = 32},
 
+  },
+
+    items = {
+    [0] =
+    {type = "coin", x = 300, y = 500},
+    {type = "coin", x = 350, y = 500},
+  -- {type = "coin", x = 400, y = 500},
+   -- {type = "trap", x = 700, y = 620},
   },
 
   -- Tabla de acciones y teclas
@@ -69,8 +79,8 @@ scene = {
   stats = {
     [0] =
 
-    {tag = "player", health = 100, points = 0, damage = 0},
-    {tag = "enemy01", health = 20, points = 10, damage = 1},
+    {tag = "player", health = 100, points = 0, damage = 1},
+    {tag = "enemy01", health = 20, points = 0, damage = 1},
   },
   -- Tabla de Entidades
   entities = {
@@ -114,7 +124,7 @@ scene = {
           src_rect = {x = 0, y = 0},
         },
         transform = {
-          position = {x = 50.0, y = 300.0},
+          position = {x = 20.0, y = 300.0},
           scale = {x = 1.0, y = 1.0},
           rotation = 0.0,
         },

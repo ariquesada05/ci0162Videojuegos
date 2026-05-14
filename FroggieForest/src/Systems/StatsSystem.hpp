@@ -66,7 +66,7 @@ public:
             entities.begin(),
             entities.end(),
             [&](Entity entity) {
-                return entity.getComponent<TagComponent>().tag == "Stats";
+                return entity.getComponent<TagComponent>().tag == "player";
             }
         );
 
@@ -89,7 +89,6 @@ public:
 
         statsText << "Health: " << health;
         std::string healthText = statsText.str();
-        std::cout << health << std::endl;
 
 
         int windowWidth, windowHeight;

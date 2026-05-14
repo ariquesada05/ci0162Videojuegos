@@ -11,12 +11,12 @@ void StatsManager::AddStat(
     const std::string &tag,
     const StatsComponent &stat)
 {
-    std::cout << "REGISTERING STATS FOR TAG: "
-              << tag
-              << std::endl;
+
 
     tagToStat.insert({tag, stat});
 }
+
+
 
 void StatsManager::AddStatsToEntity(Entity &entity)
 {

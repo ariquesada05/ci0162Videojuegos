@@ -113,6 +113,8 @@ private:
    */
   void LoadDamageColliders(const sol::table &colliders);
 
+  void LoadItems(const sol::table& items, std::unique_ptr<Registry>& registry);
+
 public:
   /**
    * @brief Construct a new SceneLoader

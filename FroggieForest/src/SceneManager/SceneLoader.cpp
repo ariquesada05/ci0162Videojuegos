@@ -122,6 +122,12 @@ void SceneLoader::LoadScene(const std::string &scenePath, sol::state &lua,
   sol::table entities = scene["entities"];
   LoadEntities(lua, entities, registry);
 
+  if (sol::optional<sol::table> hasItems = scene["items"];
+    hasItems != sol::nullopt)
+  {
+      LoadItems(hasItems.value(), registry);
+  }
+
   std::cout << "[SceneLoader] Scene loaded" << std::endl;
 }
 
@@ -291,19 +297,30 @@ void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table enti
     newEntity.addComponent<ClickableComponent>();
   }
 
-  //* TagComponent
-  if (sol::optional<sol::table> hasTagComponent = components["tag"];
-      hasTagComponent != sol::nullopt)
-  {
+//* TagComponent
+if (sol::optional<sol::table> hasTagComponent = components["tag"];
+    hasTagComponent != sol::nullopt)
+{
     std::string tag = components["tag"]["tag"];
+
     newEntity.addComponent<TagComponent>(tag);
 
-     std::cout << "ADDING STATS TO TAG: "
-          << tag
-          << std::endl;
-  StatsManager::GetInstance().AddStatsToEntity(newEntity);
+    if (StatsManager::GetInstance().HasStat(tag))
+    {
+        auto stats =
+            StatsManager::GetInstance().GetStat(tag);
 
-  }
+        newEntity.addComponent<StatsComponent>(
+            stats.Health,
+            stats.Points,
+            stats.Damage
+        );
+
+        std::cout << "STATS ADDED TO ENTITY: "
+                  << tag
+                  << std::endl;
+    }
+}
  
 
 
@@ -969,8 +986,8 @@ void SceneLoader::LoadStats(const sol::table &stats){
     sol::table stat = stats[index];
 
     StatsComponent newStat {
-      stat["points"],
       stat["health"],
+      stat["points"],
       stat["damage"]
     };
    
@@ -979,4 +996,73 @@ void SceneLoader::LoadStats(const sol::table &stats){
     index++;
   }
 
+}
+
+void SceneLoader::LoadItems(
+    const sol::table& items,
+    std::unique_ptr<Registry>& registry)
+{
+    int index = 0;
+
+    while (true)
+    {
+        sol::optional<sol::table> hasItem = items[index];
+
+        if (hasItem == sol::nullopt)
+        {
+            break;
+        }
+
+        sol::table item = items[index];
+
+        std::string type = item["type"];
+
+        float x = item["x"];
+        float y = item["y"];
+
+        Entity entity = registry->createEntity();
+
+        entity.addComponent<TransformComponent>(
+            glm::vec2(x, y)
+        );
+
+        entity.addComponent<BoxColliderComponent>(
+            32,
+            32
+        );
+
+        entity.addComponent<RigidBodyComponent>(
+            false,
+            false,
+            1
+        );
+
+        if (type == "coin")
+        {
+            entity.addComponent<SpriteComponent>(
+                "coin",
+                32,
+                32,
+                0,
+                0
+            );
+
+            entity.addComponent<TagComponent>("coin");
+        }
+
+        if (type == "trap")
+        {
+            entity.addComponent<SpriteComponent>(
+                "spikes",
+                32,
+                32,
+                0,
+                0
+            );
+
+            entity.addComponent<TagComponent>("trap");
+        }
+
+        index++;
+    }
 }

@@ -63,6 +63,13 @@ public:
      * @return std::optional<StatsComponent> Stats if found, empty otherwise
      */
     std::optional<StatsComponent> operator[](const std::string& tag) const;
+    bool HasStat(const std::string& tag) {
+    return tagToStat.find(tag) != tagToStat.end();
+    }
+
+    StatsComponent GetStat(const std::string& tag) {
+        return tagToStat.at(tag);
+    }
 };
 
 #endif //STATS_MANAGER_HPP

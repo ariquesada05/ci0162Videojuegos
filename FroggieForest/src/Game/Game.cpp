@@ -229,6 +229,7 @@ void Game::update()
   registry->Update();
   registry->getSystem<ScriptSystem>().update(lua);
 
+
   registry->getSystem<PhysicsSystem>().update();
   registry->getSystem<MovementSystem>().update(deltaTime);
   registry->getSystem<BoxCollisionSystem>().update(eventManager, lua);
