@@ -13,7 +13,7 @@ scene = {
     {assetId = "enemy01_run", filePath = "./assets/images/enemy01_run.png",},
     {assetId = "terrain", filePath = "./assets/images/terrain.png",},
     {assetId = "coin", filePath = "./assets/images/coin.png"},
-    --{assetId = "spikes", filePath = "./assets/images/spikes.png"},
+    {assetId = "spikes", filePath = "./assets/images/trap1.png"},
   },
 
   -- Tabla con la Info de las animaciones
@@ -48,13 +48,48 @@ scene = {
 
   },
 
-    items = {
+   
+
+items = {
     [0] =
-    {type = "coin", x = 300, y = 500},
-    {type = "coin", x = 350, y = 500},
-  -- {type = "coin", x = 400, y = 500},
-   -- {type = "trap", x = 700, y = 620},
-  },
+    -- Coins abajo
+    {type = "coin", x = 200, y = 700},
+    {type = "coin", x = 250, y = 700},
+    {type = "coin", x = 300, y = 700},
+    {type = "coin", x = 350, y = 700},
+
+    -- Plataforma arriba izquierda
+    {type = "coin", x = 450, y = 500},
+    {type = "coin", x = 500, y = 500},
+    {type = "coin", x = 550, y = 500},
+
+    -- Plataforma arriba centro
+    {type = "coin", x = 750, y = 350},
+    {type = "coin", x = 800, y = 350},
+    {type = "coin", x = 850, y = 350},
+
+    -- Plataforma alta derecha
+    {type = "coin", x = 1150, y = 250},
+    {type = "coin", x = 1200, y = 250},
+    {type = "coin", x = 1250, y = 250},
+
+    -- Trampas piso principal
+    {type = "trap", x = 600, y = 820},
+    {type = "trap", x = 620, y = 820},
+    {type = "trap", x = 640, y = 820},
+
+    {type = "trap", x = 950, y = 820},
+    {type = "trap", x = 970, y = 820},
+    {type = "trap", x = 990, y = 820},
+
+    -- Trampas plataforma
+    {type = "trap", x = 1300, y = 520},
+    {type = "trap", x = 1320, y = 520},
+
+    -- Coins finales
+    {type = "coin", x = 1450, y = 650},
+    {type = "coin", x = 1500, y = 650},
+},
 
   -- Tabla de acciones y teclas
   keys = {

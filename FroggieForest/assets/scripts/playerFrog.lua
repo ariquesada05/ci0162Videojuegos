@@ -13,7 +13,8 @@ player_can_jump = false
 player_speed = 5.0 * 64.0
 player_jump_force = -3200.0 * 64.0
 damage_cooldown = 0
-
+invulnerable = false
+damage_timer = 1.0
 -- Variables de ataque
 player_is_attacking = false
 attack_timer = 0          -- contador de frames
@@ -125,15 +126,9 @@ function on_collision(other)
     end
   end
   if get_tag(other) == "coin" then
-    print("COIN DETECTED")
-
     local points = get_score(this)
 
-    print("POINTS BEFORE:", points)
-
     increment_score(this, points + 10)
-
-    print("POINTS AFTER:", get_score(this))
 
     kill_entity(other)
   end
@@ -145,6 +140,11 @@ function on_collision(other)
     on_damage(other)
   end
 
+   if get_tag(other) == "trap" then
+    on_damage(other)
+  end
+
+
   if get_tag(other) == "win" then
     go_to_scene("win")
   end
@@ -154,7 +154,7 @@ function on_damage(other)
 
   local otherTag = get_tag(other)
 
-  if otherTag == "enemy01" then
+  if otherTag == "enemy01" or otherTag == "trap" then
 
     if damage_cooldown > 0 then
       return
@@ -176,6 +176,8 @@ function on_damage(other)
       die()
     end
   end
+
+
 end
 
 ----------------------------------------------------------------
