@@ -23,8 +23,8 @@ scene = {
     {animation_id = "player_frog_run" , texture_id = "frog_run",  w = 32, h = 32, num_frames = 10, speed_rate = 10, is_loop = true,},
     {animation_id = "player_frog_die" , texture_id = "frog_die",  w = 32, h = 32, num_frames = 3, speed_rate = 5, is_loop = true,},
     {animation_id = "player_frog_attack", texture_id = "frog_attack", w = 48, h = 32, num_frames = 8, speed_rate = 5, is_loop = true,},
-    {animation_id = "enemy01_idle", texture_id = "enemy01_idle", w = 32, h = 32, num_frames = 7, speed_rate = 5, is_loop = true,},
-    {animation_id = "enemy01_run" , texture_id = "enemy01_run",  w = 32, h = 32, num_frames = 5, speed_rate = 2, is_loop = true,},
+    {animation_id = "enemy01_idle", texture_id = "enemy01_idle", w = 16, h = 48, num_frames = 7, speed_rate = 2, is_loop = true,},
+    {animation_id = "enemy01_run" , texture_id = "enemy01_run",  w = 16, h = 48, num_frames = 7, speed_rate = 3, is_loop = true,},
   
   },
 

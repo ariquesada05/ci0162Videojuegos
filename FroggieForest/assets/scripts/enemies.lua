@@ -4,13 +4,13 @@ enemies =
     components = {
        sprite = {
           assetId = "enemy01_idle",
-          width = 32,
+          width = 16,
           height = 48,
           src_rect = {x = 0, y = 0}, 
         },
     animation = {
           num_frames = 8,
-          speed_rate = 2,
+          speed_rate = 3,
           is_loop = true,
         },
     rigid_body = {
@@ -19,7 +19,7 @@ enemies =
           mass = 0,
         },
     box_collider = {
-          width = 32,
+          width = 16,
           height = 48,
           offset = {x = 0, y = 0},
         },

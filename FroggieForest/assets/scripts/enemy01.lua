@@ -39,7 +39,7 @@ end
 -- COLISIONES
 ----------------------------------------------------------------
 function on_collision(other)
-  print("Collided with: " .. get_tag(other))
+  
 end
   
 --   if get_tag(other) == "die" then
