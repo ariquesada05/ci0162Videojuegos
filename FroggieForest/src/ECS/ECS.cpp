@@ -15,7 +15,15 @@ void Entity::Kill()
 
 void System::addEntityToSystem(Entity entity)
 {
-  entities.push_back(entity);
+    for (auto& existingEntity : entities)
+    {
+        if (existingEntity.getID() == entity.getID())
+        {
+            return;
+        }
+    }
+
+    entities.push_back(entity);
 }
 
 void System::removeEntityFromSystem(Entity entity)
@@ -80,19 +88,29 @@ void Registry::killEntity(Entity entity)
 
 void Registry::addEntityToSystem(Entity entity)
 {
-  const int entityID = entity.getID();
+    const int entityID = entity.getID();
 
-  const auto &entityComponentSignature = entityComponentSignatures[entityID];
+    const auto& entityComponentSignature =
+        entityComponentSignatures[entityID];
 
-  for (const auto &system : systems)
-  {
-    const auto &componentSignature = system.second->getSignature();
-
-    if ((entityComponentSignature & componentSignature) == componentSignature)
+    for (const auto& system : systems)
     {
-      system.second->addEntityToSystem(entity);
+        const auto& componentSignature =
+            system.second->getSignature();
+
+        bool belongs =
+            (entityComponentSignature & componentSignature)
+            == componentSignature;
+
+        if (belongs)
+        {
+            system.second->addEntityToSystem(entity);
+        }
+        else
+        {
+            system.second->removeEntityFromSystem(entity);
+        }
     }
-  }
 }
 
 void Registry::removeEntityFromSystem(Entity entity)

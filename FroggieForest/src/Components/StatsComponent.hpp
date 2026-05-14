@@ -1,13 +1,21 @@
-#ifndef STATSCOMPONENT_HPP
-#define STATSCOMPONENT_HPP
-
-#include <cstdint>
+#ifndef STATS_COMPONENT_HPP
+#define STATS_COMPONENT_HPP
 
 struct StatsComponent
 {
-    int Points {0};
-    int Health {0};
-    int Damage {0};
+    int Health;
+    int Points;
+    int Damage;
+
+    StatsComponent(
+        int health = 0,
+        int points = 0,
+        int damage = 0)
+    {
+        Health = health;
+        Points = points;
+        Damage = damage;
+    }
 };
 
 #endif

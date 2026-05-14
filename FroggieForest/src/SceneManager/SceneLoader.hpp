@@ -15,6 +15,7 @@
 class SceneLoader
 {
 private:
+  std::set<std::string> tagsWithDamageColliders;
   void LoadSprites(SDL_Renderer *renderer, sol::table sprites, std::unique_ptr<AssetManager> &assetManager);
 
   void LoadAnimations(const sol::table &animations, std::unique_ptr<AnimationManager> &animationManager);
@@ -44,6 +45,8 @@ private:
   void LoadEnemies(sol::state &lua, tinyxml2::XMLElement *objectGroup, std::unique_ptr<Registry> &registry);
 
   void LoadStats(const sol::table &stats);
+
+  void LoadDamageColliders(const sol::table &colliders);
 
 public:
   SceneLoader();

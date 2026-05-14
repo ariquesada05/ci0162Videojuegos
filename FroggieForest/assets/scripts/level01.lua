@@ -2,7 +2,7 @@ scene = {
   -- Tabla de imágenes y sprites
   sprites = {
     [0] = 
-   -- {assetId = "background", filePath = "./assets/images/backgroundl1.png",},
+    {assetId = "background", filePath = "./assets/images/back1.png",},
     {assetId = "frog_idle", filePath = "./assets/images/frog_idle.png",},
     {assetId = "frog_jump", filePath = "./assets/images/frog_jump.png",},
     {assetId = "frog_fall", filePath = "./assets/images/frog_fall.png",},
@@ -70,11 +70,13 @@ scene = {
     [0] =
 
     {tag = "player", health = 100, points = 0, damage = 0},
+    {tag = "enemy01", health = 20, points = 10, damage = 1},
   },
   -- Tabla de Entidades
   entities = {
     [0] = 
     -- Music
+
     {
       components = {
         script = { 
@@ -111,14 +113,29 @@ scene = {
           height = 32,
           src_rect = {x = 0, y = 0},
         },
-        tag = {
-          tag = "player",
-        },
         transform = {
           position = {x = 50.0, y = 300.0},
           scale = {x = 1.0, y = 1.0},
           rotation = 0.0,
         },
+        tag = {
+          tag = "player",
+        },
+        lapse = {
+          [0] = {
+            name = "damage",
+            seconds = 0.5,
+          },
+            {
+              name = "attack",
+              seconds = 0.6,
+              }
+        },
+        damage_collider = {
+        width = 32,
+        height = 32,
+        offset = {x = 0, y = 0},
+      },
       }
     },
   },

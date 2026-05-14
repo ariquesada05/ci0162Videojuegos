@@ -184,18 +184,35 @@ void GetPlayerVelocity(Entity entity, int &velocity)
 
 int GetHealth(Entity entity)
 {
-  if (!entity.hasComponent<StatsComponent>()) {
-    return -1; // or some default value indicating no health
+
+  if (!entity.hasComponent<StatsComponent>())
+  {
+    std::cout << "NO STATS COMPONENT" << std::endl;
+    return -1;
   }
-  auto &stats = entity.getComponent<StatsComponent>();
+
+  auto& stats = entity.getComponent<StatsComponent>();
+  std::cout << "CURRENT HEALTH: " << stats.Health << std::endl;
+
   return stats.Health;
 }
 
 void SetHealth(Entity entity, int health)
 {
-  entity.getComponent<StatsComponent>().Health = health;
-}
+    if (!entity.hasComponent<StatsComponent>())
+    {
+        return;
+    }
 
+    auto& stats =
+        entity.getComponent<StatsComponent>();
+
+    stats.Health = health;
+
+    std::cout << "NEW HEALTH: "
+              << stats.Health
+              << std::endl;
+}
 int GetPoints(Entity entity)
 {
   if (!entity.hasComponent<StatsComponent>()) {

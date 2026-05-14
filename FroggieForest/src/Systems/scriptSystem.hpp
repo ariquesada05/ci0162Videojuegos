@@ -60,7 +60,10 @@ public:
     lua.set_function("get_health",GetHealth);
     lua.set_function("increment_health", SetHealth);
 
+    lua.set_function("get_damage", GetDamage);
+    lua.set_function("set_damage", SetDamage);
 
+    
 
 
   }

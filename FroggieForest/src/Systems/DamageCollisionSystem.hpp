@@ -21,11 +21,11 @@ public:
     }
 
     void Update(sol::state& lua) {
+        
         auto entities = getEntities();
 
         for (auto i = entities.begin(); i != entities.end(); ++i) {
             Entity a = *i;
-
             const auto& aCollider = a.getComponent<DamageColliderComponent>();
             const auto& aTransform = a.getComponent<TransformComponent>();
 

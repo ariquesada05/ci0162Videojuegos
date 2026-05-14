@@ -12,6 +12,7 @@ player_state = player_states["IDLE"]
 player_can_jump = false
 player_speed = 5.0 * 64.0
 player_jump_force = -3200.0 * 64.0
+damage_cooldown = 0
 
 -- Variables de ataque
 player_is_attacking = false
@@ -159,6 +160,10 @@ function update_animation_state()
     return
   end
 
+  if damage_cooldown > 0 then
+  damage_cooldown = damage_cooldown - 1
+  end
+
   -- Si está muriendo, mantener anim de muerte
   if player_state == player_states["DIE"] then
     change_animation(this, "player_frog_die")
@@ -210,5 +215,33 @@ function update_animation_state()
       change_animation(this, "player_frog_run")
     end
     return
+  end
+end
+
+function on_damage(other)
+
+  local otherTag = get_tag(other)
+
+  if otherTag == "enemy01" then
+
+    if damage_cooldown > 0 then
+      return
+    end
+
+    damage_cooldown = 60
+
+    local health = get_health(this)
+
+    print("Health received:", health)
+
+    health = health - 10
+
+    increment_health(this, health)
+
+    print("Vida player:", health)
+
+    if health <= 0 then
+      die()
+    end
   end
 end

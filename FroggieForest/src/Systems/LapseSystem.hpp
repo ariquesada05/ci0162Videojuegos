@@ -1,6 +1,3 @@
-//
-// Created by joe on 12/3/24.
-//
 
 #ifndef LAPSE_SYSTEM_HPP
 #define LAPSE_SYSTEM_HPP

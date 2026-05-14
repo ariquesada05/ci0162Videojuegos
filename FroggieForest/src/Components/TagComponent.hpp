@@ -5,12 +5,13 @@
 
 struct TagComponent
 {
-  std::string tag;
+    std::string tag;
+    std::string className;
 
-  TagComponent(const std::string &tag = "")
-  {
-    this->tag = tag;
-  }
+    TagComponent(
+        const std::string& tag = "",
+        const std::string& className = "")
+        : tag(tag), className(className) {}
 };
 
-#endif // TAG_COMPONENT_HPP
+#endif

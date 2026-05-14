@@ -115,8 +115,8 @@ void Game::init()
     return;
   }
 
-  windowWidth = 800;
-  windowHeight = 600;
+  windowWidth = 1600;
+  windowHeight = 900;
 
   window = SDL_CreateWindow(
       "Froggie Forest",
@@ -247,8 +247,24 @@ void Game::update()
 
 void Game::render()
 {
-  SDL_SetRenderDrawColor(renderer, 31, 31, 31, 255);
+  
+  SDL_SetRenderDrawColor(renderer, 45, 60, 45, 255);
   SDL_RenderClear(renderer);
+
+  SDL_Rect dstRect = {
+      0,
+      0,
+      windowWidth,
+      windowHeight
+    };
+
+  SDL_RenderCopy(
+      renderer,
+      assetManager->getTexture("background"),
+      NULL,
+      &dstRect
+  );
+
 
   registry->getSystem<RenderSystem>().update(renderer, assetManager, camera);
   registry->getSystem<TextSystem>().update(renderer, assetManager);

@@ -26,6 +26,7 @@
 #include "../StatsManager/StatsManager.hpp"
 #include "../Components/LapseComponent.hpp"
 #include "../Components/AttackCycleComponent.hpp"
+#include "../Components/DamageColliderComponent.hpp"
 
 
 SceneLoader::SceneLoader()
@@ -69,6 +70,42 @@ void SceneLoader::LoadScene(const std::string &scenePath, sol::state &lua,
 
   sol::table animations = scene["animations"];
   LoadAnimations(animations, animationManager);
+
+  if (sol::optional<sol::table> hasStats = scene["stats"];
+    hasStats != sol::nullopt)
+  {
+    sol::table stats = hasStats.value();
+
+    int index = 0;
+    while (true)
+    {
+        sol::optional<sol::table> stat = stats[index];
+
+        if (stat == sol::nullopt)
+        {
+            break;
+        }
+
+        std::string tag = stat.value()["tag"];
+        int health = stat.value()["health"];
+        int points = stat.value()["points"];
+        int damage = stat.value()["damage"];
+
+        StatsManager::GetInstance().AddStat(
+            tag,
+            StatsComponent(health, points, damage)
+        );
+
+        std::cout << "LOADED STATS FOR: " << tag << std::endl;
+
+        index++;
+    }
+    }
+  
+  if (const sol::optional<sol::table> hasDamageColliders = scene["damage_colliders"]) {
+        const sol::table damageColliders = *hasDamageColliders;
+        LoadDamageColliders(damageColliders);
+    }
 
   sol::table fonts = scene["fonts"];
   LoadFonts(fonts, assetManager);
@@ -220,12 +257,21 @@ void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table enti
       hasBoxColliderComponent != sol::nullopt)
   {
     newEntity.addComponent<BoxColliderComponent>(
+      
         components["box_collider"]["width"],
         components["box_collider"]["height"],
         glm::vec2(
             components["box_collider"]["offset"]["x"],
             components["box_collider"]["offset"]["y"]));
-        
+          std::cout << "ADDING DAMAGE TO ENTITY ID: "
+          << newEntity.getID()
+          << std::endl;        
+
+        newEntity.addComponent<DamageColliderComponent>(
+        components["box_collider"]["width"],
+        components["box_collider"]["height"]
+
+      );
   }
 
   //* CircleColliderComponent
@@ -244,6 +290,22 @@ void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table enti
   {
     newEntity.addComponent<ClickableComponent>();
   }
+
+  //* TagComponent
+  if (sol::optional<sol::table> hasTagComponent = components["tag"];
+      hasTagComponent != sol::nullopt)
+  {
+    std::string tag = components["tag"]["tag"];
+    newEntity.addComponent<TagComponent>(tag);
+
+     std::cout << "ADDING STATS TO TAG: "
+          << tag
+          << std::endl;
+  StatsManager::GetInstance().AddStatsToEntity(newEntity);
+
+  }
+ 
+
 
   //* RigidBodyComponent
   if (sol::optional<sol::table> hasRigidBodyComponent = components["rigid_body"];
@@ -281,14 +343,6 @@ void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table enti
         components["text"]["a"]);
   }
 
-  //* TagComponent
-  if (sol::optional<sol::table> hasTagComponent = components["tag"];
-      hasTagComponent != sol::nullopt)
-  {
-    std::string tag = components["tag"]["tag"];
-    newEntity.addComponent<TagComponent>(tag);
-  }
-
   //* TransformComponent
   if (sol::optional<sol::table> hasTransformComponent = components["transform"];
       hasTransformComponent != sol::nullopt)
@@ -319,6 +373,7 @@ void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table enti
     lua["on_click"] = sol::nil;
     lua["update"] = sol::nil;
     lua["on_collision"] = sol::nil;
+    lua["on_damage"] = sol::nil;
 
     std::string path = hasPath.value();
     std::cout << "[SceneLoader] Loading script: " << path << std::endl;
@@ -453,8 +508,24 @@ void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table enti
       index++;
     }
   }
+  
+    if (newEntity.hasComponent<BoxColliderComponent>() &&
+      newEntity.hasComponent<TagComponent>())
+    {
+      auto& tag = newEntity.getComponent<TagComponent>();
 
-  StatsManager::GetInstance().AddStatsToEntity(newEntity);
+      if (tag.tag == "player" || tag.tag == "enemy01")
+      {
+          auto& box = newEntity.getComponent<BoxColliderComponent>();
+
+          newEntity.addComponent<DamageColliderComponent>(
+              box.width,
+              box.height
+          );
+
+      }
+  }
+
 }
 
 
@@ -712,88 +783,115 @@ void SceneLoader::LoadEnemiesColliders(std::unique_ptr<Registry> &registry,
   }
 }
 
-void SceneLoader::LoadEnemies(sol::state &lua, 
-  tinyxml2::XMLElement *objectGroup, std::unique_ptr<Registry> &registry)
+
+void SceneLoader::LoadEnemies(
+    sol::state &lua,
+    tinyxml2::XMLElement *objectGroup,
+    std::unique_ptr<Registry> &registry)
 {
-  tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
- // const float SCALE = 1.0f;
+    tinyxml2::XMLElement *object =
+        objectGroup->FirstChildElement("object");
 
-  std::vector<Entity> enemies;
-  std::cout << "Loading enemies..." << std::endl;
+    std::vector<Entity> enemies;
 
-  while (object != nullptr)
-  {
-    // Declarar variables
-    const char *name;
-    std::string tag;
-    int x, y;
+    std::cout << "Loading enemies..." << std::endl;
 
-    // Extraer atributos
-    object->QueryStringAttribute("name", &name);
-    tag = name;
+    while (object != nullptr)
+    {
+        // Datos del objeto TMX
+        const char *name;
+        std::string tag;
 
-    // Extraer posición
-    object->QueryIntAttribute("x", &x);
-    object->QueryIntAttribute("y", &y);
+        int x, y;
 
-    // Crear entidad
-    Entity collider = registry->createEntity();
-    collider.addComponent<TagComponent>(tag);
-    collider.addComponent<TransformComponent>(
-        glm::vec2(x, y)
-      );
+        object->QueryStringAttribute("name", &name);
+        tag = name;
 
-    collider.addComponent<EnemyColliderComponent>(32, 32);
-    
-    object = object->NextSiblingElement("object");
-    enemies.push_back(collider);
+        object->QueryIntAttribute("x", &x);
+        object->QueryIntAttribute("y", &y);
+
+        // Crear entidad VACÍA
+        Entity enemy = registry->createEntity();
+
+        enemies.push_back(enemy);
+
+        object = object->NextSiblingElement("object");
     }
 
     if (enemies.empty())
     {
-      std::cout << "No enemies found in the scene." << std::endl;
-      return;
+        std::cout << "No enemies found in the scene."
+                  << std::endl;
+        return;
     }
 
-    std::string enemiesPath = "./assets/scripts/enemies.lua";
+    // Cargar tabla Lua
+    sol::load_result load_result =
+        lua.load_file("./assets/scripts/enemies.lua");
 
-
-    sol::load_result load_result = lua.load_file("./assets/scripts/enemies.lua");
     if (!load_result.valid())
     {
-      sol::error error = load_result;
-      std::string err = error.what();
-      std::cerr << "Failed to load enemies script: " << err << std::endl;
-      return;
-    }
+        sol::error error = load_result;
 
+        std::cerr << "Failed to load enemies script: "
+                  << error.what()
+                  << std::endl;
+
+        return;
+    }
 
     load_result();
 
+    sol::object obj = lua["enemies"];
 
-    sol::object Obj = lua["enemies"];
-    if (!Obj.is<sol::table>())
+    if (!obj.is<sol::table>())
     {
-      std::cerr << "Enemies data is not a table" << std::endl;
-      return;
+        std::cerr << "Enemies data is not a table"
+                  << std::endl;
+
+        return;
     }
 
-    sol::table enemiesTable = Obj.as<sol::table>();
+    sol::table enemiesTable = obj.as<sol::table>();
 
-    for (Entity &enemy : enemies)
+    // Reiniciar lectura de objetos TMX
+    object = objectGroup->FirstChildElement("object");
+
+    int index = 0;
+
+    while (object != nullptr)
     {
-      auto& tag = enemy.getComponent<TagComponent>();
-      const auto pos = enemy.getComponent<TransformComponent>().position;
-      std::string name = tag.tag;
-      
-      sol::table enemyData = enemiesTable[name];
+        const char *name;
+        std::string tag;
 
-      LoadEntity(lua, enemy, enemyData);
+        int x, y;
 
-      auto& transform = enemy.getComponent<TransformComponent>();
-      transform.position = pos;
-      enemy.addComponent<StateComponent>();
+        object->QueryStringAttribute("name", &name);
+        tag = name;
 
+        object->QueryIntAttribute("x", &x);
+        object->QueryIntAttribute("y", &y);
+
+        Entity enemy = enemies[index];
+
+        // Obtener datos Lua
+        sol::table enemyData = enemiesTable[tag];
+
+        // Cargar TODOS los componentes desde Lua
+        LoadEntity(lua, enemy, enemyData);
+
+        // Ajustar posición desde TMX
+        auto &transform =
+            enemy.getComponent<TransformComponent>();
+
+        transform.position = glm::vec2(x, y);
+
+        // Estado extra
+        enemy.addComponent<StateComponent>();
+
+        object = object->NextSiblingElement("object");
+
+        index++;
     }
 }
 
@@ -839,6 +937,24 @@ void SceneLoader::LoadMusic(const sol::table &music, std::unique_ptr<AudioManage
   }
 }
 
+void SceneLoader::LoadDamageColliders(const sol::table &damageColliders)
+{
+  int index = 0;
+  while (true)
+  {
+      sol::optional<sol::table> hasCollider = damageColliders[index];
+      if (hasCollider == sol::nullopt)
+      {
+        break;
+      }
+
+      std::string tag = damageColliders[index]["class"];
+      
+      tagsWithDamageColliders.insert(tag);
+
+      index++;
+  }
+}
   
 void SceneLoader::LoadStats(const sol::table &stats){
   int index = 0;
