@@ -25,6 +25,7 @@
 #include "../Components/PlayerVelocity.hpp"
 #include "../StatsManager/StatsManager.hpp"
 #include "../Components/LapseComponent.hpp"
+#include "../Components/AttackCycleComponent.hpp"
 
 
 SceneLoader::SceneLoader()
@@ -356,6 +357,13 @@ void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table enti
       onClick = hasOnClick.value();
     }
 
+    sol::function onDamage = sol::nil;
+    if (sol::optional<sol::function> hasOnDamage = lua["on_damage"];
+        hasOnDamage != sol::nullopt)
+    {
+      onDamage = hasOnDamage.value();
+    }
+
     sol::function update = sol::nil;
     if (sol::optional<sol::function> hasUpdate = lua["update"];
         hasUpdate != sol::nullopt)
@@ -363,7 +371,7 @@ void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table enti
       update = hasUpdate.value();
     }
 
-    newEntity.addComponent<ScriptComponent>(update, onClick, onInit, onCollision);
+    newEntity.addComponent<ScriptComponent>(update, onClick, onInit, onCollision, onDamage);
   }
 
   //player velocity component
@@ -414,6 +422,33 @@ void SceneLoader::LoadEntity(sol::state &lua, Entity &newEntity, sol::table enti
         }
       );
       }
+
+      index++;
+    }
+  }
+
+  //*attack cycle component
+  if (sol::optional<sol::table> hasAttack = components["attacks"];
+      hasAttack != sol::nullopt)
+  {
+    newEntity.addComponent<AttackCycleComponent>();
+    auto& component = newEntity.getComponent<AttackCycleComponent>();
+
+    int index = 0;
+    while (true)
+    {
+      const sol::optional<sol::table> attack = components["attack"][index];
+      if (attack == sol::nullopt)
+      {
+        break;
+      }
+
+      const std::string name = attack.value()["name"];
+      const std::pair<int, int> awareness = {
+        attack.value()["awareness"]["x"],
+        attack.value()["awareness"]["y"]
+      };
+      component.Attacks.emplace_back(name, awareness);
 
       index++;
     }

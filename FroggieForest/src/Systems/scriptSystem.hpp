@@ -55,6 +55,14 @@ public:
     lua.set_function("play_music", PlayMusic);
     lua.set_function("stop_all_sounds", StopAllSounds);
 
+    lua.set_function("get_score", GetPoints);
+    lua.set_function("increment_score", SetPoints);
+    lua.set_function("get_health",GetHealth);
+    lua.set_function("increment_health", SetHealth);
+
+
+
+
   }
 
   void update(sol::state &lua)

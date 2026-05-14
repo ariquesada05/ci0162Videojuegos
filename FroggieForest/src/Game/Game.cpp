@@ -11,7 +11,7 @@
 #include "../Systems/overlapSystem.hpp"
 #include "../Systems/UISystem.hpp"
 #include "../Systems/CameraMovementSystem.hpp" 
-// #include "../Systems/DamageSystem.hpp"
+#include "../Systems/DamageSystem.hpp"
 #include "../Systems/animationSystem.hpp"
 #include "../Systems/ScriptSystem.hpp"
 #include "../Systems/textSystem.hpp"
@@ -26,9 +26,10 @@
 #include "../Systems/StatsSystem.hpp"
 #include "../Systems/LifetimeSystem.hpp"
 #include "../Systems/LapseSystem.hpp"
-
+#include "../Systems/DamageCollisionSystem.hpp"
 #include "../AudioManager/AudioManager.hpp"
-
+#include "../Systems/EnemyAttackSystem.hpp"
+#include "../Systems/RenderDamageColliderSystem.hpp"
 
 Game::Game()
 {
@@ -79,8 +80,9 @@ void Game::setUp()
   registry->addSystem<PhysicsSystem>();
   registry->addSystem<OverlapSystem>();
   registry->addSystem<LapseSystem>();
-  //damage
+  registry->addSystem<DamageCollisionSystem>();
   registry->addSystem<LifetimeSystem>();
+  registry->addSystem<EnemyAttackSystem>();
   registry->addSystem<EnemyColliderSystem>();
   registry->addSystem<RenderEnemyColliderSystem>();
   registry->addSystem<StatsSystem>();
@@ -231,14 +233,16 @@ void Game::update()
   registry->getSystem<MovementSystem>().update(deltaTime);
   registry->getSystem<BoxCollisionSystem>().update(eventManager, lua);
   registry->getSystem<CircleCollisionSystem>().update(eventManager);
+  registry->getSystem<DamageCollisionSystem>().Update(lua);
   //damage
   registry->getSystem<EnemyColliderSystem>().Update(lua);
 
   registry->getSystem<LapseSystem>().update(deltaTime);
-  
+
   registry->getSystem<AnimationSystem>().update();
   registry->getSystem<LifetimeSystem>().update(deltaTime);
   registry->getSystem<CameraMovementSystem>().Update(camera);
+  registry->getSystem<EnemyAttackSystem>().update(lua);
 }
 
 void Game::render()
@@ -250,13 +254,12 @@ void Game::render()
   registry->getSystem<TextSystem>().update(renderer, assetManager);
   registry->getSystem<PlayerScoreSystem>().Update(renderer, playerScore);
   registry->getSystem<StatsSystem>().Update(renderer);
-  //stats and plkayer score
-
 
   if (isDebugMode)
   {
     registry->getSystem<RenderBoxColliderSystem>().Update(renderer, camera);
     registry->getSystem<RenderEnemyColliderSystem>().Update(renderer, camera);
+    registry->getSystem<RenderDamageColliderSystem>().Update(renderer, camera);
   }
 
   SDL_RenderPresent(renderer);

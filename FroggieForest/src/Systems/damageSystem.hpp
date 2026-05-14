@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 
-#include "../Components/CircleColiderComponent.hpp"
+#include "../Components/CircleColliderComponent.hpp"
 #include "../ECS/ECS.hpp"
 #include "../EventManager/EventManager.hpp"
 #include "../Events/CollisionEvent.hpp"
@@ -14,7 +14,7 @@ class DamageSystem : public System
 public:
   DamageSystem()
   {
-    requireComponent<CircleColiderComponent>();
+    requireComponent<CircleColliderComponent>();
   }
 
   void SubscribeToCollisionEvent(std::unique_ptr<EventManager> &eventManager)

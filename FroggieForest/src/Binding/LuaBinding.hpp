@@ -176,13 +176,13 @@ void IncrementPlayerVelocity(Entity entity, int increment)
   playerVelocity.playerVelocity += increment;
 }
 
-void getPlayerVelocity(Entity entity, int &velocity)
+void GetPlayerVelocity(Entity entity, int &velocity)
 {
   auto &playerVelocity = entity.getComponent<PlayerVelocity>();
   velocity = playerVelocity.playerVelocity;
 }
 
-int getHealth(Entity entity)
+int GetHealth(Entity entity)
 {
   if (!entity.hasComponent<StatsComponent>()) {
     return -1; // or some default value indicating no health
@@ -191,12 +191,12 @@ int getHealth(Entity entity)
   return stats.Health;
 }
 
-void setHealth(Entity entity, int health)
+void SetHealth(Entity entity, int health)
 {
   entity.getComponent<StatsComponent>().Health = health;
 }
 
-int getPoints(Entity entity)
+int GetPoints(Entity entity)
 {
   if (!entity.hasComponent<StatsComponent>()) {
     return -1; // or some default value indicating no points
@@ -205,26 +205,27 @@ int getPoints(Entity entity)
   return stats.Points;
 }
 
-void setPoints(Entity entity, int points)
+void SetPoints(Entity entity, int points)
 {
   entity.getComponent<StatsComponent>().Points = points;
 }
 
 
-// int getDamage(Entity entity)
-// {
-//   if (!entity.hasComponent<StatsComponent>()) {
-//     return -1; // or some default value indicating no damage
-//   }
-//   auto &stats = entity.getComponent<StatsComponent>();
-//   return stats.damage;
-// }
+int GetDamage(Entity entity)
+{
+  if (!entity.hasComponent<StatsComponent>()) {
+    return -1; // or some default value indicating no damage
+  }
+  auto &stats = entity.getComponent<StatsComponent>();
+  return stats.Damage;
+}
 
-// int setDamage(Entity entity, int damage)
-// {
-//   entity.getComponent<StatsComponent>().damage = damage;
-// }
-//* Scenes
+void SetDamage(Entity entity, int damage)
+{
+  entity.getComponent<StatsComponent>().Damage = damage;
+}
+
+// Scenes
 
 void GoToScene(const std::string &scenePath)
 {
