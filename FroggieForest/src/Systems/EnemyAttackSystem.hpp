@@ -43,7 +43,6 @@ public:
         }
 
         if (player == nullptr) {
-            std::cerr << "[EnemyAttackSystem] No player found\n";
             return;
         }
 
