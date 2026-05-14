@@ -1,3 +1,8 @@
+/**
+ * @file DamageCollisionSystem.hpp
+ * @brief Damage collider collision detection system
+ */
+
 #ifndef DAMAGE_COLLISION_SYSTEM_HPP
 #define DAMAGE_COLLISION_SYSTEM_HPP
 
@@ -12,14 +17,25 @@
 
 #include "../Utils/Collision.hpp"
 
+/**
+ * @class DamageCollisionSystem
+ * @brief Detects collisions involving damage colliders
+ */
 class DamageCollisionSystem : public System {
 public:
+    /**
+     * @brief Construct a DamageCollisionSystem
+     */
     DamageCollisionSystem() {
         requireComponent<DamageColliderComponent>();
         requireComponent<TransformComponent>();
         requireComponent<TagComponent>();
     }
 
+    /**
+     * @brief Update damage collisions
+     * @param lua Reference to Lua state
+     */
     void Update(sol::state& lua) {
         
         auto entities = getEntities();

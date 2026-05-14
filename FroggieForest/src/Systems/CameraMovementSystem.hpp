@@ -1,3 +1,10 @@
+/**
+ * @file CameraMovementSystem.hpp
+ * @brief Camera following system
+ * 
+ * Updates camera position to follow entity with CameraFollowComponent.
+ */
+
 #ifndef CAMERA_MOVEMENT_SYSTEM_HPP
 #define CAMERA_MOVEMENT_SYSTEM_HPP
 
@@ -10,15 +17,29 @@
 
 #include "../Game/Game.hpp"
 
+/**
+ * @class CameraMovementSystem
+ * @brief Manages camera position following a target entity
+ * 
+ * Updates the camera viewport to follow the entity marked with
+ * CameraFollowComponent, typically the player.
+ */
 class CameraMovementSystem : public System
 {
 public:
+  /**
+   * @brief Construct a CameraMovementSystem
+   */
   CameraMovementSystem()
   {
     requireComponent<TransformComponent>();
     requireComponent<CameraFollowComponent>();
   }
 
+  /**
+   * @brief Update camera position
+   * @param camera The camera rectangle to update
+   */
   void Update(SDL_Rect &camera)
   {
     for (auto entity : getEntities())

@@ -1,3 +1,7 @@
+/**
+ * @file RenderDamageColliderSystem.hpp
+ * @brief Debug damage collider visualization system
+ */
 
 #ifndef RENDERDAMAGECOLLIDER_SYSTEM_HPP
 #define RENDERDAMAGECOLLIDER_SYSTEM_HPP
@@ -7,17 +11,25 @@
 #include "../Components/TransformComponent.hpp"
 #include "../ECS/ECS.hpp"
 
-
+/**
+ * @class RenderDamageColliderSystem
+ * @brief Renders damage colliders for debugging
+ */
 class RenderDamageColliderSystem : public System {
 public:
-
-    
+    /**
+     * @brief Construct a RenderDamageColliderSystem
+     */
     RenderDamageColliderSystem() {
         requireComponent<DamageColliderComponent>();
         requireComponent<TransformComponent>();
     }
 
- 
+    /**
+     * @brief Render all damage colliders
+     * @param renderer The SDL renderer
+     * @param camera The camera viewport
+     */
     void Update(SDL_Renderer* renderer, SDL_Rect& camera) {
         for (auto entity : getEntities()) {
             const auto& collider = entity.getComponent<DamageColliderComponent>();

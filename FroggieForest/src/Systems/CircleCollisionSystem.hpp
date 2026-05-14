@@ -1,3 +1,8 @@
+/**
+ * @file CircleCollisionSystem.hpp
+ * @brief Circle collision detection system
+ */
+
 #ifndef CIRCLE_COLISION_SYSTEM_HPP
 #define CIRCLE_COLISION_SYSTEM_HPP
 
@@ -9,15 +14,26 @@
 #include "../EventManager/EventManager.hpp"
 #include "../Events/CollisionEvent.hpp"
 
+/**
+ * @class CircleCollisionSystem
+ * @brief Detects collisions between circle colliders
+ */
 class CircleCollisionSystem : public System
 {
 public:
+  /**
+   * @brief Construct a CircleCollisionSystem
+   */
   CircleCollisionSystem()
   {
     requireComponent<CircleColliderComponent>();
     requireComponent<TransformComponent>();
   }
 
+  /**
+   * @brief Update collision detection for circles
+   * @param EventManager Reference to event manager
+   */
   void update(std::unique_ptr<EventManager> &EventManager)
   {
     auto entities = getEntities();

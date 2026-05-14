@@ -1,3 +1,10 @@
+/**
+ * @file movementSystem.hpp
+ * @brief Entity movement system
+ * 
+ * Updates entity positions based on velocity and physics.
+ */
+
 #ifndef MOVEMENT_SYSTEM_HPP
 #define MOVEMENT_SYSTEM_HPP
 
@@ -7,14 +14,29 @@
 #include "../Components/RigidBodyComponent.hpp"
 #include "../ECS/ECS.hpp"
 
+/**
+ * @class MovementSystem
+ * @brief Updates entity movement based on velocity
+ * 
+ * Applies physics velocity and acceleration to entity transforms,
+ * handling both dynamic and kinematic movement.
+ */
 class MovementSystem : public System
 {
 public:
+  /**
+   * @brief Construct a MovementSystem
+   */
   MovementSystem()
   {
     requireComponent<TransformComponent>();
     requireComponent<RigidBodyComponent>();
   }
+  
+  /**
+   * @brief Update entity positions
+   * @param dt Delta time in seconds
+   */
   void update(double dt)
   {
     for (auto entity : getEntities())

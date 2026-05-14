@@ -1,3 +1,8 @@
+/**
+ * @file renderBoxColliderSystem.hpp
+ * @brief Debug box collider visualization system
+ */
+
 #ifndef RENDERBOXCOLLIDERSYSTEM_HPP
 #define RENDERBOXCOLLIDERSYSTEM_HPP
 
@@ -7,15 +12,29 @@
 #include "../Components/BoxColliderComponent.hpp"
 #include "../Components/TransformComponent.hpp"
 
+/**
+ * @class RenderBoxColliderSystem
+ * @brief Renders box colliders for debugging
+ * 
+ * Visualizes box colliders as rectangles on the screen for debugging purposes.
+ */
 class RenderBoxColliderSystem : public System
 {
 public:
+  /**
+   * @brief Construct a RenderBoxColliderSystem
+   */
   RenderBoxColliderSystem()
   {
     requireComponent<BoxColliderComponent>();
     requireComponent<TransformComponent>();
   }
 
+  /**
+   * @brief Render all box colliders
+   * @param renderer The SDL renderer to draw with
+   * @param camera The camera viewport
+   */
   void Update(SDL_Renderer *renderer, SDL_Rect &camera)
   {
     for (auto entity : getEntities())

@@ -1,9 +1,16 @@
+/**
+ * @file LuaBinding.hpp
+ * @brief C++ to Lua binding functions
+ * 
+ * Provides C++ functions that can be called from Lua scripts,
+ * including animation, physics, stats, and game entity manipulation.
+ */
+
 #ifndef LUABINDING_HPP
 #define LUABINDING_HPP
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h> // SDL2_mixer used for audio
-
+#include <SDL2/SDL_mixer.h> ///< SDL2_mixer used for audio
 
 #include <string>
 #include <tuple>
@@ -22,9 +29,15 @@
 #include "../StatsManager/StatsManager.hpp"
 #include "../Components/LapseComponent.hpp"
 
+/// @defgroup LuaBindings C++ to Lua Bindings
+/// @brief Functions exposed to Lua for game manipulation
+/// @{
 
-//* Animations
-
+/**
+ * @brief Change entity animation
+ * @param entity The entity to update
+ * @param animationId The animation identifier
+ */
 void ChangeAnimation(Entity entity, const std::string &animationId)
 {
   auto &animation = entity.getComponent<AnimationComponent>();
@@ -46,6 +59,11 @@ void ChangeAnimation(Entity entity, const std::string &animationId)
   animation.startTime = SDL_GetTicks();
 }
 
+/**
+ * @brief Get current animation frame
+ * @param entity The entity to check
+ * @return int Current frame number
+ */
 int GetCurrentFrame(Entity entity)
 {
   auto &animation = entity.getComponent<AnimationComponent>();

@@ -1,3 +1,8 @@
+/**
+ * @file PlayerScoreSystem.hpp
+ * @brief Player score display system
+ */
+
 #ifndef PLAYERSCORESYSTEM_HPP
 #define PLAYERSCORESYSTEM_HPP
 
@@ -6,7 +11,10 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
-
+/**
+ * @class PlayerScoreSystem
+ * @brief Manages player score display
+ */
 class PlayerScoreSystem : public System
 {
     TTF_Font* font;
@@ -16,6 +24,10 @@ class PlayerScoreSystem : public System
     const char* scorePrefix = "Score: ";
 
     public:
+    /**
+     * @brief Construct a PlayerScoreSystem
+     * @throws std::runtime_error If font loading fails
+     */
     PlayerScoreSystem() {
         // Load the font
         font = TTF_OpenFont(fontPath, fontSize);

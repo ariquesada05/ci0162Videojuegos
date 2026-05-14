@@ -9,31 +9,31 @@ enemy_state = enemy_states["IDLE"]
 enemy_speed = 5.0 * 64.0
 
 local start_x = 0
+local pos = get_position(this)
 local direction = 1
-local range = 100.0
+local range = 700.0
+enemy_speed = 100
 ---------------------------------------------------------------
 -- UPDATE
 ----------------------------------------------------------------
 function update()
   local pos = get_position(this)
-  local vel_x = direction * enemy_speed
 
   -- cambiar dirección si sale del rango
   if pos.x >= start_x + range then
     direction = -1
-    set_position(this, start_x + range)
   elseif pos.x <= start_x - range then
     direction = 1
-    set_position(this, start_x - range)
   end
-  
 
-  -- aplicar velocidad solo en X
+  -- velocidad DESPUÉS de cambiar direction
+  local vel_x = direction * enemy_speed
+
+  -- mantener misma Y
   set_velocity(this, vel_x, 0)
 
   update_animation_state()
 end
-
 
 ----------------------------------------------------------------
 -- COLISIONES
@@ -100,3 +100,4 @@ function update_animation_state()
     return
   end
 end
+

@@ -1,3 +1,8 @@
+/**
+ * @file RenderEnemyColliderSystem.hpp
+ * @brief Debug enemy collider visualization system
+ */
+
 #ifndef RENDERENEMYCOLLIDERSYSTEM_HPP
 #define RENDERENEMYCOLLIDERSYSTEM_HPP
 
@@ -9,15 +14,26 @@
 #include "../Components/TagComponent.hpp"
 #include "../EventManager/EventManager.hpp"
 
-
+/**
+ * @class RenderEnemyColliderSystem
+ * @brief Renders enemy colliders for debugging
+ */
 class RenderEnemyColliderSystem : public System
 {
 public:
-
+    /**
+     * @brief Construct a RenderEnemyColliderSystem
+     */
     RenderEnemyColliderSystem() {
         requireComponent<EnemyColliderComponent>();
         requireComponent<TransformComponent>();
     }
+
+    /**
+     * @brief Render all enemy colliders
+     * @param renderer The SDL renderer
+     * @param camera The camera viewport
+     */
     void Update(SDL_Renderer* renderer, SDL_Rect& camera) {
         for (auto& entity : getEntities()) {
             auto& collider = entity.getComponent<EnemyColliderComponent>();

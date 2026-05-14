@@ -1,3 +1,8 @@
+/**
+ * @file overlapSystem.hpp
+ * @brief Directional collision overlap detection system
+ */
+
 #ifndef OVERLAP_SYSTEM_HPP
 #define OVERLAP_SYSTEM_HPP
 
@@ -10,17 +15,32 @@
 #include "../EventManager/EventManager.hpp"
 #include "../Events/CollisionEvent.hpp"
 
+/**
+ * @enum Direction
+ * @brief Collision direction enumeration
+ */
 enum Direction
 {
-  TOP,
-  BOTTOM,
-  LEFT,
-  RIGHT
+  TOP,    ///< Collision from top
+  BOTTOM, ///< Collision from bottom
+  LEFT,   ///< Collision from left
+  RIGHT   ///< Collision from right
 };
 
+/**
+ * @class OverlapSystem
+ * @brief Detects directional collisions
+ */
 class OverlapSystem : public System
 {
 private:
+  /**
+   * @brief Check directional collision
+   * @param a First entity
+   * @param b Second entity
+   * @param dir Direction to check
+   * @return bool True if collision exists in direction
+   */
   bool CheckCollision(Entity a, Entity b, Direction dir)
   {
     auto &aCollider = a.getComponent<BoxColliderComponent>();

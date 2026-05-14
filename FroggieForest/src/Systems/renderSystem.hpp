@@ -1,3 +1,10 @@
+/**
+ * @file renderSystem.hpp
+ * @brief Sprite rendering system
+ * 
+ * Renders all entities with sprite and transform components to the screen.
+ */
+
 #ifndef RENDER_SYSTEM_HPP
 #define RENDER_SYSTEM_HPP
 
@@ -8,15 +15,31 @@
 #include "../Components/TransformComponent.hpp"
 #include "../Components/SpriteComponent.hpp"
 
+/**
+ * @class RenderSystem
+ * @brief Renders sprites for all entities
+ * 
+ * Processes all entities that have both TransformComponent and SpriteComponent,
+ * drawing them to the screen with camera support.
+ */
 class RenderSystem : public System
 {
 public:
+  /**
+   * @brief Construct a RenderSystem
+   */
   RenderSystem()
   {
     requireComponent<TransformComponent>();
     requireComponent<SpriteComponent>();
   }
 
+  /**
+   * @brief Update and render all entities
+   * @param renderer The SDL renderer to draw with
+   * @param AssetManager The asset manager containing textures
+   * @param camera The camera viewport rectangle
+   */
   void update(SDL_Renderer *renderer, const std::unique_ptr<AssetManager> &AssetManager, SDL_Rect &camera)
   {
     for (auto &entity : getEntities())

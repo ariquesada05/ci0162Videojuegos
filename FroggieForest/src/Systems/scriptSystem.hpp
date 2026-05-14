@@ -21,6 +21,11 @@ public:
     // Clases
     lua.new_usertype<Entity>("entity");
 
+    if (!lua["entity"].valid())
+    {
+        lua.new_usertype<Entity>("entity");
+    }
+
     // Functions
     lua.set_function("change_animation", ChangeAnimation);
 
@@ -63,7 +68,7 @@ public:
     lua.set_function("get_damage", GetDamage);
     lua.set_function("set_damage", SetDamage);
 
-    
+
 
 
   }

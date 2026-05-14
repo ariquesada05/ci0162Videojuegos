@@ -1,3 +1,8 @@
+/**
+ * @file UISystem.hpp
+ * @brief UI click handling system
+ */
+
 #ifndef UI_SYSTEM_HPP
 #define UI_SYSTEM_HPP
 
@@ -14,9 +19,16 @@
 #include "../EventManager/EventManager.hpp"
 #include "../Events/ClickEvent.hpp"
 
+/**
+ * @class UISystem
+ * @brief Handles UI click events
+ */
 class UISystem : public System
 {
 public:
+  /**
+   * @brief Construct a UISystem
+   */
   UISystem() : System()
   {
     requireComponent<ClickableComponent>();
@@ -24,6 +36,10 @@ public:
     requireComponent<TransformComponent>();
   }
 
+  /**
+   * @brief Subscribe to click events
+   * @param eventManager Reference to event manager
+   */
   void SubscribeToClickEvent(std::unique_ptr<EventManager> &eventManager)
   {
     eventManager->SubscribeToEvent<ClickEvent>(this, &UISystem::OnClickEvent);

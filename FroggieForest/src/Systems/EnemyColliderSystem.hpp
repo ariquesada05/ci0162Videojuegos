@@ -1,3 +1,7 @@
+/**
+ * @file EnemyColliderSystem.hpp
+ * @brief Enemy collision management system
+ */
 
 #ifndef ENEMYCOLLIDER_SYSTEM_HPP
 #define ENEMYCOLLIDER_SYSTEM_HPP
@@ -12,17 +16,28 @@
 #include "../EventManager/EventManager.hpp"
 #include "../Components/BoxColliderComponent.hpp"
 
+/**
+ * @class EnemyColliderSystem
+ * @brief Manages enemy collision detection
+ */
 class EnemyColliderSystem : public System
 {
 
+    /**
+     * @struct CollisionInfo
+     * @brief Stores collision bounds information
+     */
     struct CollisionInfo
     {
-        float X;
-        float Y;
-        float Width;
-        float Height;
+        float X;      ///< X position
+        float Y;      ///< Y position
+        float Width;  ///< Width
+        float Height; ///< Height
     };
 public:
+    /**
+     * @brief Construct an EnemyColliderSystem
+     */
     EnemyColliderSystem() {
         requireComponent<EnemyColliderComponent>();
         requireComponent<TransformComponent>();

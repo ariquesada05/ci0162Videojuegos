@@ -1,3 +1,10 @@
+/**
+ * @file boxCollisionSystem.hpp
+ * @brief AABB box collision detection system
+ * 
+ * Detects and handles collisions between box colliders.
+ */
+
 #ifndef BOX_COLLISION_SYSTEM_HPP
 #define BOX_COLLISION_SYSTEM_HPP
 
@@ -11,9 +18,28 @@
 #include "../EventManager/EventManager.hpp"
 #include "../Events/CollisionEvent.hpp"
 
+/**
+ * @class BoxCollisionSystem
+ * @brief Detects and reports box collisions
+ * 
+ * Uses AABB collision detection to find collisions between entities
+ * with box colliders and emits collision events.
+ */
 class BoxCollisionSystem : public System
 {
 private:
+  /**
+   * @brief Check for AABB collision between two rectangles
+   * @param aX X position of first rectangle
+   * @param aY Y position of first rectangle
+   * @param aW Width of first rectangle
+   * @param aH Height of first rectangle
+   * @param bX X position of second rectangle
+   * @param bY Y position of second rectangle
+   * @param bW Width of second rectangle
+   * @param bH Height of second rectangle
+   * @return bool True if rectangles collide
+   */
   bool CheckAABBCollision(float aX, float aY, float aW, float aH,
                           float bX, float bY, float bW, float bH)
   {
@@ -25,12 +51,20 @@ private:
   }
 
 public:
+  /**
+   * @brief Construct a BoxCollisionSystem
+   */
   BoxCollisionSystem()
   {
     requireComponent<BoxColliderComponent>();
     requireComponent<TransformComponent>();
   }
 
+  /**
+   * @brief Update collision detection
+   * @param eventManager Reference to event manager for emitting events
+   * @param lua Reference to Lua state for callbacks
+   */
   void update(const std::unique_ptr<EventManager> &eventManager, sol::state_view &lua)
   {
     auto entities = getEntities();

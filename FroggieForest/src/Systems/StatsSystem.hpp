@@ -1,6 +1,10 @@
+/**
+ * @file StatsSystem.hpp
+ * @brief Statistics rendering system
+ */
+
 #ifndef STATSSYSTEM_HPP
 #define STATSSYSTEM_HPP
-
 
 #include <algorithm>
 #include <vector>
@@ -13,20 +17,32 @@
 #include "../Components/PlayerScoreComponent.hpp"
 #include "../Components/StatsComponent.hpp"
 
-
+/**
+ * @brief SDL surface deleter for unique_ptr
+ */
 inline auto surfaceDeleter = [](SDL_Surface* surface) {
     SDL_FreeSurface(surface);
 };
 
+/**
+ * @brief SDL texture deleter for unique_ptr
+ */
 inline auto textureDeleter = [](SDL_Texture* texture) {
     SDL_DestroyTexture(texture);
 };
 
+/**
+ * @brief Font deleter for unique_ptr
+ */
 inline auto fontDeleter = [](TTF_Font* font) {
     if (!font) return ;
     TTF_CloseFont(font);
 };
 
+/**
+ * @class StatsSystem
+ * @brief Renders game statistics
+ */
 class StatsSystem : public System
 {
     std::unique_ptr<TTF_Font, decltype(fontDeleter)> font{nullptr, fontDeleter};

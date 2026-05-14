@@ -1,3 +1,8 @@
+/**
+ * @file EnemyAttackSystem.hpp
+ * @brief Enemy attack execution system
+ */
+
 #ifndef ENEMYATTACKSYSTEM_HPP
 #define ENEMYATTACKSYSTEM_HPP
 
@@ -16,8 +21,15 @@
 
 #include "../Utils/Collision.hpp"
 
+/**
+ * @class EnemyAttackSystem
+ * @brief Executes enemy attacks
+ */
 class EnemyAttackSystem : public System {
 public:
+    /**
+     * @brief Construct an EnemyAttackSystem
+     */
     EnemyAttackSystem() {
         requireComponent<DamageColliderComponent>();
         requireComponent<LapseComponent>();
@@ -27,6 +39,10 @@ public:
         requireComponent<TagComponent>();
     }
 
+    /**
+     * @brief Update enemy attacks
+     * @param lua Reference to Lua state
+     */
     void update(sol::state& lua) {
 
         Entity* player = nullptr;
