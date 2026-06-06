@@ -48,47 +48,35 @@ scene = {
 
   },
 
-   
-
-items = {
+  items = {
     [0] =
-    -- Coins abajo
-    {type = "coin", x = 200, y = 700},
-    {type = "coin", x = 250, y = 700},
-    {type = "coin", x = 300, y = 700},
-    {type = "coin", x = 350, y = 700},
+    -- Piso principal
+    {type = "coin", x = 250, y = 760},
+    {type = "coin", x = 300, y = 760},
+    {type = "coin", x = 350, y = 760},
 
-    -- Plataforma arriba izquierda
-    {type = "coin", x = 450, y = 500},
-    {type = "coin", x = 500, y = 500},
-    {type = "coin", x = 550, y = 500},
+    -- Plataforma media
+    {type = "coin", x = 520, y = 540},
+    {type = "coin", x = 570, y = 540},
+    {type = "coin", x = 620, y = 540},
 
-    -- Plataforma arriba centro
-    {type = "coin", x = 750, y = 350},
-    {type = "coin", x = 800, y = 350},
-    {type = "coin", x = 850, y = 350},
+    -- Plataforma alta
+    {type = "coin", x = 900, y = 390},
+    {type = "coin", x = 950, y = 390},
+    {type = "coin", x = 1000, y = 390},
 
-    -- Plataforma alta derecha
-    {type = "coin", x = 1150, y = 250},
-    {type = "coin", x = 1200, y = 250},
-    {type = "coin", x = 1250, y = 250},
+    -- Trampas pegadas al piso principal
+    {type = "trap", x = 730, y = 775},
+    {type = "trap", x = 760, y = 775},
+    {type = "trap", x = 790, y = 775},
 
-    -- Trampas piso principal
-    {type = "trap", x = 600, y = 820},
-    {type = "trap", x = 620, y = 820},
-    {type = "trap", x = 640, y = 820},
-
-    {type = "trap", x = 950, y = 820},
-    {type = "trap", x = 970, y = 820},
-    {type = "trap", x = 990, y = 820},
-
-    -- Trampas plataforma
-    {type = "trap", x = 1300, y = 520},
-    {type = "trap", x = 1320, y = 520},
+    -- Trampas pegadas a plataforma
+    {type = "trap", x = 1240, y = 600},
+    {type = "trap", x = 1270, y = 600},
 
     -- Coins finales
-    {type = "coin", x = 1450, y = 650},
-    {type = "coin", x = 1500, y = 650},
+    {type = "coin", x = 50, y = 760},
+    {type = "coin", x = 50, y = 760},
 },
 
   -- Tabla de acciones y teclas
