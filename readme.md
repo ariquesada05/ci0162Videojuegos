@@ -1,6 +1,6 @@
-# Froggie Forest
+# Creación de Videojuegos - Froggie Forest
 
-> Froggie Forest es un juego de plataformas 2D donde controlas a una rana aventurera que debe atravesar niveles repletos de enemigos, obstáculos y secretos para rescatar a su familia.
+> Froggie Forest es un juego de plataformas 2D donde controlas Rannie, una rana aventurera que debe atravesar niveles repletos de enemigos, obstáculos y secretos para rescatar a su familia.
 
 ## Características
 - Plataformas y exploración en 2D.
@@ -10,11 +10,10 @@
 
 ## Controles
 - Movimiento: Flechas izquierda/derecha
-- Saltar: Barra espaciadora
-- Interactuar / Acción: Tecla `E` (si aplica)
+- Saltar: Z
+- Atacar: X 
 - Pausa / Menú: `Esc`
 
-> Nota: Los controles pueden depender del mapeo del controlador; revisa `scripts` si necesitas personalizarlos.
 
 ## Cómo jugar
 1. Inicia el juego.
@@ -31,12 +30,10 @@
 2. Revisa y satisface las dependencias nativas (`SDL2`, `lua`, etc.).
 3. Desde la raíz del proyecto ejecuta:
 
-```
-make
-./gameEngine
-```
 
-Nota: En Windows puede que necesites compilar desde Visual Studio o ajustar el `makefile`.
+```
+make clean; make; make run
+```
 
 ## Estructura principal del proyecto
 - `assets/` — imágenes, fuentes y sonidos.
@@ -45,17 +42,8 @@ Nota: En Windows puede que necesites compilar desde Visual Studio o ajustar el `
 - `src/` — código fuente C++ (gestores, componentes ECS, sistemas).
 - `maps/` — archivos TMX de los niveles.
 
-## Contribuir
-- Crea una rama con tu cambio: `git checkout -b feat/nombre`.
-- Envía un pull request describiendo los cambios.
-- Asegúrate de no romper compilación y de incluir assets necesarios.
 
-## Licencia
-Indica aquí la licencia elegida (por ejemplo, MIT). Si no hay licencia, especifica cómo quieres que se use el proyecto.
-
-## Créditos
-- Autor: (añade tu nombre o alias)
-- Recursos gráficos / música: revisar `assets/images` y `assets/sounds` para fuentes y atribuciones.
-
-## Contacto
-Si quieres colaborar o reportar bugs, abre un issue en el repositorio o contacta al autor.
+## Instalación de bibliotecas
+```
+sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev lua5.3 liblua5.3-dev
+```
