@@ -29,6 +29,7 @@ isDead = false
 function update()
   local vel_x, vel_y = get_velocity(this)
   vel_x = 0
+  
 
   -- Salto 
   if is_action_activated("jump") then
@@ -137,7 +138,11 @@ function on_collision(other)
   end
 
   if get_tag(other) == "enemy01" then
-    on_damage(other)
+    if player_is_attacking then
+      take_damage_enemy(other)
+    else
+      on_damage(other)
+    end
   end
 
    if get_tag(other) == "trap" then
@@ -176,8 +181,23 @@ function on_damage(other)
       die()
     end
   end
+end
 
 
+function take_damage_enemy(enemy)
+  local health = get_health(enemy)
+
+  print("Vida enemigo antes:", health)
+
+  health = health - 10
+
+  increment_health(enemy, health)
+
+  print("Vida enemigo despues:", health)
+
+  if health <= 0 then
+    kill_entity(enemy)
+  end
 end
 
 ----------------------------------------------------------------
