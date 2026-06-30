@@ -12,7 +12,7 @@
 #include <unordered_map>
 #include <optional>
 
-#include "../components/StatsComponent.hpp"
+#include "../Components/StatsComponent.hpp"
 #include "../ECS/ECS.hpp"
 
 /**

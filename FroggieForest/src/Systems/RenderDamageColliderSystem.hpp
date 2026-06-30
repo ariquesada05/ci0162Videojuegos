@@ -7,7 +7,7 @@
 #define RENDERDAMAGECOLLIDER_SYSTEM_HPP
 
 #include <SDL2/SDL.h>
-#include "../Components/damageColliderComponent.hpp"
+#include "../Components/DamageColliderComponent.hpp"
 #include "../Components/TransformComponent.hpp"
 #include "../ECS/ECS.hpp"
 

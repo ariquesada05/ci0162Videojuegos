@@ -93,7 +93,7 @@
   <object id="49" name="enemy_collider" x="1078.03" y="716.939" width="46.6061" height="64.7879"/>
  </objectgroup>
  <objectgroup id="5" name="spawn">
-  <object id="39" name="enemy01" x="238.144" y="696.053" width="33.5" height="94.3333"/>
-  <object id="48" name="enemy01" x="1023.25" y="688.833" width="33.5" height="94.3333"/>
+  <object id="39" name="enemy01" x="238.144" y="738.053" width="33.5" height="33.5"/>
+  <object id="48" name="enemy01" x="1023.25" y="735.833" width="33.5" height="33.5"/>
  </objectgroup>
 </map>
