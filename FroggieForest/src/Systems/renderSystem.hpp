@@ -10,6 +10,9 @@
 
 #include <SDL2/SDL.h>
 
+#include <algorithm>
+#include <vector>
+
 #include "../ECS/ECS.hpp"
 #include "../AssetManager/AssetManager.hpp"
 #include "../Components/TransformComponent.hpp"
@@ -42,7 +45,18 @@ public:
    */
   void update(SDL_Renderer *renderer, const std::unique_ptr<AssetManager> &AssetManager, SDL_Rect &camera)
   {
-    for (auto &entity : getEntities())
+    // Dibujar respetando el zIndex: primero las capas bajas (fondo, monedas)
+    // y encima las altas (enemigos, jugador). stable_sort conserva el orden
+    // de creación entre sprites del mismo zIndex.
+    std::vector<Entity> entities = getEntities();
+    std::stable_sort(entities.begin(), entities.end(),
+                     [](Entity a, Entity b)
+                     {
+                       return a.getComponent<SpriteComponent>().zIndex <
+                              b.getComponent<SpriteComponent>().zIndex;
+                     });
+
+    for (auto &entity : entities)
     {
       const auto &sprite = entity.getComponent<SpriteComponent>();
       const auto &transform = entity.getComponent<TransformComponent>();

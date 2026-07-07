@@ -53,6 +53,7 @@ public:
     lua.set_function("set_position", setPosition);
 
     lua.set_function("get_size", getSize);
+    lua.set_function("is_solid_at", isSolidAt);
 
     lua.set_function("play_sound", PlaySound);
     lua.set_function("play_music", PlayMusic);

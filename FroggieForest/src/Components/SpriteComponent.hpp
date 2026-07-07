@@ -24,6 +24,7 @@ public:
   int height;            ///< Height of the sprite frame in pixels
   SDL_Rect srcRect;      ///< Source rectangle in the texture
   bool flip = false;     ///< Whether to flip the sprite horizontally
+  int zIndex = 0;        ///< Draw order: higher values are rendered on top
 
   /**
    * @brief Construct a SpriteComponent
@@ -32,13 +33,15 @@ public:
    * @param height The sprite height (default: 0)
    * @param srcRectX The X position in the texture (default: 0)
    * @param srcRectY The Y position in the texture (default: 0)
+   * @param zIndex The draw order layer (default: 0)
    */
-  SpriteComponent(const std::string &textureID = "none", int width = 0, int height = 0, int srcRectX = 0, int srcRectY = 0)
+  SpriteComponent(const std::string &textureID = "none", int width = 0, int height = 0, int srcRectX = 0, int srcRectY = 0, int zIndex = 0)
   {
     this->textureID = textureID;
     this->width = width;
     this->height = height;
     this->srcRect = {srcRectX, srcRectY, width, height};
+    this->zIndex = zIndex;
   }
 
   /**

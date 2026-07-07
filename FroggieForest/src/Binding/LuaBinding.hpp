@@ -28,6 +28,7 @@
 #include "../AudioManager/AudioManager.hpp"
 #include "../StatsManager/StatsManager.hpp"
 #include "../Components/LapseComponent.hpp"
+#include "../Systems/boxCollisionSystem.hpp"
 
 /// @defgroup LuaBindings C++ to Lua Bindings
 /// @brief Functions exposed to Lua for game manipulation
@@ -205,6 +206,52 @@ std::tuple<int, int> getSize(Entity entity)
       static_cast<int>(sprite.width * transform.scale.x),
       static_cast<int>(sprite.height * transform.scale.y) //
   };
+}
+
+//* World queries
+
+/**
+ * @brief Check whether a world point overlaps a solid map collider.
+ *
+ * Considera sólidos únicamente los colliders del mapa etiquetados como
+ * "floor" o "wall". Sirve para que los enemigos detecten paredes (delante)
+ * y bordes de abismo (ausencia de suelo delante) sin depender de la física.
+ *
+ * @param x Coordenada X del mundo a consultar
+ * @param y Coordenada Y del mundo a consultar
+ * @return true si el punto cae dentro de un suelo o pared
+ */
+bool isSolidAt(float x, float y)
+{
+  auto &registry = Game::GetInstance().registry;
+
+  for (auto &entity : registry->getSystem<BoxCollisionSystem>().getEntities())
+  {
+    if (!entity.hasComponent<TagComponent>())
+    {
+      continue;
+    }
+
+    const std::string &tag = entity.getComponent<TagComponent>().tag;
+    if (tag != "floor" && tag != "wall")
+    {
+      continue;
+    }
+
+    const auto &transform = entity.getComponent<TransformComponent>();
+    const auto &collider = entity.getComponent<BoxColliderComponent>();
+
+    const float left = transform.position.x + collider.offset.x;
+    const float top = transform.position.y + collider.offset.y;
+
+    if (x >= left && x <= left + collider.width &&
+        y >= top && y <= top + collider.height)
+    {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 

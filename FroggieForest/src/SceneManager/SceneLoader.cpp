@@ -339,12 +339,16 @@ if (sol::optional<sol::table> hasTagComponent = components["tag"];
   if (sol::optional<sol::table> hasSpriteComponent = components["sprite"];
       hasSpriteComponent != sol::nullopt)
   {
+    // z_index es opcional; por defecto 0 (misma capa que el fondo/tiles)
+    int zIndex = components["sprite"]["z_index"].get_or(0);
+
     newEntity.addComponent<SpriteComponent>(
         components["sprite"]["assetId"],
         components["sprite"]["width"],
         components["sprite"]["height"],
         components["sprite"]["src_rect"]["x"],
-        components["sprite"]["src_rect"]["y"]);
+        components["sprite"]["src_rect"]["y"],
+        zIndex);
   }
 
   //* TextComponent
@@ -1044,7 +1048,8 @@ void SceneLoader::LoadItems(
                 32,
                 32,
                 0,
-                0
+                0,
+                1 // capa de items: por debajo de enemigos y jugador
             );
 
             entity.addComponent<TagComponent>("coin");
@@ -1057,7 +1062,8 @@ void SceneLoader::LoadItems(
                 32,
                 32,
                 0,
-                0
+                0,
+                1 // capa de items: por debajo de enemigos y jugador
             );
 
             entity.addComponent<TagComponent>("trap");
