@@ -115,8 +115,8 @@ void Game::init()
     return;
   }
 
-  windowWidth = 1600;
-  windowHeight = 900;
+  windowWidth = 800;
+  windowHeight = 450;
 
   window = SDL_CreateWindow(
       "Froggie Forest",

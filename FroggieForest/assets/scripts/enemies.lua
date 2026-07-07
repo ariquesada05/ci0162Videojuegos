@@ -6,7 +6,8 @@ enemies =
           assetId = "enemy01_idle",
           width = 32,
           height = 32,
-          src_rect = {x = 0, y = 0}, 
+          src_rect = {x = 0, y = 0},
+          z_index = 2, -- por encima de las monedas
         },
     animation = {
           num_frames = 9,

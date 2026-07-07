@@ -148,6 +148,7 @@ scene = {
           width = 32,
           height = 32,
           src_rect = {x = 0, y = 0},
+          z_index = 3, -- el jugador se dibuja por encima de todo
         },
         transform = {
           position = {x = 20.0, y = 300.0},
