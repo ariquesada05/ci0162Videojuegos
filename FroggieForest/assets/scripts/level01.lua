@@ -20,13 +20,13 @@ scene = {
   -- Tabla con la Info de las animaciones
   animations = {
     [0] = 
-    {animation_id = "player_frog_idle", texture_id = "frog_idle", w = 32, h = 32, num_frames = 11, speed_rate = 5, is_loop = true,},
-    {animation_id = "player_frog_jump", texture_id = "frog_jump", w = 32, h = 32, num_frames = 01, speed_rate = 01, is_loop = true,},
-    {animation_id = "player_frog_fall", texture_id = "frog_fall", w = 32, h = 32, num_frames = 01, speed_rate = 01, is_loop = true,},
-    {animation_id = "player_frog_run" , texture_id = "frog_run",  w = 32, h = 32, num_frames = 10, speed_rate = 10, is_loop = true,},
-    {animation_id = "player_frog_dash" , texture_id = "frog_run",  w = 32, h = 32, num_frames = 10, speed_rate = 15, is_loop = true,},
-    {animation_id = "player_frog_die" , texture_id = "frog_die",  w = 32, h = 32, num_frames = 3, speed_rate = 5, is_loop = true,},
-    {animation_id = "player_frog_attack", texture_id = "frog_attack", w = 48, h = 32, num_frames = 8, speed_rate = 4, is_loop = true,},
+    {animation_id = "player_frog_idle", texture_id = "frog_idle", w = 48, h = 48, num_frames = 11, speed_rate = 5, is_loop = true,},
+    {animation_id = "player_frog_jump", texture_id = "frog_jump", w = 48, h = 48, num_frames = 01, speed_rate = 01, is_loop = true,},
+    {animation_id = "player_frog_fall", texture_id = "frog_fall", w = 48, h = 48, num_frames = 01, speed_rate = 01, is_loop = true,},
+    {animation_id = "player_frog_run" , texture_id = "frog_run",  w = 48, h = 48, num_frames = 10, speed_rate = 10, is_loop = true,},
+    {animation_id = "player_frog_dash" , texture_id = "frog_dash",  w = 48, h = 48, num_frames = 10, speed_rate = 15, is_loop = true,},
+    {animation_id = "player_frog_die" , texture_id = "frog_die",  w = 48, h = 48, num_frames = 3, speed_rate = 5, is_loop = true,},
+    {animation_id = "player_frog_attack", texture_id = "frog_attack", w = 64, h = 48, num_frames = 8, speed_rate = 4, is_loop = true,},
     {animation_id = "enemy01_idle", texture_id = "enemy01_idle", w = 32, h = 32, num_frames = 9, speed_rate = 2, is_loop = true,},
     {animation_id = "enemy01_run" , texture_id = "enemy01_run",  w = 32, h = 32, num_frames = 9, speed_rate = 3, is_loop = true,},
   
@@ -131,8 +131,8 @@ scene = {
         camera_follow = {
         },
         box_collider = {
-          width = 32,
-          height = 32,
+          width = 48,
+          height = 48,
           offset = {x = 0, y = 0},
         },
         rigid_body = {
@@ -169,8 +169,8 @@ scene = {
               }
         },
         damage_collider = {
-        width = 32,
-        height = 32,
+        width = 64,
+        height = 48,
         offset = {x = 0, y = 0},
       },
       }
