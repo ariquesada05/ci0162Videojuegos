@@ -7,6 +7,7 @@ scene = {
     {assetId = "frog_jump", filePath = "./assets/images/frog_jump.png",},
     {assetId = "frog_fall", filePath = "./assets/images/frog_fall.png",},
     {assetId = "frog_run", filePath = "./assets/images/frog_run.png",},
+    {assetId = "frog_dash", filePath = "./assets/images/frog_run.png",},
     {assetId = "frog_die", filePath = "./assets/images/frog_die.png",},
     {assetId = "frog_attack", filePath = "./assets/images/frog_attack.png",},
     {assetId = "enemy01_idle", filePath = "./assets/images/enemy01_idle.png",},
@@ -23,6 +24,7 @@ scene = {
     {animation_id = "player_frog_jump", texture_id = "frog_jump", w = 32, h = 32, num_frames = 01, speed_rate = 01, is_loop = true,},
     {animation_id = "player_frog_fall", texture_id = "frog_fall", w = 32, h = 32, num_frames = 01, speed_rate = 01, is_loop = true,},
     {animation_id = "player_frog_run" , texture_id = "frog_run",  w = 32, h = 32, num_frames = 10, speed_rate = 10, is_loop = true,},
+    {animation_id = "player_frog_dash" , texture_id = "frog_run",  w = 32, h = 32, num_frames = 10, speed_rate = 15, is_loop = true,},
     {animation_id = "player_frog_die" , texture_id = "frog_die",  w = 32, h = 32, num_frames = 3, speed_rate = 5, is_loop = true,},
     {animation_id = "player_frog_attack", texture_id = "frog_attack", w = 48, h = 32, num_frames = 8, speed_rate = 4, is_loop = true,},
     {animation_id = "enemy01_idle", texture_id = "enemy01_idle", w = 32, h = 32, num_frames = 9, speed_rate = 2, is_loop = true,},
@@ -88,6 +90,7 @@ scene = {
     {action = "right", key = 1073741903},
     {action = "jump", key = 122},
     {action = "attack", key = 120},
+    {action = "dash", key = 99},
   },
 
   -- Tabla de acciones y botones del ratón

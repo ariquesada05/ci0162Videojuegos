@@ -26,7 +26,7 @@ scene = {
 
 
   -- Tabla de acciones y teclas
- keys = {
+   keys = {
     [0] = 
     {action = "up", key = 1073741906},
     {action = "left", key = 1073741904},
@@ -34,6 +34,7 @@ scene = {
     {action = "right", key = 1073741903},
     {action = "jump", key = 122},
     {action = "attack", key = 120},
+    {action = "dash", key = 99},
   },
 
   -- Tabla de acciones y botones del ratón

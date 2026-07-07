@@ -6,6 +6,7 @@ player_states = {
   FALL = 3,
   DIE = 4,
   ATTACK = 5,
+  DASH = 6,
 }
 
 player_state = player_states["IDLE"]
@@ -23,13 +24,25 @@ dieFrames = 30
 dieTimer = 0
 isDead = false  
 
+
+player_dash_force = 500
+dash_duration = 10
+dash_cooldown_max = 40
+
+is_dashing = false
+dash_timer = 0
+dash_cooldown = 0
+dash_direction = 1
 ----------------------------------------------------------------
 -- UPDATE
 ----------------------------------------------------------------
 function update()
   local vel_x, vel_y = get_velocity(this)
   vel_x = 0
-  
+
+  if dash_cooldown > 0 then
+    dash_cooldown = dash_cooldown - 1
+  end
 
   -- Salto 
   if is_action_activated("jump") then
@@ -52,6 +65,28 @@ function update()
     attack()
   end
 
+  -- Iniciar dash
+if is_action_activated("dash") then
+  if not is_dashing and dash_cooldown <= 0 and player_state ~= player_states["DIE"] then
+    print("Dash")
+    is_dashing = true
+    dash_timer = 0
+    dash_cooldown = dash_cooldown_max
+  end
+end
+
+-- Actualizar dash
+  if is_dashing then
+    dash_timer = dash_timer + 1
+    vel_x = dash_direction * player_dash_force
+    vel_y = 0
+
+    if dash_timer >= dash_duration then
+      is_dashing = false
+      dash_timer = 0
+    end
+  end
+
   if isDead then
     dieTimer = dieTimer + 1
 
@@ -62,12 +97,13 @@ function update()
     return
 end
 
-  -- Movimiento (lo dejas activo incluso atacando; si no quieres, añade "and not player_is_attacking")
   if is_action_activated("left") then
     vel_x = vel_x - player_speed
+    dash_direction = -1
   end
   if is_action_activated("right") then
     vel_x = vel_x + player_speed
+    dash_direction = 1
   end
 
   if player_state == player_states["DIE"] then
@@ -241,6 +277,21 @@ function update_animation_state()
     return
   end
 
+  -- Dash
+  if is_dashing then
+    if player_state ~= player_states["DASH"] then
+      player_state = player_states["DASH"]
+      change_animation(this, "player_frog_dash")
+    end
+
+    if dash_direction > 0 then
+      flip_sprite(this, false)
+    else
+      flip_sprite(this, true)
+    end
+
+    return
+  end
   -- Jugador cae
   if y_vel >= 0.001 then
     if player_state ~= player_states["FALL"] then
