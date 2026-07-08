@@ -36,10 +36,10 @@ scene = {
     {animation_id = "enemy01_idle", texture_id = "enemy01_idle", w = 32, h = 32, num_frames = 9, speed_rate = 2, is_loop = true,},
     {animation_id = "enemy01_run" , texture_id = "enemy01_run",  w = 32, h = 32, num_frames = 9, speed_rate = 3, is_loop = true,},
 
-    {animation_id = "platform_3", texture_id = "platform1", w = 128, h = 128, num_frames = 1, speed_rate = 1, is_loop = true},
-    {animation_id = "platform_2", texture_id = "platform2", w = 128, h = 128, num_frames = 1, speed_rate = 1, is_loop = true},
-    {animation_id = "platform_1", texture_id = "platform3", w = 128, h = 128, num_frames = 1, speed_rate = 1, is_loop = true},
-    {animation_id = "platform_0", texture_id = "platform4", w = 128, h = 128, num_frames = 1, speed_rate = 1, is_loop = true},
+    {animation_id = "platform_3", texture_id = "platform1", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
+    {animation_id = "platform_2", texture_id = "platform2", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
+    {animation_id = "platform_1", texture_id = "platform3", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
+    {animation_id = "platform_0", texture_id = "platform4", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
   
   },
 

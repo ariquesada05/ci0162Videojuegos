@@ -86,7 +86,7 @@
 </data>
  </layer>
  <objectgroup id="5" name="platforms">
-  <object id="66" name="dissapears" x="2520.5" y="871.5" width="110.5" height="24"/>
+  <object id="66" name="dissapears" x="2520.5" y="950" width="110.5" height="24"/>
  </objectgroup>
  <objectgroup id="6" name="traps"/>
  <objectgroup id="7" name="powers"/>
