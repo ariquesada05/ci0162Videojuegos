@@ -15,7 +15,13 @@ scene = {
     {assetId = "terrain", filePath = "./assets/images/terrain.png",},
     {assetId = "coin", filePath = "./assets/images/coin.png"},
     {assetId = "spikes", filePath = "./assets/images/trap1.png"},
+
+    {assetId = "platform1", filePath = "./assets/images/platform1.png"},
+    {assetId = "platform2", filePath = "./assets/images/platform2.png"},
+    {assetId = "platform3", filePath = "./assets/images/platform3.png"},
+    {assetId = "platform4", filePath = "./assets/images/platform4.png"},
   },
+  
 
   -- Tabla con la Info de las animaciones
   animations = {
@@ -29,6 +35,11 @@ scene = {
     {animation_id = "player_frog_attack", texture_id = "frog_attack", w = 64, h = 48, num_frames = 8, speed_rate = 4, is_loop = true,},
     {animation_id = "enemy01_idle", texture_id = "enemy01_idle", w = 32, h = 32, num_frames = 9, speed_rate = 2, is_loop = true,},
     {animation_id = "enemy01_run" , texture_id = "enemy01_run",  w = 32, h = 32, num_frames = 9, speed_rate = 3, is_loop = true,},
+
+    {animation_id = "platform_3", texture_id = "platform1", w = 128, h = 128, num_frames = 1, speed_rate = 1, is_loop = true},
+    {animation_id = "platform_2", texture_id = "platform2", w = 128, h = 128, num_frames = 1, speed_rate = 1, is_loop = true},
+    {animation_id = "platform_1", texture_id = "platform3", w = 128, h = 128, num_frames = 1, speed_rate = 1, is_loop = true},
+    {animation_id = "platform_0", texture_id = "platform4", w = 128, h = 128, num_frames = 1, speed_rate = 1, is_loop = true},
   
   },
 

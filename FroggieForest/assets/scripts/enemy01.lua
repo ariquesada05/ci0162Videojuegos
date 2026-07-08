@@ -1,9 +1,3 @@
--- Enemigo tipo "goomba": patrulla de lado a lado y se devuelve al chocar
--- con una pared o al llegar al borde de una plataforma (abismo).
---
--- La dirección se deduce del signo de la velocidad, que es propia de cada
--- entidad; así varios enemigos se mueven de forma independiente sin compartir
--- estado global.
 
 enemy_speed = 60
 
