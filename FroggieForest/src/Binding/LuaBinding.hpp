@@ -124,6 +124,12 @@ void KillEntity(Entity entity)
     entity.Kill();
 }
 
+/** @brief Unique id of an entity (útil para estado por-entidad en Lua) */
+int getEntityId(Entity entity)
+{
+  return entity.getID();
+}
+
 //* Controls
 
 bool IsActionActivated(const std::string &action)
@@ -258,6 +264,47 @@ bool isSolidAt(float x, float y)
   }
 
   return false;
+}
+
+/**
+ * @brief Get the player's center position in world coordinates.
+ *
+ * Busca la entidad con tag "player" y devuelve el centro de su sprite.
+ * Lo usan los enemigos que persiguen al jugador (p. ej. la abeja).
+ * Si no hay jugador, devuelve (0, 0).
+ *
+ * @return {x, y} centro del jugador
+ */
+std::tuple<int, int> getPlayerPosition()
+{
+  auto &registry = Game::GetInstance().registry;
+
+  for (auto &entity : registry->getSystem<BoxCollisionSystem>().getEntities())
+  {
+    if (!entity.hasComponent<TagComponent>() ||
+        entity.getComponent<TagComponent>().tag != "player")
+    {
+      continue;
+    }
+
+    const auto &transform = entity.getComponent<TransformComponent>();
+
+    int w = 0;
+    int h = 0;
+    if (entity.hasComponent<SpriteComponent>())
+    {
+      const auto &sprite = entity.getComponent<SpriteComponent>();
+      w = static_cast<int>(sprite.width * transform.scale.x);
+      h = static_cast<int>(sprite.height * transform.scale.y);
+    }
+
+    return {
+        static_cast<int>(transform.position.x) + w / 2,
+        static_cast<int>(transform.position.y) + h / 2 //
+    };
+  }
+
+  return {0, 0};
 }
 
 

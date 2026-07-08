@@ -181,6 +181,14 @@ function on_collision(other)
     end
   end
 
+  if get_tag(other) == "bee" then
+    if player_is_attacking then
+      take_damage_enemy(other)
+    else
+      on_damage(other)
+    end
+  end
+
    if get_tag(other) == "trap" then
     on_damage(other)
   end
@@ -195,27 +203,34 @@ function on_damage(other)
 
   local otherTag = get_tag(other)
 
+  -- Daño según el tipo de enemigo
+  local dmg = 0
   if otherTag == "enemy01" or otherTag == "trap" then
+    dmg = 10
+  elseif otherTag == "bee" then
+    dmg = 15
+  else
+    return
+  end
 
-    if damage_cooldown > 0 then
-      return
-    end
+  if damage_cooldown > 0 then
+    return
+  end
 
-    damage_cooldown = 60
+  damage_cooldown = 60
 
-    local health = get_health(this)
+  local health = get_health(this)
 
-    print("Health received:", health)
+  print("Health received:", health)
 
-    health = health - 10
+  health = health - dmg
 
-    increment_health(this, health)
+  increment_health(this, health)
 
-    print("Vida player:", health)
+  print("Vida player:", health)
 
-    if health <= 0 then
-      die()
-    end
+  if health <= 0 then
+    die()
   end
 end
 
@@ -233,6 +248,9 @@ function take_damage_enemy(enemy)
 
   if health <= 0 then
     kill_entity(enemy)
+  elseif get_tag(enemy) == "bee" then
+    -- Si la abeja sobrevive al golpe, muestra su animación de daño.
+    change_animation(enemy, "bee_hit")
   end
 end
 

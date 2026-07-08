@@ -54,6 +54,8 @@ public:
 
     lua.set_function("get_size", getSize);
     lua.set_function("is_solid_at", isSolidAt);
+    lua.set_function("get_player_position", getPlayerPosition);
+    lua.set_function("get_id", getEntityId);
 
     lua.set_function("play_sound", PlaySound);
     lua.set_function("play_music", PlayMusic);
