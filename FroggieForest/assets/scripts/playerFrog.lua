@@ -25,7 +25,7 @@ dieTimer = 0
 isDead = false  
 
 
-player_dash_force = 500
+player_dash_force = 600
 dash_duration = 10
 dash_cooldown_max = 40
 
@@ -149,11 +149,12 @@ end
 ----------------------------------------------------------------
 function on_collision(other)
 
-  if get_tag(other) == "floor" then
-    local vel_x, vel_y = get_velocity(this)
-    if vel_y == 0 then
+  if get_tag(other) == "floor" or get_tag(other) == "wall" then
+        print("TOCANDO FLOOR")
+  --  local vel_x, vel_y = get_velocity(this)
+    --if vel_y == 0 then
       player_can_jump = true
-    end
+    --end
   end
 
   if get_tag(other) == "obs" then

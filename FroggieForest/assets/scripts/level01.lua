@@ -12,10 +12,16 @@ scene = {
     {assetId = "frog_attack", filePath = "./assets/images/frog_attack.png",},
     {assetId = "enemy01_idle", filePath = "./assets/images/enemy01_idle.png",},
     {assetId = "enemy01_run", filePath = "./assets/images/enemy01_run.png",},
-    {assetId = "terrain", filePath = "./assets/images/terrain.png",},
+    {assetId = "forest", filePath = "./assets/images/forest.png",},
     {assetId = "coin", filePath = "./assets/images/coin.png"},
     {assetId = "spikes", filePath = "./assets/images/trap1.png"},
+
+    {assetId = "platform1", filePath = "./assets/images/platform1.png"},
+    {assetId = "platform2", filePath = "./assets/images/platform2.png"},
+    {assetId = "platform3", filePath = "./assets/images/platform3.png"},
+    {assetId = "platform4", filePath = "./assets/images/platform4.png"},
   },
+  
 
   -- Tabla con la Info de las animaciones
   animations = {
@@ -29,6 +35,11 @@ scene = {
     {animation_id = "player_frog_attack", texture_id = "frog_attack", w = 60, h = 24, num_frames = 7, speed_rate = 7, is_loop = true, offset_x = -18,},
     {animation_id = "enemy01_idle", texture_id = "enemy01_idle", w = 32, h = 32, num_frames = 9, speed_rate = 2, is_loop = true,},
     {animation_id = "enemy01_run" , texture_id = "enemy01_run",  w = 32, h = 32, num_frames = 9, speed_rate = 3, is_loop = true,},
+
+    {animation_id = "platform_3", texture_id = "platform1", w = 128, h = 128, num_frames = 1, speed_rate = 1, is_loop = true},
+    {animation_id = "platform_2", texture_id = "platform2", w = 128, h = 128, num_frames = 1, speed_rate = 1, is_loop = true},
+    {animation_id = "platform_1", texture_id = "platform3", w = 128, h = 128, num_frames = 1, speed_rate = 1, is_loop = true},
+    {animation_id = "platform_0", texture_id = "platform4", w = 128, h = 128, num_frames = 1, speed_rate = 1, is_loop = true},
   
   },
 
@@ -97,9 +108,9 @@ scene = {
   buttons = {},
 
   maps = {
-    map_path = "./assets/maps/level01.tmx",
-    tile_path = "./assets/maps/terrain.tsx",
-    tile_name = "terrain",
+    map_path = "./assets/maps/nivel01.tmx",
+    tile_path = "./assets/maps/forest si.tsx",
+    tile_name = "forest",
   },
 
   stats = {
@@ -151,7 +162,7 @@ scene = {
           z_index = 3, -- el jugador se dibuja por encima de todo
         },
         transform = {
-          position = {x = 20.0, y = 300.0},
+          position = {x = 40.0, y = 200.0},
           scale = {x = 2.0, y = 2.0},
           rotation = 0.0,
         },
