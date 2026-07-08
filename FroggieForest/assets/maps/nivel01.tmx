@@ -86,19 +86,7 @@
 </data>
  </layer>
  <objectgroup id="5" name="platforms">
-  <object id="66" name="dissapears" x="2497.5" y="857.5" width="133.5" height="38"/>
- </objectgroup>
- <objectgroup id="6" name="traps">
-  <object id="135" name="trap1" x="1356.5" y="1126.5" width="17.5" height="21.5"/>
-  <object id="136" name="trap1" x="1334.25" y="1127" width="17.5" height="21"/>
-  <object id="137" name="trap1" x="1379.75" y="1127.5" width="17.5" height="21"/>
-  <object id="138" name="trap1" x="1402.75" y="1127" width="17.5" height="22"/>
- </objectgroup>
- <objectgroup id="7" name="items">
-  <object id="131" name="coin" x="84.5" y="1100" width="31.5" height="26.5"/>
-  <object id="132" name="coin" x="142.5" y="1101" width="24.5" height="24"/>
-  <object id="140" name="diamond" x="2919.75" y="1027" width="24.5" height="24"/>
-  <object id="141" name="possion" x="3031.75" y="985" width="24.5" height="24"/>
+  <object id="66" name="dissapears" x="2520.5" y="871.5" width="110.5" height="24"/>
  </objectgroup>
  <objectgroup id="3" name="spawn">
   <object id="60" name="enemy01" x="878.75" y="1080.83" width="36.5" height="33.3333"/>
