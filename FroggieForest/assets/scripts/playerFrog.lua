@@ -31,6 +31,8 @@ dieFrames = 30
 dieTimer = 0
 isDead = false  
 
+diamond_timer = 0
+invulnerable = false
 
 player_dash_force = 600
 dash_duration = 10
@@ -104,6 +106,16 @@ end
       is_dashing = false
       dash_timer = 0
     end
+  end
+
+  -- Contador de invulnerabilidad del diamante
+  if invulnerable then
+      diamond_timer = diamond_timer - 1
+
+      if diamond_timer <= 0 then
+          invulnerable = false
+          print("Diamante terminado")
+      end
   end
 
   if isDead then
@@ -188,6 +200,22 @@ function on_collision(other)
 
     kill_entity(other)
   end
+
+  if get_tag(other) == "possion" then
+    local health = get_health(this)
+
+    increment_health(this, health + 5)
+
+    kill_entity(other)
+  end 
+
+  if get_tag(other) == "diamond" then
+        invulnerable = true
+        diamond_timer = 180      
+
+        kill_entity(other)
+    end
+  
   if get_tag(other) == "die" then
     die()
   end

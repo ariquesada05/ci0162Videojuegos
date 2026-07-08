@@ -14,7 +14,10 @@ scene = {
     {assetId = "enemy01_run", filePath = "./assets/images/enemy01_run.png",},
     {assetId = "forest", filePath = "./assets/images/forest.png",},
     {assetId = "coin", filePath = "./assets/images/coin.png"},
-    {assetId = "spikes", filePath = "./assets/images/trap1.png"},
+    {assetId = "trap1", filePath = "./assets/images/trap1.png"},
+    {assetId = "possion", filePath = "./assets/images/item1.png"},
+    {assetId = "diamond", filePath = "./assets/images/item3.png"},
+    {assetId = "trap2", filePath = "./assets/images/trap2.png"},
 
     {assetId = "platform1", filePath = "./assets/images/platform1.png"},
     {assetId = "platform2", filePath = "./assets/images/platform2.png"},

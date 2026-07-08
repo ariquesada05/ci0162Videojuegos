@@ -120,7 +120,7 @@ private:
                                 tinyxml2::XMLElement *objectGroup,
                                 std::unique_ptr<Registry> &registry);
 
-  void LoadTraps(tinyxml2::XMLElement *objectGroup,
+  void LoadTraps(sol::state &lua, tinyxml2::XMLElement *objectGroup,
                                std::unique_ptr<Registry> &registry);
 
 

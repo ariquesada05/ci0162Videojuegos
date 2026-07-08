@@ -678,7 +678,7 @@ void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &regis
       }
       else if (name.compare("traps") == 0)
       {
-          LoadTraps(objectGroup, registry);
+          LoadTraps(lua, objectGroup, registry);
       }
 
       objectGroup = objectGroup->NextSiblingElement("objectgroup");
@@ -1059,15 +1059,32 @@ void SceneLoader::LoadItems(tinyxml2::XMLElement *objectGroup,
     }
 }
 
-void SceneLoader::LoadTraps(tinyxml2::XMLElement *objectGroup,
-                               std::unique_ptr<Registry> &registry)
+void SceneLoader::LoadTraps(sol::state &lua,
+                            tinyxml2::XMLElement *objectGroup,
+                            std::unique_ptr<Registry> &registry)
 {
+    sol::load_result load_result =
+        lua.load_file("./assets/scripts/traps.lua");
+
+    if (!load_result.valid())
+    {
+        sol::error error = load_result;
+        std::cerr << "Failed to load traps script: "
+                  << error.what() << std::endl;
+        return;
+    }
+
+    load_result();
+
+    sol::table trapsTable = lua["traps"];
+
     tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
 
     while (object != nullptr)
     {
         const char *name = nullptr;
-        int x = 0, y = 0;
+        int x = 0;
+        int y = 0;
 
         object->QueryStringAttribute("name", &name);
         object->QueryIntAttribute("x", &x);
@@ -1075,16 +1092,16 @@ void SceneLoader::LoadTraps(tinyxml2::XMLElement *objectGroup,
 
         std::string tag = name ? name : "unknown";
 
-        Entity entity = registry->createEntity();
+        sol::optional<sol::table> hasTrap = trapsTable[tag];
 
-        entity.addComponent<TransformComponent>(glm::vec2(x, y));
-        entity.addComponent<BoxColliderComponent>(32, 32);
-        entity.addComponent<RigidBodyComponent>(false, false, 1);
-
-        if (tag == "trap")
+        if (hasTrap != sol::nullopt)
         {
-            entity.addComponent<SpriteComponent>("spikes", 32, 32, 0, 0, 1);
-            entity.addComponent<TagComponent>("trap");
+            Entity trap = registry->createEntity();
+
+            LoadEntity(lua, trap, hasTrap.value());
+
+            auto &transform = trap.getComponent<TransformComponent>();
+            transform.position = glm::vec2(x, y);
         }
 
         object = object->NextSiblingElement("object");
