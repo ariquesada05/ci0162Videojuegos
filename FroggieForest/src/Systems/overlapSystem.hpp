@@ -6,6 +6,7 @@
 #ifndef OVERLAP_SYSTEM_HPP
 #define OVERLAP_SYSTEM_HPP
 
+#include <algorithm>
 #include <memory>
 
 #include "../Components/BoxColliderComponent.hpp"
@@ -41,61 +42,11 @@ private:
    * @param dir Direction to check
    * @return bool True if collision exists in direction
    */
-  bool CheckCollision(Entity a, Entity b, Direction dir)
-  {
-    auto &aCollider = a.getComponent<BoxColliderComponent>();
-    auto &bCollider = b.getComponent<BoxColliderComponent>();
-    auto &aTransform = a.getComponent<TransformComponent>();
-    auto &bTransform = b.getComponent<TransformComponent>();
-
-    float aX = aTransform.previousPosition.x;
-    float aY = aTransform.previousPosition.y;
-    float aW = static_cast<float>(aCollider.width);
-    float aH = static_cast<float>(aCollider.height);
-
-    float bX = bTransform.previousPosition.x;
-    float bY = bTransform.previousPosition.y;
-    float bW = static_cast<float>(bCollider.width);
-    float bH = static_cast<float>(bCollider.height);
-
-    if (Direction::TOP == dir)
-    {
-      return (
-          aX < bX + bW &&
-          aX + aW > bX &&
-          aY > bY //
-      );
-    }
-    if (Direction::BOTTOM == dir)
-    {
-      return (
-          aX < bX + bW &&
-          aX + aW > bX &&
-          aY < bY //
-      );
-    }
-
-    if (Direction::LEFT == dir)
-    {
-      return (
-          aY < bY + bH &&
-          aY + aH > bY &&
-          aX > bX //
-      );
-    }
-
-    if (Direction::RIGHT == dir)
-    {
-      return (
-          aY < bY + bH &&
-          aY + aH > bY &&
-          aX < bX //
-      );
-    }
-
-    return false;
-  }
-
+  // Empuja a 'b' (entidad dinámica) fuera de 'a' (entidad estática/pesada)
+  // resolviendo SOLO el eje de menor penetración. Así un aterrizaje (mucho
+  // solapamiento horizontal, poco vertical) se resuelve hacia arriba y no
+  // se dispara además un empuje lateral que haría que el piso actuara como
+  // pared.
   void AvoidOverlap(Entity a, Entity b)
   {
     auto &aCollider = a.getComponent<BoxColliderComponent>();
@@ -105,26 +56,57 @@ private:
     auto &bTransform = b.getComponent<TransformComponent>();
     auto &bRigidBody = b.getComponent<RigidBodyComponent>();
 
-    if (CheckCollision(a, b, Direction::TOP))
+    float aX = aTransform.position.x;
+    float aY = aTransform.position.y;
+    float aW = static_cast<float>(aCollider.width);
+    float aH = static_cast<float>(aCollider.height);
+
+    float bX = bTransform.position.x;
+    float bY = bTransform.position.y;
+    float bW = static_cast<float>(bCollider.width);
+    float bH = static_cast<float>(bCollider.height);
+
+    // Solapamiento real en cada eje (positivo solo si de verdad se traslapan).
+    float overlapX = std::min(aX + aW, bX + bW) - std::max(aX, bX);
+    float overlapY = std::min(aY + aH, bY + bH) - std::max(aY, bY);
+
+    if (overlapX <= 0.0f || overlapY <= 0.0f)
     {
-      bTransform.position = glm::vec2(bTransform.position.x, aTransform.position.y - bCollider.height);
-      bRigidBody.velocity = glm::vec2(bRigidBody.velocity.x, 0.0f);
-    }
-    if (CheckCollision(a, b, Direction::BOTTOM))
-    {
-      bTransform.position = glm::vec2(bTransform.position.x, aTransform.position.y + aCollider.height);
-      bRigidBody.velocity = glm::vec2(bRigidBody.velocity.x, 0.0f);
+      return;
     }
 
-    if (CheckCollision(a, b, Direction::LEFT))
+    float aCenterX = aX + aW * 0.5f;
+    float aCenterY = aY + aH * 0.5f;
+    float bCenterX = bX + bW * 0.5f;
+    float bCenterY = bY + bH * 0.5f;
+
+    if (overlapY < overlapX)
     {
-      bTransform.position = glm::vec2(aTransform.position.x - bCollider.width, bTransform.position.y);
-      bRigidBody.velocity = glm::vec2(0.0f, bRigidBody.velocity.y);
+      // Penetración vertical menor => colisión de piso/techo.
+      if (bCenterY < aCenterY)
+      {
+        // 'b' viene desde arriba: se posa sobre 'a'.
+        bTransform.position.y = aY - bH;
+      }
+      else
+      {
+        // 'b' viene desde abajo: golpea el techo.
+        bTransform.position.y = aY + aH;
+      }
+      bRigidBody.velocity.y = 0.0f;
     }
-    if (CheckCollision(a, b, Direction::RIGHT))
+    else
     {
-      bTransform.position = glm::vec2(aTransform.position.x + aCollider.width, bTransform.position.y);
-      bRigidBody.velocity = glm::vec2(0.0f, bRigidBody.velocity.y);
+      // Penetración horizontal menor => colisión lateral (pared).
+      if (bCenterX < aCenterX)
+      {
+        bTransform.position.x = aX - bW;
+      }
+      else
+      {
+        bTransform.position.x = aX + aW;
+      }
+      bRigidBody.velocity.x = 0.0f;
     }
   }
 
