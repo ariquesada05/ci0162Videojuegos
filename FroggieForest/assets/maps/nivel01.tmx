@@ -101,9 +101,9 @@
   <object id="141" name="possion" x="3031.75" y="985" width="24.5" height="24"/>
  </objectgroup>
  <objectgroup id="3" name="spawn">
-  <object id="60" name="enemy01" x="878.75" y="1080.83" width="36.5" height="33.3333"/>
-  <object id="61" name="enemy01" x="1657.92" y="1094" width="33.5" height="41.3333"/>
-  <object id="69" name="enemy01" x="2159.08" y="537.833" width="33.5" height="41.3333"/>
+  <object id="60" name="enemy01" x="878.75" y="1087.5" width="33.5" height="41.3333"/>
+  <object id="61" name="enemy01" x="1653.92" y="1087.5" width="33.5" height="41.3333"/>
+  <object id="69" name="enemy01" x="2142.58" y="559.333" width="33.5" height="41.3333"/>
  </objectgroup>
  <objectgroup id="4" name="EnemiesColliders">
   <object id="58" name="enemy_collider" x="921.636" y="1077.02" width="20.1061" height="41.2879"/>
