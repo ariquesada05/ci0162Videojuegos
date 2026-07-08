@@ -27,6 +27,7 @@ struct AnimationData
   int numFrames;          ///< Total number of frames in the animation
   int fremeSpeedRate;     ///< Speed at which to advance frames (1 = every frame, 2 = every 2 frames, etc)
   bool isLoop;            ///< Whether the animation loops when finished
+  int offsetX;            ///< Horizontal draw offset (frame px) to re-center wider frames
 
   /**
    * @brief Construct animation data with default values
@@ -44,8 +45,8 @@ struct AnimationData
       int height = 0,
       int numFrames = 1,
       int fremeSpeedRate = 1,
-      bool isLoop = true //
-  )
+      bool isLoop = true, //
+      int offsetX = 0)
   {
     this->textureId = textureId;
     this->width = width;
@@ -53,6 +54,7 @@ struct AnimationData
     this->numFrames = numFrames;
     this->fremeSpeedRate = fremeSpeedRate;
     this->isLoop = isLoop;
+    this->offsetX = offsetX;
   }
 };
 
@@ -97,8 +99,8 @@ public:
       int height = 0,
       int numFrames = 1,
       int fremeSpeedRate = 1,
-      bool isLoop = true //
-  );
+      bool isLoop = true, //
+      int offsetX = 0);
 
   /**
    * @brief Retrieve animation data by ID

@@ -170,8 +170,9 @@ void SceneLoader::LoadAnimations(const sol::table &animations, std::unique_ptr<A
     int numFrames = animation["num_frames"];
     int speedRate = animation["speed_rate"];
     bool isLoop = animation["is_loop"];
+    int offsetX = animation["offset_x"].get_or(0); // opcional; recentra frames anchos
 
-    animationManager->addAnimation(animationId, textureId, width, height, numFrames, speedRate, isLoop);
+    animationManager->addAnimation(animationId, textureId, width, height, numFrames, speedRate, isLoop, offsetX);
 
     index++;
   }

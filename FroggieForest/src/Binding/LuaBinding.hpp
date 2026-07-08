@@ -52,6 +52,12 @@ void ChangeAnimation(Entity entity, const std::string &animationId)
   sprite.height = data.height;
   sprite.srcRect.x = 0;
   sprite.srcRect.y = 0;
+  // Actualizar también el tamaño del recorte: sin esto, srcRect.w/h se quedan
+  // con el tamaño del frame inicial y las animaciones con frames de distinto
+  // tamaño (p. ej. el ataque, más ancho) se ven recortadas.
+  sprite.srcRect.w = data.width;
+  sprite.srcRect.h = data.height;
+  sprite.offsetX = data.offsetX;
 
   animation.currentFrame = 1;
   animation.frameTime = data.fremeSpeedRate;

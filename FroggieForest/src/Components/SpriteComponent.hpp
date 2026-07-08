@@ -25,6 +25,7 @@ public:
   SDL_Rect srcRect;      ///< Source rectangle in the texture
   bool flip = false;     ///< Whether to flip the sprite horizontally
   int zIndex = 0;        ///< Draw order: higher values are rendered on top
+  int offsetX = 0;       ///< Horizontal draw offset (frame px) to re-center wider animation frames
 
   /**
    * @brief Construct a SpriteComponent
