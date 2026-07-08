@@ -11,6 +11,13 @@ player_states = {
 
 player_state = player_states["IDLE"]
 player_can_jump = false
+-- Doble salto: 1 salto desde el piso + 1 salto en el aire. Se recargan al
+-- volver a tocar el piso. jump_was_pressed detecta el flanco de la tecla para
+-- que cada pulsación cuente como un solo salto (si no, mantenerla gastaría
+-- ambos saltos de golpe).
+jumps_max = 2
+jumps_left = 0
+jump_was_pressed = false
 player_speed = 5.0 * 64.0
 player_jump_force = -3200.0 * 64.0
 damage_cooldown = 0
@@ -44,13 +51,25 @@ function update()
     dash_cooldown = dash_cooldown - 1
   end
 
-  -- Salto 
-  if is_action_activated("jump") then
-    if player_can_jump then
-      print("Jump")
-      add_force(this, 0, player_jump_force)
-    end
+  -- Salto (con doble salto)
+  local jump_pressed = is_action_activated("jump")
+  local jump_just_pressed = jump_pressed and not jump_was_pressed
+
+  -- Al estar en el piso se recargan los saltos disponibles.
+  if player_can_jump then
+    jumps_left = jumps_max
   end
+
+  -- Salta solo en el flanco de subida de la tecla y si quedan saltos:
+  -- el primero desde el piso, el segundo en el aire.
+  if jump_just_pressed and jumps_left > 0 then
+    print("Jump")
+    vel_y = 0  -- reinicia la caída para que el salto en el aire sea consistente
+    add_force(this, 0, player_jump_force)
+    jumps_left = jumps_left - 1
+  end
+
+  jump_was_pressed = jump_pressed
 
   -- Iniciar ataque
   if is_action_activated("attack") then
