@@ -61,37 +61,6 @@ scene = {
 
   },
 
-  items = {
-    [0] =
-    -- Piso principal
-    {type = "coin", x = 250, y = 760},
-    {type = "coin", x = 300, y = 760},
-    {type = "coin", x = 350, y = 760},
-
-    -- Plataforma media
-    {type = "coin", x = 520, y = 540},
-    {type = "coin", x = 570, y = 540},
-    {type = "coin", x = 620, y = 540},
-
-    -- Plataforma alta
-    {type = "coin", x = 900, y = 390},
-    {type = "coin", x = 950, y = 390},
-    {type = "coin", x = 1000, y = 390},
-
-    -- Trampas pegadas al piso principal
-    {type = "trap", x = 730, y = 775},
-    {type = "trap", x = 760, y = 775},
-    {type = "trap", x = 790, y = 775},
-
-    -- Trampas pegadas a plataforma
-    {type = "trap", x = 1240, y = 600},
-    {type = "trap", x = 1270, y = 600},
-
-    -- Coins finales
-    {type = "coin", x = 50, y = 760},
-    {type = "coin", x = 50, y = 760},
-},
-
   -- Tabla de acciones y teclas
   keys = {
     [0] = 

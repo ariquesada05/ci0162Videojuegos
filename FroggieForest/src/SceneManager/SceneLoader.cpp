@@ -96,8 +96,6 @@ void SceneLoader::LoadScene(const std::string &scenePath, sol::state &lua,
             StatsComponent(health, points, damage)
         );
 
-        std::cout << "LOADED STATS FOR: " << tag << std::endl;
-
         index++;
     }
     }
@@ -121,12 +119,6 @@ void SceneLoader::LoadScene(const std::string &scenePath, sol::state &lua,
 
   sol::table entities = scene["entities"];
   LoadEntities(lua, entities, registry);
-
-  if (sol::optional<sol::table> hasItems = scene["items"];
-    hasItems != sol::nullopt)
-  {
-      LoadItems(hasItems.value(), registry);
-  }
 
   std::cout << "[SceneLoader] Scene loaded" << std::endl;
 }
@@ -677,6 +669,16 @@ void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &regis
       }else if (name.compare("spawn") == 0)
       {
         LoadEnemies(lua, objectGroup, registry);
+      }else if (name.compare("platforms")==0)
+      {
+        LoadPlatforms(lua, objectGroup, registry);
+      }else if (name.compare("items") == 0)
+      {
+          LoadItems(objectGroup, registry);
+      }
+      else if (name.compare("traps") == 0)
+      {
+          LoadTraps(objectGroup, registry);
       }
 
       objectGroup = objectGroup->NextSiblingElement("objectgroup");
@@ -1025,73 +1027,123 @@ void SceneLoader::LoadStats(const sol::table &stats){
 
 }
 
-void SceneLoader::LoadItems(
-    const sol::table& items,
-    std::unique_ptr<Registry>& registry)
+void SceneLoader::LoadItems(tinyxml2::XMLElement *objectGroup,
+                               std::unique_ptr<Registry> &registry)
 {
-    int index = 0;
+    tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
 
-    while (true)
+    while (object != nullptr)
     {
-        sol::optional<sol::table> hasItem = items[index];
+        const char *name = nullptr;
+        int x = 0, y = 0;
 
-        if (hasItem == sol::nullopt)
-        {
-            break;
-        }
+        object->QueryStringAttribute("name", &name);
+        object->QueryIntAttribute("x", &x);
+        object->QueryIntAttribute("y", &y);
 
-        sol::table item = items[index];
-
-        std::string type = item["type"];
-
-        float x = item["x"];
-        float y = item["y"];
+        std::string tag = name ? name : "unknown";
 
         Entity entity = registry->createEntity();
 
-        entity.addComponent<TransformComponent>(
-            glm::vec2(x, y)
-        );
+        entity.addComponent<TransformComponent>(glm::vec2(x, y));
+        entity.addComponent<BoxColliderComponent>(32, 32);
+        entity.addComponent<RigidBodyComponent>(false, false, 1);
 
-        entity.addComponent<BoxColliderComponent>(
-            32,
-            32
-        );
-
-        entity.addComponent<RigidBodyComponent>(
-            false,
-            false,
-            1
-        );
-
-        if (type == "coin")
+        if (tag == "coin")
         {
-            entity.addComponent<SpriteComponent>(
-                "coin",
-                32,
-                32,
-                0,
-                0,
-                1 // capa de items: por debajo de enemigos y jugador
-            );
-
+            entity.addComponent<SpriteComponent>("coin", 32, 32, 0, 0, 1);
             entity.addComponent<TagComponent>("coin");
         }
 
-        if (type == "trap")
-        {
-            entity.addComponent<SpriteComponent>(
-                "spikes",
-                32,
-                32,
-                0,
-                0,
-                1 // capa de items: por debajo de enemigos y jugador
-            );
+        object = object->NextSiblingElement("object");
+    }
+}
 
+void SceneLoader::LoadTraps(tinyxml2::XMLElement *objectGroup,
+                               std::unique_ptr<Registry> &registry)
+{
+    tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
+
+    while (object != nullptr)
+    {
+        const char *name = nullptr;
+        int x = 0, y = 0;
+
+        object->QueryStringAttribute("name", &name);
+        object->QueryIntAttribute("x", &x);
+        object->QueryIntAttribute("y", &y);
+
+        std::string tag = name ? name : "unknown";
+
+        Entity entity = registry->createEntity();
+
+        entity.addComponent<TransformComponent>(glm::vec2(x, y));
+        entity.addComponent<BoxColliderComponent>(32, 32);
+        entity.addComponent<RigidBodyComponent>(false, false, 1);
+
+        if (tag == "trap")
+        {
+            entity.addComponent<SpriteComponent>("spikes", 32, 32, 0, 0, 1);
             entity.addComponent<TagComponent>("trap");
         }
 
-        index++;
+        object = object->NextSiblingElement("object");
     }
 }
+
+void SceneLoader::LoadPlatforms(sol::state &lua,
+                                tinyxml2::XMLElement *objectGroup,
+                                std::unique_ptr<Registry> &registry)
+{
+    sol::load_result load_result =
+        lua.load_file("./assets/scripts/platforms.lua");
+
+    if (!load_result.valid())
+    {
+        sol::error error = load_result;
+        std::cerr << "Failed to load platforms script: "
+                  << error.what() << std::endl;
+        return;
+    }
+
+    load_result();
+
+    sol::object obj = lua["platforms"];
+
+    if (!obj.is<sol::table>())
+    {
+        std::cerr << "Platforms data is not a table" << std::endl;
+        return;
+    }
+
+    sol::table platformsTable = obj.as<sol::table>();
+
+    tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
+
+    while (object != nullptr)
+    {
+        const char *name = nullptr;
+        int x = 0, y = 0;
+
+        object->QueryStringAttribute("name", &name);
+        object->QueryIntAttribute("x", &x);
+        object->QueryIntAttribute("y", &y);
+
+        std::string tag = name ? name : "unknown";
+
+        sol::optional<sol::table> hasPlatform = platformsTable[tag];
+
+        if (hasPlatform != sol::nullopt)
+        {
+            Entity platform = registry->createEntity();
+
+            LoadEntity(lua, platform, hasPlatform.value());
+
+            auto &transform = platform.getComponent<TransformComponent>();
+            transform.position = glm::vec2(x, y);
+        }
+
+        object = object->NextSiblingElement("object");
+    }
+}
+

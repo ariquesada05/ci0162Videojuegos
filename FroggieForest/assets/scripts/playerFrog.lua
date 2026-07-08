@@ -149,12 +149,11 @@ end
 ----------------------------------------------------------------
 function on_collision(other)
 
-  if get_tag(other) == "floor" or get_tag(other) == "wall" then
-        print("TOCANDO FLOOR")
-  --  local vel_x, vel_y = get_velocity(this)
-    --if vel_y == 0 then
+  if get_tag(other) == "floor" or get_tag(other) == "dissappears" then
+ local vel_x, vel_y = get_velocity(this)
+    if vel_y == 0 then
       player_can_jump = true
-    --end
+    end
   end
 
   if get_tag(other) == "obs" then
