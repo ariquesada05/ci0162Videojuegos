@@ -15,9 +15,10 @@ void AnimationManager::addAnimation(
     int height,
     int numFrames,
     int fremeSpeedRate,
-    bool isLoop)
+    bool isLoop,
+    int offsetX)
 {
-  auto animationData = AnimationData(textureId, width, height, numFrames, fremeSpeedRate, isLoop);
+  auto animationData = AnimationData(textureId, width, height, numFrames, fremeSpeedRate, isLoop, offsetX);
   animations[AnimationId] = animationData;
 }
 

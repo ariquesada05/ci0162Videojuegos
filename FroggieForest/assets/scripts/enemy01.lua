@@ -16,13 +16,6 @@ function on_init()
 end
 
 function update()
-  dbg_frame = (dbg_frame or 0) + 1
-  if dbg_frame % 20 == 0 then
-    local px, py = get_position(this)
-    local dvx = get_velocity(this)
-    print(string.format("DBG_ENEMY pos=(%.1f, %.1f) vel=%d", px, py, dvx))
-  end
-
   local x, y = get_position(this)
   local w, h = get_size(this)
 
