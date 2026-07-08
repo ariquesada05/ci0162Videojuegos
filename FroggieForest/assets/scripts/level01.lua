@@ -12,7 +12,7 @@ scene = {
     {assetId = "frog_attack", filePath = "./assets/images/frog_attack.png",},
     {assetId = "enemy01_idle", filePath = "./assets/images/enemy01_idle.png",},
     {assetId = "enemy01_run", filePath = "./assets/images/enemy01_run.png",},
-    {assetId = "terrain", filePath = "./assets/images/terrain.png",},
+    {assetId = "forest", filePath = "./assets/images/forest.png",},
     {assetId = "coin", filePath = "./assets/images/coin.png"},
     {assetId = "spikes", filePath = "./assets/images/trap1.png"},
 
@@ -108,9 +108,9 @@ scene = {
   buttons = {},
 
   maps = {
-    map_path = "./assets/maps/level01.tmx",
-    tile_path = "./assets/maps/terrain.tsx",
-    tile_name = "terrain",
+    map_path = "./assets/maps/nivel01.tmx",
+    tile_path = "./assets/maps/forest si.tsx",
+    tile_name = "forest",
   },
 
   stats = {
@@ -162,7 +162,7 @@ scene = {
           z_index = 3, -- el jugador se dibuja por encima de todo
         },
         transform = {
-          position = {x = 20.0, y = 300.0},
+          position = {x = 40.0, y = 200.0},
           scale = {x = 2.0, y = 2.0},
           rotation = 0.0,
         },

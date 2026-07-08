@@ -730,40 +730,62 @@ void SceneLoader::LoadLayer(std::unique_ptr<Registry> &registry, tinyxml2::XMLEl
   }
 }
 
-void SceneLoader::LoadColliders(std::unique_ptr<Registry> &registry, 
-  tinyxml2::XMLElement *objectGroup)
+void SceneLoader::LoadColliders(std::unique_ptr<Registry> &registry,
+                                tinyxml2::XMLElement *objectGroup)
 {
-  tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
+    tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
 
-  while (object != nullptr)
-  {
-    // Declarar variables
-    const char *name;
-    std::string tag;
-    int x, y, w, h;
+    while (object != nullptr)
+    {
+        const char *name = nullptr;
+        std::string tag = "unknown";
 
-    // Extraer atributos
-    object->QueryStringAttribute("name", &name);
-    tag = name;
+        int x = 0;
+        int y = 0;
+        int w = 0;
+        int h = 0;
 
-    // Extraer posición
-    object->QueryIntAttribute("x", &x);
-    object->QueryIntAttribute("y", &y);
+        object->QueryStringAttribute("name", &name);
 
-    // Extraer dimensiones
-    object->QueryIntAttribute("width", &w);
-    object->QueryIntAttribute("height", &h);
+        if (name != nullptr)
+        {
+            tag = name;
+        }
 
-    // Crear entidad
-    Entity collider = registry->createEntity();
-    collider.addComponent<TagComponent>(tag);
-    collider.addComponent<TransformComponent>(
-        glm::vec2(x, y));
-    collider.addComponent<BoxColliderComponent>(w, h);
-    collider.addComponent<RigidBodyComponent>(false, true, 9999999999.0f);
+        object->QueryIntAttribute("x", &x);
+        object->QueryIntAttribute("y", &y);
+        object->QueryIntAttribute("width", &w);
+        object->QueryIntAttribute("height", &h);
 
-    object = object->NextSiblingElement("object");
-  }
+        if (w <= 0 || h <= 0)
+        {
+            object = object->NextSiblingElement("object");
+            continue;
+        }
+
+        std::cout << "COLLIDER LOADED -> tag: " << tag
+                  << " x: " << x
+                  << " y: " << y
+                  << " w: " << w
+                  << " h: " << h
+                  << std::endl;
+
+        Entity collider = registry->createEntity();
+
+        collider.addComponent<TagComponent>(tag);
+
+        collider.addComponent<TransformComponent>(
+            glm::vec2(x, y));
+
+        collider.addComponent<BoxColliderComponent>(w, h);
+
+        collider.addComponent<RigidBodyComponent>(
+            false,
+            true,
+            9999999999.0f);
+
+        object = object->NextSiblingElement("object");
+    }
 }
 
 void SceneLoader::LoadEnemiesColliders(std::unique_ptr<Registry> &registry, 
