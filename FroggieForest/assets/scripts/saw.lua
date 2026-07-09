@@ -1,27 +1,3 @@
--- ============================================================================
--- Trampa "sierra": gira sobre sí misma y se desplaza de un lado a otro sobre un
--- tramo fijo, haciendo 30 de daño al jugador. No le afecta la gravedad
--- (is_dynamic=false) ni empuja al jugador (is_solid=false): es un peligro que
--- hay que esquivar o saltar.
---
--- El DAÑO al jugador lo aplica playerFrog.lua (rama del tag "saw"), igual que
--- con las trampas de pinchos. Aquí solo gestionamos el vaivén y el giro.
---
--- Para USARLA en un nivel hay que añadir a ese nivel (p. ej. level01.lua):
---
---   sprites = {
---     {assetId = "saw_on", filePath = "./assets/images/Saw/On (38x38).png"},
---   }
---   animations = {
---     {animation_id = "saw_on", texture_id = "saw_on", w = 38, h = 38, num_frames = 8, speed_rate = 16, is_loop = true},
---   }
---
--- Y en el mapa (.tmx), dentro del objectgroup "spawn", un objeto con
--- name="saw" en la posición donde deba aparecer. La entidad se arma sola
--- desde enemies.lua (tabla "saw").
--- ============================================================================
-
--- Estado por-entidad (permite varias sierras sin compartir variables).
 saw_data = saw_data or {}
 
 SAW_SPEED = 90            -- px/segundo

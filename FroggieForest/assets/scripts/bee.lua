@@ -1,36 +1,9 @@
--- ============================================================================
--- Enemigo "abeja": persigue al jugador dentro de un radio, no le afecta la
--- gravedad y no atraviesa objetos sólidos (paredes/suelo), igual que el jugador.
---
--- La lógica ya está lista. Para USARLA en un nivel, hay que añadir a ese nivel
--- (p. ej. level01.lua) lo siguiente:
---
---   sprites = {
---     {assetId = "bee_fly",    filePath = "./assets/images/bee_fly.png"},
---     {assetId = "bee_attack", filePath = "./assets/images/bee_attack.png"},
---     {assetId = "bee_hit",    filePath = "./assets/images/bee_hit.png"},
---   }
---   animations = {
---     {animation_id = "bee_fly",    texture_id = "bee_fly",    w = 64, h = 64, num_frames = 4, speed_rate = 6, is_loop = true},
---     {animation_id = "bee_attack", texture_id = "bee_attack", w = 64, h = 64, num_frames = 4, speed_rate = 8, is_loop = true},
---     {animation_id = "bee_hit",    texture_id = "bee_hit",    w = 64, h = 64, num_frames = 4, speed_rate = 8, is_loop = false},
---   }
---   stats = {
---     {tag = "bee", health = 10, points = 0, damage = 15},
---   }
---
--- Y en el mapa (.tmx), dentro del objectgroup "spawn", un objeto con
--- name="bee" en la posición donde deba aparecer. La entidad se arma sola
--- desde enemies.lua (tabla "bee").
--- ============================================================================
-
--- Estado por-entidad (permite varias abejas sin compartir variables).
 bee_data = bee_data or {}
 
 BEE_SPEED     = 120          -- px/segundo
 local TILE    = 16           -- tamaño de tile del mapa (level01.tmx: 16px)
 DETECT_RADIUS = 11 * TILE    -- radio de persecución: ~11 tiles (176px)
-ATTACK_RANGE  = 30           -- distancia a la que reproduce la animación de ataque
+ATTACK_RANGE  = 20           -- distancia a la que reproduce la animación de ataque
 
 local function get_state(id)
   local d = bee_data[id]
@@ -41,7 +14,6 @@ local function get_state(id)
   return d
 end
 
--- Cambia la animación solo si es distinta (evita reiniciar el frame cada cuadro).
 local function set_anim(id, name)
   local d = get_state(id)
   if d.anim ~= name then
@@ -94,6 +66,5 @@ function update()
 end
 
 function on_collision(other)
-  -- El daño al jugador y la muerte de la abeja los gestiona playerFrog.lua
-  -- (rama del tag "bee"), igual que con enemy01.
+
 end

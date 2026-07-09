@@ -239,7 +239,6 @@ function on_collision(other)
     receive_damage(other)
   end
 
-  -- Sierra: peligro móvil que hace mucho daño (30). No se puede matar.
   if get_tag(other) == "saw" then
     receive_damage(other)
   end
@@ -250,10 +249,6 @@ function on_collision(other)
   end
 end
 
--- on_damage lo dispara el DamageCollisionSystem con el "damage_collider", que
--- en el jugador es un hitbox de ataque más ancho que el cuerpo. Por eso aquí
--- SOLO golpeamos a los enemigos mientras se ataca; el daño que RECIBE el
--- jugador se maneja en on_collision (con el box_collider, de alcance normal).
 function on_damage(other)
   if not player_is_attacking then
     return
@@ -272,14 +267,18 @@ function receive_damage(other)
 
   local otherTag = get_tag(other)
 
-  -- Daño según el tipo de enemigo
+  if invulnerable then
+    return
+  end
+
+
   local dmg = 0
   if otherTag == "enemy01" or otherTag == "trap" then
-    dmg = 10
+    dmg = 5
   elseif otherTag == "bee" then
-    dmg = 15
+    dmg = 10
   elseif otherTag == "saw" then
-    dmg = 30
+    dmg = 10
   else
     return
   end
@@ -320,7 +319,6 @@ function take_damage_enemy(enemy)
   if health <= 0 then
     kill_entity(enemy)
   elseif get_tag(enemy) == "bee" then
-    -- Si la abeja sobrevive al golpe, muestra su animación de daño.
     change_animation(enemy, "bee_hit")
   end
 end
