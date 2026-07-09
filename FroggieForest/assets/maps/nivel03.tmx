@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="240" height="80" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="297">
+<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="240" height="80" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="400">
  <tileset firstgid="1" source="forest si.tsx"/>
  <layer id="1" name="platform" width="240" height="80">
   <data encoding="csv">
@@ -103,6 +103,11 @@
   <object id="255" name="trap1" x="2641" y="699" width="17.5" height="21.5"/>
   <object id="256" name="trap1" x="3041" y="699" width="17.5" height="21.5"/>
   <object id="257" name="trap1" x="3169" y="699" width="17.5" height="21.5"/>
+  <object id="310" name="trap3" x="1150" y="299" width="96" height="21"/>
+  <object id="311" name="trap2" x="1350" y="285" width="51" height="35"/>
+  <object id="312" name="trap2" x="2750" y="669" width="51" height="35"/>
+  <object id="313" name="trap3" x="3250" y="683" width="96" height="21"/>
+  <object id="314" name="trap4" x="2960" y="616" width="23" height="88"/>
  </objectgroup>
  <objectgroup id="7" name="items">
   <object id="204" name="coin" x="64" y="1104" width="25" height="25"/>
@@ -123,6 +128,8 @@
   <object id="262" name="coin" x="3280" y="656" width="25" height="25"/>
   <object id="269" name="coin" x="3472" y="400" width="25" height="25"/>
   <object id="271" name="coin" x="3472" y="176" width="25" height="25"/>
+  <object id="320" name="diamond" x="1050" y="270" width="24" height="24"/>
+  <object id="321" name="possion" x="3300" y="660" width="24" height="24"/>
  </objectgroup>
  <objectgroup id="3" name="spawn">
   <object id="214" name="enemy01" x="497.25" y="989" width="18.75" height="17.3"/>
@@ -133,6 +140,13 @@
   <object id="263" name="enemy01" x="2688" y="701" width="33.5" height="41.3"/>
   <object id="265" name="enemy01" x="3232" y="701" width="33.5" height="41.3"/>
   <object id="272" name="enemy01" x="3472" y="221" width="33.5" height="41.3"/>
+  <object id="300" name="saw" x="2600" y="647" width="57" height="57"/>
+  <object id="301" name="saw" x="3050" y="647" width="57" height="57"/>
+  <object id="302" name="saw" x="1250" y="263" width="57" height="57"/>
+  <object id="303" name="bee" x="600" y="900" width="64" height="64"/>
+  <object id="304" name="bee" x="950" y="650" width="64" height="64"/>
+  <object id="305" name="bee" x="1300" y="250" width="64" height="64"/>
+  <object id="306" name="bee" x="2100" y="450" width="64" height="64"/>
  </objectgroup>
  <objectgroup id="4" name="EnemiesColliders">
   <object id="215" name="enemy_collider" x="532.25" y="983.5" width="12.35" height="24.05"/>

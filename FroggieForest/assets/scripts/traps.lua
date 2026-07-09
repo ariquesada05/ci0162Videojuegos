@@ -46,8 +46,8 @@ traps =
 
             sprite = {
                 assetId = "trap2",
-                width = 32,
-                height = 32,
+                width = 51,
+                height = 35,
                 src_rect = {x = 0, y = 0},
                 z_index = 1,
             },
@@ -65,8 +65,8 @@ traps =
             },
 
             box_collider = {
-                width = 32,
-                height = 32,
+                width = 44,
+                height = 26,
                 offset = {x = 0, y = 0},
             },
 
@@ -87,8 +87,8 @@ traps =
 
             sprite = {
                 assetId = "trap3",
-                width = 32,
-                height = 32,
+                width = 96,
+                height = 21,
                 src_rect = {x = 0, y = 0},
                 z_index = 1,
             },
@@ -106,8 +106,8 @@ traps =
             },
 
             box_collider = {
-                width = 32,
-                height = 32,
+                width = 90,
+                height = 18,
                 offset = {x = 0, y = 0},
             },
 
@@ -128,8 +128,8 @@ traps =
 
             sprite = {
                 assetId = "trap4",
-                width = 32,
-                height = 32,
+                width = 23,
+                height = 88,
                 src_rect = {x = 0, y = 0},
                 z_index = 1,
             },
@@ -147,8 +147,8 @@ traps =
             },
 
             box_collider = {
-                width = 32,
-                height = 32,
+                width = 20,
+                height = 80,
                 offset = {x = 0, y = 0},
             },
 
@@ -169,8 +169,8 @@ traps =
 
             sprite = {
                 assetId = "trap5",
-                width = 32,
-                height = 32,
+                width = 23,
+                height = 88,
                 src_rect = {x = 0, y = 0},
                 z_index = 1,
             },
@@ -188,8 +188,8 @@ traps =
             },
 
             box_collider = {
-                width = 32,
-                height = 32,
+                width = 20,
+                height = 80,
                 offset = {x = 0, y = 0},
             },
 

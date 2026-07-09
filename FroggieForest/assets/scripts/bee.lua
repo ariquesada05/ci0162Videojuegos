@@ -29,7 +29,7 @@ bee_data = bee_data or {}
 
 BEE_SPEED     = 120          -- px/segundo
 local TILE    = 16           -- tamaño de tile del mapa (level01.tmx: 16px)
-DETECT_RADIUS = 4 * TILE     -- radio de persecución: 4 tiles (súbelo si es poco)
+DETECT_RADIUS = 11 * TILE    -- radio de persecución: ~11 tiles (176px)
 ATTACK_RANGE  = 30           -- distancia a la que reproduce la animación de ataque
 
 local function get_state(id)

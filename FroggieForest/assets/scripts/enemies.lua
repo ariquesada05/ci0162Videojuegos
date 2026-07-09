@@ -41,6 +41,7 @@ enemies =
       rotation = 0.0,
     },
 
+    },
   },
 
   -- Abeja: persigue al jugador (ver bee.lua). No le afecta la gravedad
@@ -88,5 +89,45 @@ enemies =
       },
     },
   },
-}
+
+  -- Sierra: gira y se mueve de un lado a otro (ver saw.lua). Hace 30 de daño.
+  -- No le afecta la gravedad (is_dynamic=false) ni empuja al jugador
+  -- (is_solid=false): es un peligro que hay que esquivar.
+  saw = {
+    components = {
+      sprite = {
+        assetId = "saw_on",
+        width = 38,
+        height = 38,
+        src_rect = {x = 0, y = 0},
+        z_index = 2, -- por encima de las monedas
+      },
+      animation = {
+        num_frames = 8,
+        speed_rate = 16,
+        is_loop = true,
+      },
+      rigid_body = {
+        is_dynamic = false,
+        is_solid = false,
+        mass = 0,
+      },
+      box_collider = {
+        width = 50,
+        height = 50,
+        offset = {x = 0, y = 0},
+      },
+      script = {
+        path = "./assets/scripts/saw.lua",
+      },
+      tag = {
+        tag = "saw",
+      },
+      transform = {
+        position = {x = 0, y = 0},
+        scale = {x = 1.5, y = 1.5},
+        rotation = 0.0,
+      },
+    },
+  },
 }

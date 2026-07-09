@@ -16,6 +16,12 @@ scene = {
     {assetId = "enemy01_idle", filePath = "./assets/images/enemy01_idle.png",},
     {assetId = "enemy01_run", filePath = "./assets/images/enemy01_run.png",},
 
+    -- Abeja (enemigo volador que persigue) y sierra (peligro móvil).
+    {assetId = "bee_fly", filePath = "./assets/images/bee_fly.png",},
+    {assetId = "bee_attack", filePath = "./assets/images/bee_attack.png",},
+    {assetId = "bee_hit", filePath = "./assets/images/bee_hit.png",},
+    {assetId = "saw_on", filePath = "./assets/images/Saw/On (38x38).png",},
+
 
     {assetId = "forest", filePath = "./assets/images/forest.png",},
 
@@ -25,9 +31,9 @@ scene = {
 
     {assetId = "trap1", filePath = "./assets/images/trap1.png"},
     {assetId = "trap2", filePath = "./assets/images/trap2.png"},
-    {assetId = "trap3", filePath = "./assets/images/trap2.png"},
-    {assetId = "trap4", filePath = "./assets/images/trap2.png"},
-    {assetId = "trap5", filePath = "./assets/images/trap2.png"},
+    {assetId = "trap3", filePath = "./assets/images/trap3.png"},
+    {assetId = "trap4", filePath = "./assets/images/trap4.png"},
+    {assetId = "trap5", filePath = "./assets/images/trap5.png"},
 
 
     {assetId = "platform1", filePath = "./assets/images/platform1.png"},
@@ -50,6 +56,11 @@ scene = {
     
     {animation_id = "enemy01_idle", texture_id = "enemy01_idle", w = 32, h = 32, num_frames = 9, speed_rate = 2, is_loop = true,},
     {animation_id = "enemy01_run" , texture_id = "enemy01_run",  w = 32, h = 32, num_frames = 9, speed_rate = 3, is_loop = true,},
+
+    {animation_id = "bee_fly",    texture_id = "bee_fly",    w = 64, h = 64, num_frames = 4, speed_rate = 6, is_loop = true,},
+    {animation_id = "bee_attack", texture_id = "bee_attack", w = 64, h = 64, num_frames = 4, speed_rate = 8, is_loop = true,},
+    {animation_id = "bee_hit",    texture_id = "bee_hit",    w = 64, h = 64, num_frames = 4, speed_rate = 8, is_loop = false,},
+    {animation_id = "saw_on",     texture_id = "saw_on",     w = 38, h = 38, num_frames = 8, speed_rate = 16, is_loop = true,},
 
     {animation_id = "platform_3", texture_id = "platform1", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
     {animation_id = "platform_2", texture_id = "platform2", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
@@ -102,6 +113,7 @@ scene = {
 
     {tag = "player", health = 100, points = 0, damage = 1},
     {tag = "enemy01", health = 20, points = 0, damage = 1},
+    {tag = "bee", health = 20, points = 0, damage = 15},
   },
   -- Tabla de Entidades
   entities = {

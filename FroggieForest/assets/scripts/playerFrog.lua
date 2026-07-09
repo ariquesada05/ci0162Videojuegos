@@ -239,6 +239,11 @@ function on_collision(other)
     receive_damage(other)
   end
 
+  -- Sierra: peligro móvil que hace mucho daño (30). No se puede matar.
+  if get_tag(other) == "saw" then
+    receive_damage(other)
+  end
+
 
   if get_tag(other) == "win" then
     go_to_scene("win")
@@ -273,6 +278,8 @@ function receive_damage(other)
     dmg = 10
   elseif otherTag == "bee" then
     dmg = 15
+  elseif otherTag == "saw" then
+    dmg = 30
   else
     return
   end
