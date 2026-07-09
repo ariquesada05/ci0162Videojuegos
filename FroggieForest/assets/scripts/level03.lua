@@ -1,8 +1,8 @@
 scene = {
   -- Tabla de imágenes y sprites
   sprites = {
-    [0] =
-    {assetId = "background", filePath = "./assets/images/back.png",},
+    [0] = 
+    {assetId = "background", filePath = "./assets/images/back2.png",},
 
     {assetId = "frog_idle", filePath = "./assets/images/frog_idle.png",},
     {assetId = "frog_jump", filePath = "./assets/images/frog_jump.png",},
@@ -66,7 +66,6 @@ scene = {
     {animation_id = "platform_2", texture_id = "platform2", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
     {animation_id = "platform_1", texture_id = "platform3", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
     {animation_id = "platform_0", texture_id = "platform4", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
-
   },
 
    -- sounds table
