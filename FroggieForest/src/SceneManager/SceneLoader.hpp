@@ -113,7 +113,7 @@ private:
    */
   void LoadDamageColliders(const sol::table &colliders);
 
-  void LoadItems(tinyxml2::XMLElement *objectGroup,
+  void LoadItems(sol::state &lua, tinyxml2::XMLElement *objectGroup,
                                std::unique_ptr<Registry> &registry);
 
   void LoadPlatforms(sol::state &lua,

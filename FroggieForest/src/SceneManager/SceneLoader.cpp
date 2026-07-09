@@ -674,7 +674,7 @@ void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &regis
         LoadPlatforms(lua, objectGroup, registry);
       }else if (name.compare("items") == 0)
       {
-          LoadItems(objectGroup, registry);
+          LoadItems(lua, objectGroup, registry);
       }
       else if (name.compare("traps") == 0)
       {
@@ -1027,15 +1027,32 @@ void SceneLoader::LoadStats(const sol::table &stats){
 
 }
 
-void SceneLoader::LoadItems(tinyxml2::XMLElement *objectGroup,
-                               std::unique_ptr<Registry> &registry)
+void SceneLoader::LoadItems(sol::state &lua,
+                            tinyxml2::XMLElement *objectGroup,
+                            std::unique_ptr<Registry> &registry)
 {
+    sol::load_result load_result =
+        lua.load_file("./assets/scripts/items.lua");
+
+    if (!load_result.valid())
+    {
+        sol::error error = load_result;
+        std::cerr << "Failed to load items script: "
+                  << error.what() << std::endl;
+        return;
+    }
+
+    load_result();
+
+    sol::table itemsTable = lua["items"];
+
     tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
 
     while (object != nullptr)
     {
         const char *name = nullptr;
-        int x = 0, y = 0;
+        int x = 0;
+        int y = 0;
 
         object->QueryStringAttribute("name", &name);
         object->QueryIntAttribute("x", &x);
@@ -1043,16 +1060,18 @@ void SceneLoader::LoadItems(tinyxml2::XMLElement *objectGroup,
 
         std::string tag = name ? name : "unknown";
 
-        Entity entity = registry->createEntity();
+        std::cout << "ITEM FOUND: " << tag << std::endl;
 
-        entity.addComponent<TransformComponent>(glm::vec2(x, y));
-        entity.addComponent<BoxColliderComponent>(32, 32);
-        entity.addComponent<RigidBodyComponent>(false, false, 1);
+        sol::optional<sol::table> hasItem = itemsTable[tag];
 
-        if (tag == "coin")
+        if (hasItem != sol::nullopt)
         {
-            entity.addComponent<SpriteComponent>("coin", 32, 32, 0, 0, 1);
-            entity.addComponent<TagComponent>("coin");
+            Entity item = registry->createEntity();
+
+            LoadEntity(lua, item, hasItem.value());
+
+            auto &transform = item.getComponent<TransformComponent>();
+            transform.position = glm::vec2(x, y);
         }
 
         object = object->NextSiblingElement("object");
