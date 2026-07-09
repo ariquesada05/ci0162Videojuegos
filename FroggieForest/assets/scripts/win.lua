@@ -33,11 +33,6 @@ keys = {
     {action = "attack", key = 120},
   },
 
-  -- Tabla de acciones y botones del ratón
-  buttons = {
-    [0] = 
-    {name = "shoot", button = 1},
-  },
 
   -- Tabla de Mapa
   maps = {

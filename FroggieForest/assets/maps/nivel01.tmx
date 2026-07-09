@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="200" height="80" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="142">
+<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="200" height="80" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="143">
  <tileset firstgid="1" source="forest si.tsx"/>
  <layer id="1" name="platform" width="200" height="80">
   <data encoding="csv">
@@ -86,7 +86,8 @@
 </data>
  </layer>
  <objectgroup id="5" name="platforms">
-  <object id="66" name="dissapears" x="2520.5" y="905.5" width="110.5" height="24"/>
+  <object id="66" name="dissapears" x="2785.38" y="839.318" width="133.5" height="38"/>
+  <object id="142" name="dissapears" x="2536.28" y="693.121" width="133.5" height="38"/>
  </objectgroup>
  <objectgroup id="6" name="traps">
   <object id="135" name="trap1" x="1356.5" y="1126.5" width="17.5" height="21.5"/>
@@ -101,9 +102,9 @@
   <object id="141" name="possion" x="3031.75" y="985" width="24.5" height="24"/>
  </objectgroup>
  <objectgroup id="3" name="spawn">
-  <object id="60" name="enemy01" x="878.75" y="1087.5" width="33.5" height="41.3333"/>
-  <object id="61" name="enemy01" x="1653.92" y="1087.5" width="33.5" height="41.3333"/>
-  <object id="69" name="enemy01" x="2142.58" y="559.333" width="33.5" height="41.3333"/>
+  <object id="60" name="enemy01" x="878.75" y="1080.83" width="36.5" height="33.3333"/>
+  <object id="61" name="enemy01" x="1657.92" y="1094" width="33.5" height="41.3333"/>
+  <object id="69" name="enemy01" x="2159.08" y="537.833" width="33.5" height="41.3333"/>
  </objectgroup>
  <objectgroup id="4" name="EnemiesColliders">
   <object id="58" name="enemy_collider" x="921.636" y="1077.02" width="20.1061" height="41.2879"/>
@@ -151,7 +152,6 @@
   <object id="113" name="floor" x="2882" y="1102.67" width="305.333" height="176.667"/>
   <object id="114" name="floor" x="3009.33" y="1025.33" width="65.3333" height="80"/>
   <object id="115" name="floor" x="3119.33" y="1062.67" width="64" height="18.6667" visible="0"/>
-  <object id="115" name="floor" x="3119.33" y="1062.67" width="64" height="18.6667" visible="0"/>
   <object id="116" name="floor" x="2892.67" y="1065.33" width="74.6667" height="14.6667"/>
   <object id="117" name="floor" x="242.909" y="1156.73" width="25.6364" height="15.6364"/>
   <object id="121" name="floor" x="338.818" y="1160.55" width="25.6364" height="15.6364"/>
@@ -159,7 +159,6 @@
   <object id="126" name="wall" x="3183.86" y="0.227273" width="15.8182" height="1279.59"/>
   <object id="127" name="wall" x="0.136364" y="-0.0227273" width="16" height="1278.77"/>
   <object id="128" name="wall" x="16.303" y="-0.181818" width="3167.27" height="16.6667"/>
-  <object id="129" name="floor" x="241.5" y="345.25" width="79" height="17.5"/>
   <object id="129" name="floor" x="241.5" y="345.25" width="79" height="17.5"/>
  </objectgroup>
 </map>
