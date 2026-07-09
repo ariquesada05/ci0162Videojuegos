@@ -166,9 +166,9 @@ scene = {
         -- con el offset, para que el golpe alcance el doble de distancia a
         -- cada lado. Solo afecta al ataque; la física usa el box_collider.
         damage_collider = {
-        width = 120,
+        width = 128,
         height = 48,
-        offset = {x = -40, y = 0},
+        offset = {x = -64, y = 0},
       },
       }
     },
