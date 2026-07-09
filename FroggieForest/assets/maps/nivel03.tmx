@@ -132,14 +132,14 @@
   <object id="321" name="possion" x="3300" y="660" width="24" height="24"/>
  </objectgroup>
  <objectgroup id="3" name="spawn">
-  <object id="214" name="enemy01" x="497.25" y="989" width="18.75" height="17.3"/>
-  <object id="221" name="enemy01" x="923.75" y="528.5" width="25.75" height="26.8"/>
+  <object id="214" name="enemy01" x="497.25" y="958" width="18.75" height="17.3"/>
+  <object id="221" name="enemy01" x="923.75" y="510" width="25.75" height="26.8"/>
   <object id="234" name="enemy01" x="1362" y="267.75" width="33.5" height="41.3"/>
   <object id="249" name="enemy01" x="1915.5" y="432" width="33.5" height="41.3"/>
-  <object id="251" name="enemy01" x="2848" y="657" width="33.5" height="41.3"/>
-  <object id="263" name="enemy01" x="2688" y="701" width="33.5" height="41.3"/>
-  <object id="265" name="enemy01" x="3232" y="701" width="33.5" height="41.3"/>
-  <object id="272" name="enemy01" x="3472" y="221" width="33.5" height="41.3"/>
+  <object id="251" name="enemy01" x="2848" y="640" width="33.5" height="41.3"/>
+  <object id="263" name="enemy01" x="2688" y="640" width="33.5" height="41.3"/>
+  <object id="265" name="enemy01" x="3232" y="640" width="33.5" height="41.3"/>
+  <object id="272" name="enemy01" x="3472" y="180" width="33.5" height="41.3"/>
   <object id="300" name="saw" x="2600" y="647" width="57" height="57"/>
   <object id="301" name="saw" x="3050" y="647" width="57" height="57"/>
   <object id="302" name="saw" x="1250" y="263" width="57" height="57"/>

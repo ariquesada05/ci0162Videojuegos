@@ -111,7 +111,7 @@
  <objectgroup id="3" name="spawn">
   <object id="60" name="enemy01" x="878.75" y="1094" width="36.5" height="33.3333"/>
   <object id="61" name="enemy01" x="1657.92" y="1094" width="33.5" height="41.3333"/>
-  <object id="69" name="enemy01" x="2159.08" y="537.833" width="33.5" height="41.3333"/>
+  <object id="69" name="enemy01" x="2159.08" y="540" width="33.5" height="41.3333"/>
   <object id="201" name="saw" x="1780" y="1094" width="57" height="57"/>
   <object id="202" name="saw" x="2050" y="549" width="57" height="57"/>
   <object id="203" name="bee" x="1100" y="980" width="64" height="64"/>
