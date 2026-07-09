@@ -102,7 +102,7 @@
   <object id="132" name="coin" x="142.5" y="1101" width="24.5" height="24"/>
  </objectgroup>
  <objectgroup id="3" name="spawn">
-  <object id="60" name="enemy01" x="878.75" y="1080.83" width="36.5" height="33.3333"/>
+  <object id="60" name="enemy01" x="878.75" y="1094" width="36.5" height="33.3333"/>
   <object id="61" name="enemy01" x="1657.92" y="1094" width="33.5" height="41.3333"/>
   <object id="69" name="enemy01" x="2173.75" y="643.166" width="33.5" height="41.3333"/>
  </objectgroup>
