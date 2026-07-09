@@ -2,7 +2,8 @@ scene = {
   -- Tabla de imágenes y sprites
   sprites = {
     [0] = 
-    {assetId = "background", filePath = "./assets/images/back1.png",},
+    {assetId = "background", filePath = "./assets/images/back2.png",},
+
     {assetId = "frog_idle", filePath = "./assets/images/frog_idle.png",},
     {assetId = "frog_jump", filePath = "./assets/images/frog_jump.png",},
     {assetId = "frog_fall", filePath = "./assets/images/frog_fall.png",},
@@ -91,7 +92,7 @@ scene = {
   buttons = {},
 
   maps = {
-    map_path = "./assets/maps/nivel01.tmx",
+    map_path = "./assets/maps/nivel02.tmx",
     tile_path = "./assets/maps/forest si.tsx",
     tile_name = "forest",
   },
