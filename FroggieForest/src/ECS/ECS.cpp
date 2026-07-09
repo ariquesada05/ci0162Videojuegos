@@ -147,6 +147,17 @@ void Registry::clearAllEntities()
   {
     removeEntityFromSystem(Entity(i));
     entityComponentSignatures[i].reset();
-    freeIDs.push_back(i);
   }
+
+  // Reinicio total del asignador de ids. Antes se hacía freeIDs.push_back(i)
+  // para TODOS los ids sin vaciar freeIDs ni resetear numEntities: los ids ya
+  // liberados durante el nivel (monedas/enemigos con kill_entity) quedaban
+  // DUPLICADOS en freeIDs, así que en la siguiente escena dos entidades podían
+  // recibir el mismo id y pisarse sus componentes (p. ej. el suelo o el
+  // jugador), haciendo que el jugador cayera por el mapa y la cámara se
+  // descuadrara. Al volver desde el menú no había kills, por eso no fallaba.
+  numEntities = 0;
+  freeIDs.clear();
+  entitiesToBeAdded.clear();
+  entitiesToBeKilled.clear();
 }

@@ -26,6 +26,7 @@
 
 const int FPS = 60;                           ///< Target frames per second
 const int MILISECS_PER_FRAME = 1000 / FPS;  ///< Milliseconds per frame
+const double MAX_DELTA_TIME = 0.05;         ///< Tope de deltaTime (s) para evitar saltos de física en frames lentos
 
 /**
  * @class Game

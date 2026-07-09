@@ -245,8 +245,12 @@ function on_collision(other)
   end
 
 
+  -- Al tocar la meta se avanza al siguiente nivel. Cada nivel define su destino
+  -- en el global next_scene (lo fija su script de música al cargar la escena):
+  -- level01->level02, level02->level03, level03->mainMenu. Si no está definido,
+  -- se cae a la pantalla "win" como respaldo.
   if get_tag(other) == "win" then
-    go_to_scene("win")
+    go_to_scene(next_scene or "win")
   end
 end
 

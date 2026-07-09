@@ -219,6 +219,16 @@ void Game::update()
   double deltaTime = (SDL_GetTicks() - millisecsPreviousFrame) / 1000.0;
   // TODO: add this variable to the LUA state
 
+  // Se acota el deltaTime: si un frame tarda mucho (p. ej. el primero tras
+  // cargar una escena, que incluye el tiempo de carga del mapa), un dt enorme
+  // integraría la gravedad de golpe y lanzaría al jugador a través del suelo
+  // (túnel), dejándolo fuera del mapa y descuadrando la cámara. Con el tope, la
+  // física siempre avanza en pasos razonables.
+  if (deltaTime > MAX_DELTA_TIME)
+  {
+    deltaTime = MAX_DELTA_TIME;
+  }
+
   millisecsPreviousFrame = SDL_GetTicks();
 
   eventManager->Reset();
@@ -286,6 +296,11 @@ void Game::runScene()
 {
   sceneManager->LoadScene();
   registry->getSystem<ScriptSystem>().initFromScript(lua);
+
+  // La carga de la escena (mapa con miles de tiles, texturas) consume tiempo.
+  // Se reinicia la marca de tiempo para que el primer frame no arrastre ese
+  // tiempo de carga como deltaTime.
+  millisecsPreviousFrame = SDL_GetTicks();
 
   while (sceneManager->IsSceneRunning())
   {

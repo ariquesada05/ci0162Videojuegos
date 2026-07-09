@@ -111,8 +111,14 @@ void SceneLoader::LoadScene(const std::string &scenePath, sol::state &lua,
   sol::table keys = scene["keys"];
   LoadKeys(keys, controllerManager);
 
-  sol::table buttons = scene["buttons"];
-  LoadButtons(buttons, controllerManager);
+  // La tabla "buttons" es opcional: si la escena no la declara, sol recibiría
+  // nil y reventaría al construir el sol::table ("type check failed in
+  // constructor"). Se lee protegida, igual que "stats"/"damage_colliders".
+  if (sol::optional<sol::table> hasButtons = scene["buttons"];
+      hasButtons != sol::nullopt)
+  {
+    LoadButtons(hasButtons.value(), controllerManager);
+  }
 
   sol::table maps = scene["maps"];
   LoadMap(maps, registry, lua);

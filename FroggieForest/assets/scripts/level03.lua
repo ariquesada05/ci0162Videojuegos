@@ -77,7 +77,7 @@ scene = {
     -- music table
   music = {
     [0] =
-        {musicId = "l01Music" ,filePath ="./assets/sounds/boss battle.mp3"},
+        {musicId = "l03Music" ,filePath ="./assets/sounds/boss battle.mp3"},
       },
   -- Tabla de fuentes
   fonts = {
@@ -121,7 +121,7 @@ scene = {
     {
       components = {
         script = {
-          path = "./assets/scripts/level01Music.lua",
+          path = "./assets/scripts/level03Music.lua",
         },
       }
     },
