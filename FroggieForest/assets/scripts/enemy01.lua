@@ -4,9 +4,11 @@ enemy_speed = 60
 -- Se llama una vez al crear el enemigo.
 function on_init()
   -- Arranca caminando hacia la derecha con la animación de correr.
+  -- El sprite del hongo mira a la izquierda por defecto, así que se voltea
+  -- para que mire hacia donde camina (derecha).
   set_velocity(this, enemy_speed, 0)
   change_animation(this, "enemy01_run")
-  flip_sprite(this, false)
+  flip_sprite(this, true)
 end
 
 function update()
@@ -40,7 +42,8 @@ function update()
   end
 
   set_velocity(this, dir * enemy_speed, 0)
-  flip_sprite(this, dir < 0)
+  -- Sprite mira a la izquierda por defecto: se voltea al ir a la derecha.
+  flip_sprite(this, dir > 0)
 end
 
 function on_collision(other)
