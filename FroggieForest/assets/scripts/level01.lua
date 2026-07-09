@@ -14,7 +14,10 @@ scene = {
     {assetId = "enemy01_run", filePath = "./assets/images/enemy01_run.png",},
     {assetId = "forest", filePath = "./assets/images/forest.png",},
     {assetId = "coin", filePath = "./assets/images/coin.png"},
-    {assetId = "spikes", filePath = "./assets/images/trap1.png"},
+    {assetId = "trap1", filePath = "./assets/images/trap1.png"},
+    {assetId = "possion", filePath = "./assets/images/item1.png"},
+    {assetId = "diamond", filePath = "./assets/images/item3.png"},
+    {assetId = "trap2", filePath = "./assets/images/trap2.png"},
 
     {assetId = "platform1", filePath = "./assets/images/platform1.png"},
     {assetId = "platform2", filePath = "./assets/images/platform2.png"},
@@ -36,10 +39,10 @@ scene = {
     {animation_id = "enemy01_idle", texture_id = "enemy01_idle", w = 32, h = 32, num_frames = 9, speed_rate = 2, is_loop = true,},
     {animation_id = "enemy01_run" , texture_id = "enemy01_run",  w = 32, h = 32, num_frames = 9, speed_rate = 3, is_loop = true,},
 
-    {animation_id = "platform_3", texture_id = "platform1", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
-    {animation_id = "platform_2", texture_id = "platform2", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
-    {animation_id = "platform_1", texture_id = "platform3", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
-    {animation_id = "platform_0", texture_id = "platform4", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
+    {animation_id = "platform_3", texture_id = "platform1", w = 128, h = 128, num_frames = 1, speed_rate = 1, is_loop = true},
+    {animation_id = "platform_2", texture_id = "platform2", w = 128, h = 128, num_frames = 1, speed_rate = 1, is_loop = true},
+    {animation_id = "platform_1", texture_id = "platform3", w = 128, h = 128, num_frames = 1, speed_rate = 1, is_loop = true},
+    {animation_id = "platform_0", texture_id = "platform4", w = 128, h = 128, num_frames = 1, speed_rate = 1, is_loop = true},
   
   },
 
