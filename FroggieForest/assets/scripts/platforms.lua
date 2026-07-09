@@ -1,57 +1,50 @@
--- Datos de las plataformas que se cargan desde el mapa (objectgroup "platforms").
--- La clave de cada plataforma debe coincidir con el "name" del objeto en el .tmx.
--- El objeto del nivel se llama "dissapears", así que esa es la clave aquí.
-platforms =
-{
-  dissapears = {
-    components = {
+local state = 3
+local timer = 0
+local activated = false
+local disappeared = false
 
-      sprite = {
-        assetId = "platform1",
-        width = 100,
-        height = 14,
-        src_rect = {x = 0, y = 0},
-        z_index = 2,
-      },
+local time_per_state = 24
 
-      animation = {
-        num_frames = 1,
-        speed_rate = 1,
-        is_loop = true,
-      },
+function on_collision(other)
 
-      -- Masa enorme (igual que los "floor" del mapa) para que en la
-      -- resolución de colisiones el jugador sea el que se reposiciona y la
-      -- plataforma NO se mueva hacia abajo ni hacia los lados.
-      rigid_body = {
-        is_dynamic = false,
-        is_solid = true,
-        mass = 9999999999.0,
-      },
+  if disappeared then
+    return
+  end
 
-      -- La imagen se recortó a 100x14 con la barra pegada arriba. La colisión
-      -- usa la esquina superior del sprite (el offset se ignora en el motor),
-      -- así que la rana se apoya justo sobre la barra visible.
-      box_collider = {
-        width = 58,
-        height = 14,
-        offset = {x = 0, y = 0},
-      },
+  if get_tag(other) ~= "player" then
+    return
+  end
 
-      script = {
-        path = "./assets/scripts/disappearingPlatform.lua",
-      },
+  -- Verifica que el jugador venga cayendo o esté encima
+  local vx, vy = get_velocity(other)
 
-      -- El jugador reconoce este tag para poder volver a saltar al apoyarse.
-      tag = {
-        tag = "dissappears",
-      },
+  if vy >= 0 then
+    activated = true
+  end
+end
 
-      transform = {
-        position = {x = 0, y = 0},
-        scale = {x = 1.0, y = 1.0},
-        rotation = 0.0,
-      },
-    },
-  },
-}
+function update()
+
+  if not activated or disappeared then
+    return
+  end
+
+  timer = timer + 1
+
+  if timer >= time_per_state then
+    timer = 0
+    state = state - 1
+
+    if state == 2 then
+      change_animation(this, "platform_2")
+
+    elseif state == 1 then
+      change_animation(this, "platform_1")
+
+    elseif state == 0 then
+      change_animation(this, "platform_0")
+      disappeared = true
+      kill_entity(this)
+    end
+  end
+end
