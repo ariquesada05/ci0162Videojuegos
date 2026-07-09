@@ -26,7 +26,8 @@ damage_timer = 1.0
 -- Variables de ataque
 player_is_attacking = false
 attack_timer = 0          -- contador de frames
-attack_max_frames = 20
+-- Duración del ataque: medio segundo (30 frames a 60 FPS)
+attack_max_frames = 30
 dieFrames = 30
 dieTimer = 0
 isDead = false  
@@ -220,24 +221,22 @@ function on_collision(other)
     die()
   end
 
+  -- El golpe al enemigo lo aplica on_damage (hitbox de ataque ancho). Aquí, al
+  -- contacto con el cuerpo, el jugador solo recibe daño si NO está atacando.
   if get_tag(other) == "enemy01" then
-    if player_is_attacking then
-      take_damage_enemy(other)
-    else
-      on_damage(other)
+    if not player_is_attacking then
+      receive_damage(other)
     end
   end
 
   if get_tag(other) == "bee" then
-    if player_is_attacking then
-      take_damage_enemy(other)
-    else
-      on_damage(other)
+    if not player_is_attacking then
+      receive_damage(other)
     end
   end
 
    if get_tag(other) == "trap" then
-    on_damage(other)
+    receive_damage(other)
   end
 
 
@@ -246,7 +245,25 @@ function on_collision(other)
   end
 end
 
+-- on_damage lo dispara el DamageCollisionSystem con el "damage_collider", que
+-- en el jugador es un hitbox de ataque más ancho que el cuerpo. Por eso aquí
+-- SOLO golpeamos a los enemigos mientras se ataca; el daño que RECIBE el
+-- jugador se maneja en on_collision (con el box_collider, de alcance normal).
 function on_damage(other)
+  if not player_is_attacking then
+    return
+  end
+
+  local otherTag = get_tag(other)
+
+  if otherTag == "enemy01" or otherTag == "bee" then
+    take_damage_enemy(other)
+  end
+end
+
+-- Daño que recibe el jugador. Se llama desde on_collision (box_collider), así
+-- la zona vulnerable sigue siendo del tamaño del cuerpo y no del ataque.
+function receive_damage(other)
 
   local otherTag = get_tag(other)
 

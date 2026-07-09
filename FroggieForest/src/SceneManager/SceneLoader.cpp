@@ -532,9 +532,33 @@ if (sol::optional<sol::table> hasTagComponent = components["tag"];
       {
           auto& box = newEntity.getComponent<BoxColliderComponent>();
 
+          // Por defecto el damage collider iguala al box collider.
+          int dcWidth = box.width;
+          int dcHeight = box.height;
+          int dcOffsetX = 0;
+          int dcOffsetY = 0;
+
+          // Solo el jugador puede declarar un "damage_collider" explícito (con
+          // tamaño/offset) para tener un hitbox de ataque más grande que su
+          // cuerpo, sin afectar la física (que usa el box). Los enemigos
+          // mantienen su damage collider igual al box, como antes.
+          if (tag.tag == "player")
+          {
+              if (sol::optional<sol::table> hasDamageCollider = components["damage_collider"];
+                  hasDamageCollider != sol::nullopt)
+              {
+                  dcWidth = components["damage_collider"]["width"].get_or(box.width);
+                  dcHeight = components["damage_collider"]["height"].get_or(box.height);
+                  dcOffsetX = components["damage_collider"]["offset"]["x"].get_or(0);
+                  dcOffsetY = components["damage_collider"]["offset"]["y"].get_or(0);
+              }
+          }
+
           newEntity.addComponent<DamageColliderComponent>(
-              box.width,
-              box.height
+              dcWidth,
+              dcHeight,
+              dcOffsetX,
+              dcOffsetY
           );
 
       }

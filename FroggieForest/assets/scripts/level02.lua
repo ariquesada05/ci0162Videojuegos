@@ -45,7 +45,7 @@ scene = {
     {animation_id = "player_frog_run" , texture_id = "frog_run",  w = 25, h = 24, num_frames = 10, speed_rate = 10, is_loop = true,},
     {animation_id = "player_frog_dash" , texture_id = "frog_dash",  w = 25, h = 24, num_frames = 10, speed_rate = 15, is_loop = true,},
     {animation_id = "player_frog_die" , texture_id = "frog_die",  w = 24, h = 24, num_frames = 3, speed_rate = 5, is_loop = true,},
-    {animation_id = "player_frog_attack", texture_id = "frog_attack", w = 60, h = 24, num_frames = 7, speed_rate = 7, is_loop = true, offset_x = -18,},
+    {animation_id = "player_frog_attack", texture_id = "frog_attack", w = 60, h = 24, num_frames = 7, speed_rate = 14, is_loop = true, offset_x = -18,},
     
     {animation_id = "enemy01_idle", texture_id = "enemy01_idle", w = 32, h = 32, num_frames = 9, speed_rate = 2, is_loop = true,},
     {animation_id = "enemy01_run" , texture_id = "enemy01_run",  w = 32, h = 32, num_frames = 9, speed_rate = 3, is_loop = true,},
@@ -162,10 +162,13 @@ scene = {
               seconds = 0.6,
               }
         },
+        -- Hitbox de ataque: más ancho que el cuerpo (box de 40) y centrado
+        -- con el offset, para que el golpe alcance el doble de distancia a
+        -- cada lado. Solo afecta al ataque; la física usa el box_collider.
         damage_collider = {
-        width = 64,
+        width = 120,
         height = 48,
-        offset = {x = 0, y = 0},
+        offset = {x = -40, y = 0},
       },
       }
     },

@@ -52,14 +52,14 @@ public:
 
                 const bool collision = checkCollision(
                     {
-                        aTransform.position.x,
-                        aTransform.position.y,
+                        aTransform.position.x + aCollider.OffsetX,
+                        aTransform.position.y + aCollider.OffsetY,
                         static_cast<float>(aCollider.Width),
                         static_cast<float>(aCollider.Height)
                     },
                     {
-                        bTransform.position.x,
-                        bTransform.position.y,
+                        bTransform.position.x + bCollider.OffsetX,
+                        bTransform.position.y + bCollider.OffsetY,
                         static_cast<float>(bCollider.Width),
                         static_cast<float>(bCollider.Height)
                     });

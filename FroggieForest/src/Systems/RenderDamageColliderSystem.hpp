@@ -36,8 +36,8 @@ public:
             const auto& transform = entity.getComponent<TransformComponent>();
 
             SDL_Rect box = {
-                static_cast<int>(transform.position.x - camera.x) - 4,
-                static_cast<int>(transform.position.y - camera.y) - 4,
+                static_cast<int>(transform.position.x - camera.x) + collider.OffsetX - 4,
+                static_cast<int>(transform.position.y - camera.y) + collider.OffsetY - 4,
                 static_cast<int>(collider.Width) + 8,
                 static_cast<int>(collider.Height) + 8
             };
