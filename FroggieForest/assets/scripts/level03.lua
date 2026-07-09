@@ -67,7 +67,7 @@ scene = {
     -- music table
   music = { 
     [0] =
-        {musicId = "l01Music" ,filePath ="./assets/sounds/Tree.mp3"},
+        {musicId = "l03Music" ,filePath ="./assets/sounds/Tree.mp3"},
       },
   -- Tabla de fuentes
   fonts = {
