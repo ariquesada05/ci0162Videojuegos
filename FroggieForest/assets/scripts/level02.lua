@@ -22,6 +22,11 @@ scene = {
     {assetId = "bee_hit", filePath = "./assets/images/bee_hit.png",},
     {assetId = "saw_on", filePath = "./assets/images/Saw/On (38x38).png",},
 
+    -- Jabalí (patrulla + embestida).
+    {assetId = "boar_idle", filePath = "./assets/images/boar_idle.png",},
+    {assetId = "boar_walk", filePath = "./assets/images/boar_walk.png",},
+    {assetId = "boar_run", filePath = "./assets/images/boar_run.png",},
+
 
     {assetId = "forest", filePath = "./assets/images/forest.png",},
 
@@ -61,6 +66,10 @@ scene = {
     {animation_id = "bee_attack", texture_id = "bee_attack", w = 64, h = 64, num_frames = 4, speed_rate = 8, is_loop = true,},
     {animation_id = "bee_hit",    texture_id = "bee_hit",    w = 64, h = 64, num_frames = 4, speed_rate = 8, is_loop = false,},
     {animation_id = "saw_on",     texture_id = "saw_on",     w = 38, h = 38, num_frames = 8, speed_rate = 16, is_loop = true,},
+
+    {animation_id = "boar_idle", texture_id = "boar_idle", w = 48, h = 32, num_frames = 4, speed_rate = 6,  is_loop = true,},
+    {animation_id = "boar_walk", texture_id = "boar_walk", w = 48, h = 32, num_frames = 6, speed_rate = 8,  is_loop = true,},
+    {animation_id = "boar_run",  texture_id = "boar_run",  w = 48, h = 32, num_frames = 6, speed_rate = 12, is_loop = true,},
 
     {animation_id = "platform_3", texture_id = "platform1", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
     {animation_id = "platform_2", texture_id = "platform2", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},

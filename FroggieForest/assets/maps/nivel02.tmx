@@ -121,6 +121,9 @@
   <object id="203" name="bee" x="1150" y="980" width="64" height="64"/>
   <object id="204" name="bee" x="1600" y="980" width="64" height="64"/>
   <object id="205" name="bee" x="2050" y="560" width="64" height="64"/>
+  <object id="400" name="boar" x="600" y="573" width="64" height="64"/>
+  <object id="401" name="boar" x="650" y="433" width="64" height="64"/>
+  <object id="402" name="boar" x="700" y="106" width="64" height="64"/>
  </objectgroup>
  <objectgroup id="4" name="EnemiesColliders">
   <object id="58" name="enemy_collider" x="921.636" y="1077.02" width="20.1061" height="41.2879"/>

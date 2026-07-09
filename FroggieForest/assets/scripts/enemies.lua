@@ -125,4 +125,46 @@ enemies =
       },
     },
   },
+
+  -- Jabalí: patrulla como el hongo (sin dañar al caminar) y, al detectar al
+  -- jugador, embiste corriendo hacia él (ver boar.lua). No le afecta la gravedad
+  -- (is_dynamic=false) ni empuja físicamente al caminar (is_solid=false); el
+  -- empujón fuerte solo ocurre en la embestida.
+  boar = {
+    components = {
+      sprite = {
+        assetId = "boar_walk",
+        width = 48,
+        height = 32,
+        src_rect = {x = 0, y = 0},
+        z_index = 2, -- por encima de las monedas
+      },
+      animation = {
+        num_frames = 6,
+        speed_rate = 8,
+        is_loop = true,
+      },
+      rigid_body = {
+        is_dynamic = false,
+        is_solid = false,
+        mass = 0,
+      },
+      box_collider = {
+        width = 44,
+        height = 44,
+        offset = {x = 0, y = 0},
+      },
+      script = {
+        path = "./assets/scripts/boar.lua",
+      },
+      tag = {
+        tag = "boar",
+      },
+      transform = {
+        position = {x = 0, y = 0},
+        scale = {x = 2.0, y = 2.0},
+        rotation = 0.0,
+      },
+    },
+  },
 }

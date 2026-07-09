@@ -43,6 +43,17 @@ is_dashing = false
 dash_timer = 0
 dash_cooldown = 0
 dash_direction = 1
+
+-- Empuje (knockback) por la embestida del jabalí. boar.lua fija boar_hit_damage
+-- y boar_hit_dir cuando su embestida golpea al jugador; aquí se aplican el daño
+-- y el empujón. Mientras knockback_timer > 0, la velocidad horizontal la impone
+-- el empujón e ignora el input del jugador.
+KNOCKBACK_SPEED = 600     -- px/segundo del empujón
+KNOCKBACK_FRAMES = 12     -- duración del empujón (~0.2 s)
+knockback_timer = 0
+knockback_vx = 0
+boar_hit_damage = 0
+boar_hit_dir = 0
 ----------------------------------------------------------------
 -- UPDATE
 ----------------------------------------------------------------
@@ -119,6 +130,30 @@ end
       end
   end
 
+  -- Embestida del jabalí: daño (8) + empuje solicitados por boar.lua. Se
+  -- aplican aquí para respetar invulnerabilidad, i-frames (damage_cooldown) y
+  -- muerte, igual que el resto del daño.
+  if boar_hit_damage and boar_hit_damage > 0 then
+    local dmg = boar_hit_damage
+    local dir = boar_hit_dir or 1
+    boar_hit_damage = 0
+    boar_hit_dir = 0
+
+    if not invulnerable and damage_cooldown <= 0 and not isDead then
+      damage_cooldown = 60
+      knockback_timer = KNOCKBACK_FRAMES
+      knockback_vx = dir * KNOCKBACK_SPEED
+
+      local health = get_health(this) - dmg
+      increment_health(this, health)
+      print("Embestida jabali, vida player:", health)
+
+      if health <= 0 then
+        die()
+      end
+    end
+  end
+
   if isDead then
     dieTimer = dieTimer + 1
 
@@ -140,6 +175,13 @@ end
 
   if player_state == player_states["DIE"] then
     return
+  end
+
+  -- Mientras dura el empujón de la embestida, la velocidad horizontal la impone
+  -- el knockback e ignora el input (para que el golpe "empuje" de verdad).
+  if knockback_timer > 0 then
+    knockback_timer = knockback_timer - 1
+    vel_x = knockback_vx
   end
 
   set_velocity(this, vel_x, vel_y)
