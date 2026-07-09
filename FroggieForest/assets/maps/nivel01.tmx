@@ -112,12 +112,12 @@
   <object id="60" name="enemy01" x="878.75" y="1094" width="36.5" height="33.3333"/>
   <object id="61" name="enemy01" x="1657.92" y="1094" width="33.5" height="41.3333"/>
   <object id="69" name="enemy01" x="2159.08" y="537.833" width="33.5" height="41.3333"/>
-  <object id="200" name="saw" x="1150" y="1094" width="57" height="57"/>
   <object id="201" name="saw" x="1780" y="1094" width="57" height="57"/>
   <object id="202" name="saw" x="2050" y="549" width="57" height="57"/>
   <object id="203" name="bee" x="1100" y="980" width="64" height="64"/>
   <object id="204" name="bee" x="1650" y="980" width="64" height="64"/>
   <object id="205" name="bee" x="2250" y="520" width="64" height="64"/>
+  <object id="200" name="ant" x="1150" y="1094" width="57" height="57"/>
  </objectgroup>
  <objectgroup id="4" name="EnemiesColliders">
   <object id="58" name="enemy_collider" x="921.636" y="1094.02" width="20.1061" height="41.2879"/>

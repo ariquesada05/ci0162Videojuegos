@@ -243,11 +243,10 @@ function on_collision(other)
     receive_damage(other)
   end
 
+   if get_tag(other) == "ant" then
+    receive_damage(other)
+  end
 
-  -- Al tocar la meta se avanza al siguiente nivel. Cada nivel define su destino
-  -- en el global next_scene (lo fija su script de música al cargar la escena):
-  -- level01->level02, level02->level03, level03->mainMenu. Si no está definido,
-  -- se cae a la pantalla "win" como respaldo.
   if get_tag(other) == "win" then
     go_to_scene(next_scene or "win")
   end
@@ -260,7 +259,7 @@ function on_damage(other)
 
   local otherTag = get_tag(other)
 
-  if otherTag == "enemy01" or otherTag == "bee" then
+  if otherTag == "enemy01" or otherTag == "bee" or otherTag == "ant" then
     take_damage_enemy(other)
   end
 end
