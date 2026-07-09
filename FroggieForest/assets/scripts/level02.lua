@@ -67,7 +67,7 @@ scene = {
     -- music table
   music = { 
     [0] =
-        {musicId = "l01Music" ,filePath ="./assets/sounds/journey.mp3"},
+        {musicId = "l02Music" ,filePath ="./assets/sounds/regrowth.mp3"},
       },
   -- Tabla de fuentes
   fonts = {
@@ -111,7 +111,7 @@ scene = {
     {
       components = {
         script = { 
-          path = "./assets/scripts/level01Music.lua",
+          path = "./assets/scripts/level02Music.lua",
         },
       }
     },
