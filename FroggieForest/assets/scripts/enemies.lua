@@ -44,9 +44,7 @@ enemies =
     },
   },
 
-  -- Abeja: persigue al jugador (ver bee.lua). No le afecta la gravedad
-  -- (is_dynamic=false) pero es sólida (is_solid=true) con masa baja, así los
-  -- muros/suelo (masa enorme) la bloquean igual que al jugador.
+ 
   bee = {
     components = {
       sprite = {
@@ -90,9 +88,6 @@ enemies =
     },
   },
 
-  -- Sierra: gira y se mueve de un lado a otro (ver saw.lua). Hace 30 de daño.
-  -- No le afecta la gravedad (is_dynamic=false) ni empuja al jugador
-  -- (is_solid=false): es un peligro que hay que esquivar.
   saw = {
     components = {
       sprite = {

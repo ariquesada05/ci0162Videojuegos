@@ -111,8 +111,8 @@ scene = {
     [0] =
 
     {tag = "player", health = 100, points = 0, damage = 1},
-    {tag = "enemy01", health = 20, points = 0, damage = 1},
-    {tag = "bee", health = 20, points = 0, damage = 15},
+    {tag = "enemy01", health = 10, points = 0, damage = 1},
+    {tag = "bee", health = 20, points = 0, damage = 5},
   },
   -- Tabla de Entidades
   entities = {
