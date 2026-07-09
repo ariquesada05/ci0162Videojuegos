@@ -167,4 +167,47 @@ enemies =
       },
     },
   },
+  ant = {
+  components = {
+    sprite = {
+      assetId = "ant_idle",
+      width = 64,
+      height = 32,
+      src_rect = {x = 0, y = 0},
+      z_index = 2,
+    },
+
+    animation = {
+      num_frames = 6,
+      speed_rate = 8,
+      is_loop = true,
+    },
+
+    rigid_body = {
+      is_dynamic = false,
+      is_solid = false,
+      mass = 0,
+    },
+
+    box_collider = {
+      width = 64,
+      height = 32,
+      offset = {x = 0, y = 0},
+    },
+
+    script = {
+      path = "./assets/scripts/ant.lua",
+    },
+
+    tag = {
+      tag = "ant",
+    },
+
+    transform = {
+      position = {x = 0, y = 0},
+      scale = {x = 1.5, y = 1.5},
+      rotation = 0.0,
+    },
+  },
+},
 }

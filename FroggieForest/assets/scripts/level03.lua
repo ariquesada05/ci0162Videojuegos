@@ -1,9 +1,8 @@
 scene = {
   -- Tabla de imágenes y sprites
-  sprites = {
+ sprites = {
     [0] = 
-    {assetId = "background", filePath = "./assets/images/back2.png",},
-
+    {assetId = "background", filePath = "./assets/images/back1.png",},
     {assetId = "frog_idle", filePath = "./assets/images/frog_idle.png",},
     {assetId = "frog_jump", filePath = "./assets/images/frog_jump.png",},
     {assetId = "frog_fall", filePath = "./assets/images/frog_fall.png",},
@@ -20,6 +19,7 @@ scene = {
     {assetId = "bee_fly", filePath = "./assets/images/bee_fly.png",},
     {assetId = "bee_attack", filePath = "./assets/images/bee_attack.png",},
     {assetId = "bee_hit", filePath = "./assets/images/bee_hit.png",},
+
     {assetId = "saw_on", filePath = "./assets/images/Saw/On (38x38).png",},
 
     -- Jabalí (patrulla + embestida).
@@ -27,6 +27,10 @@ scene = {
     {assetId = "boar_walk", filePath = "./assets/images/boar_walk.png",},
     {assetId = "boar_run", filePath = "./assets/images/boar_run.png",},
 
+    {assetId = "ant_attack", filePath = "./assets/images/GiantAntBlueAttack-Sheet.png"},
+    {assetId = "ant_idle", filePath = "./assets/images/GiantAntBlueIdle-Sheet.png"},
+    {assetId = "ant_walk", filePath = "./assets/images/GiantAntBlueWalk-Sheet.png"},
+    {assetId = "ant_death", filePath = "./assets/images/GiantAntDeath-Sheet.png"},
 
     {assetId = "forest", filePath = "./assets/images/forest.png",},
 
@@ -46,11 +50,11 @@ scene = {
     {assetId = "platform3", filePath = "./assets/images/platform3.png"},
     {assetId = "platform4", filePath = "./assets/images/platform4.png"},
   },
-
+  
 
   -- Tabla con la Info de las animaciones
   animations = {
-    [0] =
+    [0] = 
     {animation_id = "player_frog_idle", texture_id = "frog_idle", w = 24, h = 24, num_frames = 4, speed_rate = 5, is_loop = true,},
     {animation_id = "player_frog_jump", texture_id = "frog_jump", w = 26, h = 26, num_frames = 01, speed_rate = 01, is_loop = true,},
     {animation_id = "player_frog_fall", texture_id = "frog_fall", w = 24, h = 24, num_frames = 01, speed_rate = 01, is_loop = true,},
@@ -58,13 +62,19 @@ scene = {
     {animation_id = "player_frog_dash" , texture_id = "frog_dash",  w = 25, h = 24, num_frames = 10, speed_rate = 15, is_loop = true,},
     {animation_id = "player_frog_die" , texture_id = "frog_die",  w = 24, h = 24, num_frames = 3, speed_rate = 5, is_loop = true,},
     {animation_id = "player_frog_attack", texture_id = "frog_attack", w = 98, h = 24, num_frames = 7, speed_rate = 14, is_loop = true, offset_x = -38,},
-
+    
     {animation_id = "enemy01_idle", texture_id = "enemy01_idle", w = 32, h = 32, num_frames = 9, speed_rate = 2, is_loop = true,},
     {animation_id = "enemy01_run" , texture_id = "enemy01_run",  w = 32, h = 32, num_frames = 9, speed_rate = 3, is_loop = true,},
 
     {animation_id = "bee_fly",    texture_id = "bee_fly",    w = 64, h = 64, num_frames = 4, speed_rate = 6, is_loop = true,},
     {animation_id = "bee_attack", texture_id = "bee_attack", w = 64, h = 64, num_frames = 4, speed_rate = 8, is_loop = true,},
     {animation_id = "bee_hit",    texture_id = "bee_hit",    w = 64, h = 64, num_frames = 4, speed_rate = 8, is_loop = false,},
+
+    {animation_id = "ant_attack", texture_id = "ant_attack", w = 64, h = 32, num_frames = 6, speed_rate = 8, is_loop = false},
+    {animation_id = "ant_idle", texture_id = "ant_idle", w = 64, h = 32, num_frames = 6, speed_rate = 6, is_loop = true},
+    {animation_id = "ant_walk", texture_id = "ant_walk", w = 64, h = 32, num_frames = 6, speed_rate = 8, is_loop = true},
+    {animation_id = "ant_death", texture_id = "ant_death", w = 64, h = 32, num_frames = 6, speed_rate = 6, is_loop = false},
+
     {animation_id = "saw_on",     texture_id = "saw_on",     w = 38, h = 38, num_frames = 8, speed_rate = 16, is_loop = true,},
 
     {animation_id = "boar_idle", texture_id = "boar_idle", w = 48, h = 32, num_frames = 4, speed_rate = 6,  is_loop = true,},
@@ -75,6 +85,7 @@ scene = {
     {animation_id = "platform_2", texture_id = "platform2", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
     {animation_id = "platform_1", texture_id = "platform3", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
     {animation_id = "platform_0", texture_id = "platform4", w = 100, h = 14, num_frames = 1, speed_rate = 1, is_loop = true},
+  
   },
 
    -- sounds table
@@ -122,6 +133,8 @@ scene = {
     {tag = "player", health = 100, points = 0, damage = 1},
     {tag = "enemy01", health = 20, points = 0, damage = 1},
     {tag = "bee", health = 20, points = 0, damage = 15},
+    {tag = "ant", health = 20, points = 0, damage = 10},
+
   },
   -- Tabla de Entidades
   entities = {

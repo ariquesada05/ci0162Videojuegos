@@ -19,6 +19,7 @@ scene = {
     {assetId = "bee_fly", filePath = "./assets/images/bee_fly.png",},
     {assetId = "bee_attack", filePath = "./assets/images/bee_attack.png",},
     {assetId = "bee_hit", filePath = "./assets/images/bee_hit.png",},
+
     {assetId = "saw_on", filePath = "./assets/images/Saw/On (38x38).png",},
 
     -- Jabalí (patrulla + embestida).
@@ -26,6 +27,10 @@ scene = {
     {assetId = "boar_walk", filePath = "./assets/images/boar_walk.png",},
     {assetId = "boar_run", filePath = "./assets/images/boar_run.png",},
 
+    {assetId = "ant_attack", filePath = "./assets/images/GiantAntBlueAttack-Sheet.png"},
+    {assetId = "ant_idle", filePath = "./assets/images/GiantAntBlueIdle-Sheet.png"},
+    {assetId = "ant_walk", filePath = "./assets/images/GiantAntBlueWalk-Sheet.png"},
+    {assetId = "ant_death", filePath = "./assets/images/GiantAntDeath-Sheet.png"},
 
     {assetId = "forest", filePath = "./assets/images/forest.png",},
 
@@ -64,6 +69,12 @@ scene = {
     {animation_id = "bee_fly",    texture_id = "bee_fly",    w = 64, h = 64, num_frames = 4, speed_rate = 6, is_loop = true,},
     {animation_id = "bee_attack", texture_id = "bee_attack", w = 64, h = 64, num_frames = 4, speed_rate = 8, is_loop = true,},
     {animation_id = "bee_hit",    texture_id = "bee_hit",    w = 64, h = 64, num_frames = 4, speed_rate = 8, is_loop = false,},
+
+    {animation_id = "ant_attack", texture_id = "ant_attack", w = 64, h = 32, num_frames = 6, speed_rate = 8, is_loop = false},
+    {animation_id = "ant_idle", texture_id = "ant_idle", w = 64, h = 32, num_frames = 6, speed_rate = 6, is_loop = true},
+    {animation_id = "ant_walk", texture_id = "ant_walk", w = 64, h = 32, num_frames = 6, speed_rate = 8, is_loop = true},
+    {animation_id = "ant_death", texture_id = "ant_death", w = 64, h = 32, num_frames = 6, speed_rate = 6, is_loop = false},
+
     {animation_id = "saw_on",     texture_id = "saw_on",     w = 38, h = 38, num_frames = 8, speed_rate = 16, is_loop = true,},
 
     {animation_id = "boar_idle", texture_id = "boar_idle", w = 48, h = 32, num_frames = 4, speed_rate = 6,  is_loop = true,},
@@ -122,6 +133,8 @@ scene = {
     {tag = "player", health = 100, points = 0, damage = 1},
     {tag = "enemy01", health = 10, points = 0, damage = 1},
     {tag = "bee", health = 20, points = 0, damage = 5},
+    {tag = "ant", health = 15, points = 0, damage = 5},
+
   },
   -- Tabla de Entidades
   entities = {
